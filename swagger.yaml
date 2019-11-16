@@ -265,7 +265,7 @@ paths:
           schema:
             items:
               $ref: '#/definitions/employee'
-            type: array
+            type: object
         '401':
           description: Unauthorized
         '403':
