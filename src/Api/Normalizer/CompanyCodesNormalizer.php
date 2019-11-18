@@ -30,7 +30,7 @@ class CompanyCodesNormalizer implements DenormalizerInterface, NormalizerInterfa
 
     public function supportsNormalization($data, $format = null)
     {
-        return get_class($data) === 'Paylocity\\Api\\Model\\CompanyCodes';
+        return is_object($data) && get_class($data) === 'Paylocity\\Api\\Model\\CompanyCodes';
     }
 
     public function denormalize($data, $class, $format = null, array $context = [])
@@ -40,22 +40,10 @@ class CompanyCodesNormalizer implements DenormalizerInterface, NormalizerInterfa
         }
         $object = new \Paylocity\Api\Model\CompanyCodes();
         if (property_exists($data, 'code')) {
-            $value = $data->{'code'};
-            if (is_string($data->{'code'})) {
-                $value = $data->{'code'};
-            } elseif (is_null($data->{'code'})) {
-                $value = $data->{'code'};
-            }
-            $object->setCode($value);
+            $object->setCode($data->{'code'});
         }
         if (property_exists($data, 'description')) {
-            $value_1 = $data->{'description'};
-            if (is_string($data->{'description'})) {
-                $value_1 = $data->{'description'};
-            } elseif (is_null($data->{'description'})) {
-                $value_1 = $data->{'description'};
-            }
-            $object->setDescription($value_1);
+            $object->setDescription($data->{'description'});
         }
 
         return $object;
@@ -64,20 +52,8 @@ class CompanyCodesNormalizer implements DenormalizerInterface, NormalizerInterfa
     public function normalize($object, $format = null, array $context = [])
     {
         $data = new \stdClass();
-        $value = $object->getCode();
-        if (is_string($object->getCode())) {
-            $value = $object->getCode();
-        } elseif (is_null($object->getCode())) {
-            $value = $object->getCode();
-        }
-        $data->{'code'} = $value;
-        $value_1 = $object->getDescription();
-        if (is_string($object->getDescription())) {
-            $value_1 = $object->getDescription();
-        } elseif (is_null($object->getDescription())) {
-            $value_1 = $object->getDescription();
-        }
-        $data->{'description'} = $value_1;
+        $data->{'code'} = $object->getCode();
+        $data->{'description'} = $object->getDescription();
 
         return $data;
     }

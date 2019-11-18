@@ -30,7 +30,7 @@ class EmployeeAdditionalDirectDepositItemNormalizer implements DenormalizerInter
 
     public function supportsNormalization($data, $format = null)
     {
-        return get_class($data) === 'Paylocity\\Api\\Model\\EmployeeAdditionalDirectDepositItem';
+        return is_object($data) && get_class($data) === 'Paylocity\\Api\\Model\\EmployeeAdditionalDirectDepositItem';
     }
 
     public function denormalize($data, $class, $format = null, array $context = [])
@@ -39,87 +39,6 @@ class EmployeeAdditionalDirectDepositItemNormalizer implements DenormalizerInter
             throw new InvalidArgumentException();
         }
         $object = new \Paylocity\Api\Model\EmployeeAdditionalDirectDepositItem();
-        if (property_exists($data, 'accountNumber')) {
-            $value = $data->{'accountNumber'};
-            if (is_string($data->{'accountNumber'})) {
-                $value = $data->{'accountNumber'};
-            } elseif (is_null($data->{'accountNumber'})) {
-                $value = $data->{'accountNumber'};
-            }
-            $object->setAccountNumber($value);
-        }
-        if (property_exists($data, 'accountType')) {
-            $value_1 = $data->{'accountType'};
-            if (is_string($data->{'accountType'})) {
-                $value_1 = $data->{'accountType'};
-            } elseif (is_null($data->{'accountType'})) {
-                $value_1 = $data->{'accountType'};
-            }
-            $object->setAccountType($value_1);
-        }
-        if (property_exists($data, 'amount')) {
-            $value_2 = $data->{'amount'};
-            if (is_float($data->{'amount'})) {
-                $value_2 = $data->{'amount'};
-            } elseif (is_null($data->{'amount'})) {
-                $value_2 = $data->{'amount'};
-            }
-            $object->setAmount($value_2);
-        }
-        if (property_exists($data, 'amountType')) {
-            $value_3 = $data->{'amountType'};
-            if (is_string($data->{'amountType'})) {
-                $value_3 = $data->{'amountType'};
-            } elseif (is_null($data->{'amountType'})) {
-                $value_3 = $data->{'amountType'};
-            }
-            $object->setAmountType($value_3);
-        }
-        if (property_exists($data, 'blockSpecial')) {
-            $value_4 = $data->{'blockSpecial'};
-            if (is_bool($data->{'blockSpecial'})) {
-                $value_4 = $data->{'blockSpecial'};
-            } elseif (is_null($data->{'blockSpecial'})) {
-                $value_4 = $data->{'blockSpecial'};
-            }
-            $object->setBlockSpecial($value_4);
-        }
-        if (property_exists($data, 'isSkipPreNote')) {
-            $value_5 = $data->{'isSkipPreNote'};
-            if (is_bool($data->{'isSkipPreNote'})) {
-                $value_5 = $data->{'isSkipPreNote'};
-            } elseif (is_null($data->{'isSkipPreNote'})) {
-                $value_5 = $data->{'isSkipPreNote'};
-            }
-            $object->setIsSkipPreNote($value_5);
-        }
-        if (property_exists($data, 'nameOnAccount')) {
-            $value_6 = $data->{'nameOnAccount'};
-            if (is_string($data->{'nameOnAccount'})) {
-                $value_6 = $data->{'nameOnAccount'};
-            } elseif (is_null($data->{'nameOnAccount'})) {
-                $value_6 = $data->{'nameOnAccount'};
-            }
-            $object->setNameOnAccount($value_6);
-        }
-        if (property_exists($data, 'preNoteDate')) {
-            $value_7 = $data->{'preNoteDate'};
-            if (is_string($data->{'preNoteDate'})) {
-                $value_7 = $data->{'preNoteDate'};
-            } elseif (is_null($data->{'preNoteDate'})) {
-                $value_7 = $data->{'preNoteDate'};
-            }
-            $object->setPreNoteDate($value_7);
-        }
-        if (property_exists($data, 'routingNumber')) {
-            $value_8 = $data->{'routingNumber'};
-            if (is_string($data->{'routingNumber'})) {
-                $value_8 = $data->{'routingNumber'};
-            } elseif (is_null($data->{'routingNumber'})) {
-                $value_8 = $data->{'routingNumber'};
-            }
-            $object->setRoutingNumber($value_8);
-        }
 
         return $object;
     }
@@ -127,69 +46,6 @@ class EmployeeAdditionalDirectDepositItemNormalizer implements DenormalizerInter
     public function normalize($object, $format = null, array $context = [])
     {
         $data = new \stdClass();
-        $value = $object->getAccountNumber();
-        if (is_string($object->getAccountNumber())) {
-            $value = $object->getAccountNumber();
-        } elseif (is_null($object->getAccountNumber())) {
-            $value = $object->getAccountNumber();
-        }
-        $data->{'accountNumber'} = $value;
-        $value_1 = $object->getAccountType();
-        if (is_string($object->getAccountType())) {
-            $value_1 = $object->getAccountType();
-        } elseif (is_null($object->getAccountType())) {
-            $value_1 = $object->getAccountType();
-        }
-        $data->{'accountType'} = $value_1;
-        $value_2 = $object->getAmount();
-        if (is_float($object->getAmount())) {
-            $value_2 = $object->getAmount();
-        } elseif (is_null($object->getAmount())) {
-            $value_2 = $object->getAmount();
-        }
-        $data->{'amount'} = $value_2;
-        $value_3 = $object->getAmountType();
-        if (is_string($object->getAmountType())) {
-            $value_3 = $object->getAmountType();
-        } elseif (is_null($object->getAmountType())) {
-            $value_3 = $object->getAmountType();
-        }
-        $data->{'amountType'} = $value_3;
-        $value_4 = $object->getBlockSpecial();
-        if (is_bool($object->getBlockSpecial())) {
-            $value_4 = $object->getBlockSpecial();
-        } elseif (is_null($object->getBlockSpecial())) {
-            $value_4 = $object->getBlockSpecial();
-        }
-        $data->{'blockSpecial'} = $value_4;
-        $value_5 = $object->getIsSkipPreNote();
-        if (is_bool($object->getIsSkipPreNote())) {
-            $value_5 = $object->getIsSkipPreNote();
-        } elseif (is_null($object->getIsSkipPreNote())) {
-            $value_5 = $object->getIsSkipPreNote();
-        }
-        $data->{'isSkipPreNote'} = $value_5;
-        $value_6 = $object->getNameOnAccount();
-        if (is_string($object->getNameOnAccount())) {
-            $value_6 = $object->getNameOnAccount();
-        } elseif (is_null($object->getNameOnAccount())) {
-            $value_6 = $object->getNameOnAccount();
-        }
-        $data->{'nameOnAccount'} = $value_6;
-        $value_7 = $object->getPreNoteDate();
-        if (is_string($object->getPreNoteDate())) {
-            $value_7 = $object->getPreNoteDate();
-        } elseif (is_null($object->getPreNoteDate())) {
-            $value_7 = $object->getPreNoteDate();
-        }
-        $data->{'preNoteDate'} = $value_7;
-        $value_8 = $object->getRoutingNumber();
-        if (is_string($object->getRoutingNumber())) {
-            $value_8 = $object->getRoutingNumber();
-        } elseif (is_null($object->getRoutingNumber())) {
-            $value_8 = $object->getRoutingNumber();
-        }
-        $data->{'routingNumber'} = $value_8;
 
         return $data;
     }

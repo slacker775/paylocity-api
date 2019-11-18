@@ -24,8 +24,6 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      *
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @throws \Paylocity\Api\Exception\GetAllCompanyCodesAndDescriptionsByResourceUnauthorizedException
-     * @throws \Paylocity\Api\Exception\GetAllCompanyCodesAndDescriptionsByResourceForbiddenException
      * @throws \Paylocity\Api\Exception\GetAllCompanyCodesAndDescriptionsByResourceNotFoundException
      * @throws \Paylocity\Api\Exception\GetAllCompanyCodesAndDescriptionsByResourceInternalServerErrorException
      *
@@ -48,8 +46,6 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      *
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @throws \Paylocity\Api\Exception\GetAllCustomFieldsByCategoryUnauthorizedException
-     * @throws \Paylocity\Api\Exception\GetAllCustomFieldsByCategoryForbiddenException
      * @throws \Paylocity\Api\Exception\GetAllCustomFieldsByCategoryNotFoundException
      * @throws \Paylocity\Api\Exception\GetAllCustomFieldsByCategoryInternalServerErrorException
      *
@@ -63,9 +59,8 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     /**
      * New Employee API sends new employee data directly to Web Pay. Companies who use the New Hire Template in Web Pay may require additional fields when hiring employees. New Employee API Requests will honor these required fields.
      *
-     * @param string                        $companyId        Company Id
-     * @param \Paylocity\Api\Model\Employee $json             Employee Model
-     * @param array                         $headerParameters {
+     * @param string $companyId        Company Id
+     * @param array  $headerParameters {
      *
      *     @var string $Authorization Bearer + JWT
      * }
@@ -73,15 +68,13 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
      * @throws \Paylocity\Api\Exception\AddEmployeeBadRequestException
-     * @throws \Paylocity\Api\Exception\AddEmployeeUnauthorizedException
-     * @throws \Paylocity\Api\Exception\AddEmployeeForbiddenException
      * @throws \Paylocity\Api\Exception\AddEmployeeInternalServerErrorException
      *
      * @return \Paylocity\Api\Model\EmployeeIdResponse[]|\Psr\Http\Message\ResponseInterface|null
      */
-    public function addEmployee(string $companyId, \Paylocity\Api\Model\Employee $json, array $headerParameters = [], string $fetch = self::FETCH_OBJECT)
+    public function addEmployee(string $companyId, \Paylocity\Api\Model\Employee $requestBody, array $headerParameters = [], string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Paylocity\Api\Endpoint\AddEmployee($companyId, $json, $headerParameters), $fetch);
+        return $this->executePsr7Endpoint(new \Paylocity\Api\Endpoint\AddEmployee($companyId, $requestBody, $headerParameters), $fetch);
     }
 
     /**
@@ -102,12 +95,10 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      *
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @throws \Paylocity\Api\Exception\GetAllEmployeesUnauthorizedException
-     * @throws \Paylocity\Api\Exception\GetAllEmployeesForbiddenException
      * @throws \Paylocity\Api\Exception\GetAllEmployeesNotFoundException
      * @throws \Paylocity\Api\Exception\GetAllEmployeesInternalServerErrorException
      *
-     * @return \Paylocity\Api\Model\EmployeeInfo[]|\Psr\Http\Message\ResponseInterface|null
+     * @return \Psr\Http\Message\ResponseInterface|null
      */
     public function getAllEmployees(string $companyId, array $queryParameters = [], array $headerParameters = [], string $fetch = self::FETCH_OBJECT)
     {
@@ -126,8 +117,6 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      *
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @throws \Paylocity\Api\Exception\GetEmployeeUnauthorizedException
-     * @throws \Paylocity\Api\Exception\GetEmployeeForbiddenException
      * @throws \Paylocity\Api\Exception\GetEmployeeNotFoundException
      * @throws \Paylocity\Api\Exception\GetEmployeeInternalServerErrorException
      *
@@ -141,10 +130,9 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     /**
      * Update Employee API will update existing employee data in WebPay.
      *
-     * @param string                        $companyId        Company Id
-     * @param string                        $employeeId       Employee Id
-     * @param \Paylocity\Api\Model\Employee $json             Employee Model
-     * @param array                         $headerParameters {
+     * @param string $companyId        Company Id
+     * @param string $employeeId       Employee Id
+     * @param array  $headerParameters {
      *
      *     @var string $Authorization Bearer + JWT
      * }
@@ -152,24 +140,21 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
      * @throws \Paylocity\Api\Exception\UpdateEmployeeBadRequestException
-     * @throws \Paylocity\Api\Exception\UpdateEmployeeUnauthorizedException
-     * @throws \Paylocity\Api\Exception\UpdateEmployeeForbiddenException
      * @throws \Paylocity\Api\Exception\UpdateEmployeeInternalServerErrorException
      *
      * @return \Psr\Http\Message\ResponseInterface|null
      */
-    public function updateEmployee(string $companyId, string $employeeId, \Paylocity\Api\Model\Employee $json, array $headerParameters = [], string $fetch = self::FETCH_OBJECT)
+    public function updateEmployee(string $companyId, string $employeeId, \Paylocity\Api\Model\Employee $requestBody, array $headerParameters = [], string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Paylocity\Api\Endpoint\UpdateEmployee($companyId, $employeeId, $json, $headerParameters), $fetch);
+        return $this->executePsr7Endpoint(new \Paylocity\Api\Endpoint\UpdateEmployee($companyId, $employeeId, $requestBody, $headerParameters), $fetch);
     }
 
     /**
      * Sends new or updated employee additional rates information directly to Web Pay.
      *
-     * @param string                              $companyId        Company Id
-     * @param string                              $employeeId       Employee Id
-     * @param \Paylocity\Api\Model\AdditionalRate $json             Additional Rate Model
-     * @param array                               $headerParameters {
+     * @param string $companyId        Company Id
+     * @param string $employeeId       Employee Id
+     * @param array  $headerParameters {
      *
      *     @var string $Authorization Bearer + JWT
      * }
@@ -177,24 +162,21 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
      * @throws \Paylocity\Api\Exception\AddOrUpdateAdditionalRatesBadRequestException
-     * @throws \Paylocity\Api\Exception\AddOrUpdateAdditionalRatesUnauthorizedException
-     * @throws \Paylocity\Api\Exception\AddOrUpdateAdditionalRatesForbiddenException
      * @throws \Paylocity\Api\Exception\AddOrUpdateAdditionalRatesInternalServerErrorException
      *
      * @return \Psr\Http\Message\ResponseInterface|null
      */
-    public function addOrUpdateAdditionalRates(string $companyId, string $employeeId, \Paylocity\Api\Model\AdditionalRate $json, array $headerParameters = [], string $fetch = self::FETCH_OBJECT)
+    public function addOrUpdateAdditionalRates(string $companyId, string $employeeId, \Paylocity\Api\Model\AdditionalRate $requestBody, array $headerParameters = [], string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Paylocity\Api\Endpoint\AddOrUpdateAdditionalRates($companyId, $employeeId, $json, $headerParameters), $fetch);
+        return $this->executePsr7Endpoint(new \Paylocity\Api\Endpoint\AddOrUpdateAdditionalRates($companyId, $employeeId, $requestBody, $headerParameters), $fetch);
     }
 
     /**
      * Sends new or updated employee benefit setup information directly to Web Pay.
      *
-     * @param string                            $companyId        Company Id
-     * @param string                            $employeeId       Employee Id
-     * @param \Paylocity\Api\Model\BenefitSetup $json             BenefitSetup Model
-     * @param array                             $headerParameters {
+     * @param string $companyId        Company Id
+     * @param string $employeeId       Employee Id
+     * @param array  $headerParameters {
      *
      *     @var string $Authorization Bearer + JWT
      * }
@@ -202,15 +184,13 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
      * @throws \Paylocity\Api\Exception\UpdateOrAddEmployeeBenefitSetupBadRequestException
-     * @throws \Paylocity\Api\Exception\UpdateOrAddEmployeeBenefitSetupUnauthorizedException
-     * @throws \Paylocity\Api\Exception\UpdateOrAddEmployeeBenefitSetupForbiddenException
      * @throws \Paylocity\Api\Exception\UpdateOrAddEmployeeBenefitSetupInternalServerErrorException
      *
      * @return \Psr\Http\Message\ResponseInterface|null
      */
-    public function updateOrAddEmployeeBenefitSetup(string $companyId, string $employeeId, \Paylocity\Api\Model\BenefitSetup $json, array $headerParameters = [], string $fetch = self::FETCH_OBJECT)
+    public function updateOrAddEmployeeBenefitSetup(string $companyId, string $employeeId, \Paylocity\Api\Model\BenefitSetup $requestBody, array $headerParameters = [], string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Paylocity\Api\Endpoint\UpdateOrAddEmployeeBenefitSetup($companyId, $employeeId, $json, $headerParameters), $fetch);
+        return $this->executePsr7Endpoint(new \Paylocity\Api\Endpoint\UpdateOrAddEmployeeBenefitSetup($companyId, $employeeId, $requestBody, $headerParameters), $fetch);
     }
 
     /**
@@ -225,9 +205,6 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      *
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @throws \Paylocity\Api\Exception\GetAllEarningsUnauthorizedException
-     * @throws \Paylocity\Api\Exception\GetAllEarningsForbiddenException
-     * @throws \Paylocity\Api\Exception\GetAllEarningsNotFoundException
      * @throws \Paylocity\Api\Exception\GetAllEarningsInternalServerErrorException
      *
      * @return \Paylocity\Api\Model\Earning[]|\Psr\Http\Message\ResponseInterface|null
@@ -240,10 +217,9 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     /**
      * Add/Update Earning API sends new or updated employee earnings information directly to Web Pay.
      *
-     * @param string                       $companyId        Company Id
-     * @param string                       $employeeId       Employee Id
-     * @param \Paylocity\Api\Model\Earning $json             Earning Model
-     * @param array                        $headerParameters {
+     * @param string $companyId        Company Id
+     * @param string $employeeId       Employee Id
+     * @param array  $headerParameters {
      *
      *     @var string $Authorization Bearer + JWT
      * }
@@ -251,15 +227,13 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
      * @throws \Paylocity\Api\Exception\AddOrUpdateAnEmployeeEarningBadRequestException
-     * @throws \Paylocity\Api\Exception\AddOrUpdateAnEmployeeEarningUnauthorizedException
-     * @throws \Paylocity\Api\Exception\AddOrUpdateAnEmployeeEarningForbiddenException
      * @throws \Paylocity\Api\Exception\AddOrUpdateAnEmployeeEarningInternalServerErrorException
      *
      * @return \Psr\Http\Message\ResponseInterface|null
      */
-    public function addOrUpdateAnEmployeeEarning(string $companyId, string $employeeId, \Paylocity\Api\Model\Earning $json, array $headerParameters = [], string $fetch = self::FETCH_OBJECT)
+    public function addOrUpdateAnEmployeeEarning(string $companyId, string $employeeId, \Paylocity\Api\Model\Earning $requestBody, array $headerParameters = [], string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Paylocity\Api\Endpoint\AddOrUpdateAnEmployeeEarning($companyId, $employeeId, $json, $headerParameters), $fetch);
+        return $this->executePsr7Endpoint(new \Paylocity\Api\Endpoint\AddOrUpdateAnEmployeeEarning($companyId, $employeeId, $requestBody, $headerParameters), $fetch);
     }
 
     /**
@@ -275,9 +249,6 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      *
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @throws \Paylocity\Api\Exception\GetEarningsByEarningCodeUnauthorizedException
-     * @throws \Paylocity\Api\Exception\GetEarningsByEarningCodeForbiddenException
-     * @throws \Paylocity\Api\Exception\GetEarningsByEarningCodeNotFoundException
      * @throws \Paylocity\Api\Exception\GetEarningsByEarningCodeInternalServerErrorException
      *
      * @return \Paylocity\Api\Model\Earning[]|\Psr\Http\Message\ResponseInterface|null
@@ -302,9 +273,6 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
      * @throws \Paylocity\Api\Exception\DeleteEarningByEarningCodeAndStartDateBadRequestException
-     * @throws \Paylocity\Api\Exception\DeleteEarningByEarningCodeAndStartDateUnauthorizedException
-     * @throws \Paylocity\Api\Exception\DeleteEarningByEarningCodeAndStartDateForbiddenException
-     * @throws \Paylocity\Api\Exception\DeleteEarningByEarningCodeAndStartDateNotFoundException
      * @throws \Paylocity\Api\Exception\DeleteEarningByEarningCodeAndStartDateInternalServerErrorException
      *
      * @return \Psr\Http\Message\ResponseInterface|null
@@ -328,9 +296,6 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      *
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @throws \Paylocity\Api\Exception\GetEarningByEarningCodeAndStartDateUnauthorizedException
-     * @throws \Paylocity\Api\Exception\GetEarningByEarningCodeAndStartDateForbiddenException
-     * @throws \Paylocity\Api\Exception\GetEarningByEarningCodeAndStartDateNotFoundException
      * @throws \Paylocity\Api\Exception\GetEarningByEarningCodeAndStartDateInternalServerErrorException
      *
      * @return \Paylocity\Api\Model\Earning|\Psr\Http\Message\ResponseInterface|null
@@ -343,10 +308,9 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     /**
      * Sends new or updated employee emergency contacts directly to Web Pay.
      *
-     * @param string                                $companyId        Company Id
-     * @param string                                $employeeId       Employee Id
-     * @param \Paylocity\Api\Model\EmergencyContact $json             Emergency Contact Model
-     * @param array                                 $headerParameters {
+     * @param string $companyId        Company Id
+     * @param string $employeeId       Employee Id
+     * @param array  $headerParameters {
      *
      *     @var string $Authorization Bearer + JWT
      * }
@@ -354,15 +318,13 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
      * @throws \Paylocity\Api\Exception\AddOrUpdateEmergencyContactsBadRequestException
-     * @throws \Paylocity\Api\Exception\AddOrUpdateEmergencyContactsUnauthorizedException
-     * @throws \Paylocity\Api\Exception\AddOrUpdateEmergencyContactsForbiddenException
      * @throws \Paylocity\Api\Exception\AddOrUpdateEmergencyContactsInternalServerErrorException
      *
      * @return \Psr\Http\Message\ResponseInterface|null
      */
-    public function addOrUpdateEmergencyContacts(string $companyId, string $employeeId, \Paylocity\Api\Model\EmergencyContact $json, array $headerParameters = [], string $fetch = self::FETCH_OBJECT)
+    public function addOrUpdateEmergencyContacts(string $companyId, string $employeeId, \Paylocity\Api\Model\EmergencyContact $requestBody, array $headerParameters = [], string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Paylocity\Api\Endpoint\AddOrUpdateEmergencyContacts($companyId, $employeeId, $json, $headerParameters), $fetch);
+        return $this->executePsr7Endpoint(new \Paylocity\Api\Endpoint\AddOrUpdateEmergencyContacts($companyId, $employeeId, $requestBody, $headerParameters), $fetch);
     }
 
     /**
@@ -377,12 +339,9 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      *
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @throws \Paylocity\Api\Exception\GetAllLocalTaxesUnauthorizedException
-     * @throws \Paylocity\Api\Exception\GetAllLocalTaxesForbiddenException
-     * @throws \Paylocity\Api\Exception\GetAllLocalTaxesNotFoundException
      * @throws \Paylocity\Api\Exception\GetAllLocalTaxesInternalServerErrorException
      *
-     * @return \Paylocity\Api\Model\LocalTax[]|\Psr\Http\Message\ResponseInterface|null
+     * @return \Psr\Http\Message\ResponseInterface|null
      */
     public function getAllLocalTaxes(string $companyId, string $employeeId, array $headerParameters = [], string $fetch = self::FETCH_OBJECT)
     {
@@ -392,10 +351,9 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     /**
      * Sends new employee local tax information directly to Web Pay.
      *
-     * @param string                        $companyId        Company Id
-     * @param string                        $employeeId       Employee Id
-     * @param \Paylocity\Api\Model\LocalTax $json             LocalTax Model
-     * @param array                         $headerParameters {
+     * @param string $companyId        Company Id
+     * @param string $employeeId       Employee Id
+     * @param array  $headerParameters {
      *
      *     @var string $Authorization Bearer + JWT
      * }
@@ -403,15 +361,13 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
      * @throws \Paylocity\Api\Exception\AddLocalTaxBadRequestException
-     * @throws \Paylocity\Api\Exception\AddLocalTaxUnauthorizedException
-     * @throws \Paylocity\Api\Exception\AddLocalTaxForbiddenException
      * @throws \Paylocity\Api\Exception\AddLocalTaxInternalServerErrorException
      *
      * @return \Psr\Http\Message\ResponseInterface|null
      */
-    public function addLocalTax(string $companyId, string $employeeId, \Paylocity\Api\Model\LocalTax $json, array $headerParameters = [], string $fetch = self::FETCH_OBJECT)
+    public function addLocalTax(string $companyId, string $employeeId, \stdClass $requestBody, array $headerParameters = [], string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Paylocity\Api\Endpoint\AddLocalTax($companyId, $employeeId, $json, $headerParameters), $fetch);
+        return $this->executePsr7Endpoint(new \Paylocity\Api\Endpoint\AddLocalTax($companyId, $employeeId, $requestBody, $headerParameters), $fetch);
     }
 
     /**
@@ -428,9 +384,6 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
      * @throws \Paylocity\Api\Exception\DeleteLocalTaxByTaxCodeBadRequestException
-     * @throws \Paylocity\Api\Exception\DeleteLocalTaxByTaxCodeUnauthorizedException
-     * @throws \Paylocity\Api\Exception\DeleteLocalTaxByTaxCodeForbiddenException
-     * @throws \Paylocity\Api\Exception\DeleteLocalTaxByTaxCodeNotFoundException
      * @throws \Paylocity\Api\Exception\DeleteLocalTaxByTaxCodeInternalServerErrorException
      *
      * @return \Psr\Http\Message\ResponseInterface|null
@@ -453,12 +406,9 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      *
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @throws \Paylocity\Api\Exception\GetLocalTaxByTaxCodeUnauthorizedException
-     * @throws \Paylocity\Api\Exception\GetLocalTaxByTaxCodeForbiddenException
-     * @throws \Paylocity\Api\Exception\GetLocalTaxByTaxCodeNotFoundException
      * @throws \Paylocity\Api\Exception\GetLocalTaxByTaxCodeInternalServerErrorException
      *
-     * @return \Paylocity\Api\Model\LocalTax[]|\Psr\Http\Message\ResponseInterface|null
+     * @return \Psr\Http\Message\ResponseInterface|null
      */
     public function getLocalTaxByTaxCode(string $companyId, string $employeeId, string $taxCode, array $headerParameters = [], string $fetch = self::FETCH_OBJECT)
     {
@@ -468,10 +418,9 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     /**
      * Sends new or updated employee non-primary state tax information directly to Web Pay.
      *
-     * @param string                                  $companyId        Company Id
-     * @param string                                  $employeeId       Employee Id
-     * @param \Paylocity\Api\Model\NonPrimaryStateTax $json             Non-Primary State Tax Model
-     * @param array                                   $headerParameters {
+     * @param string $companyId        Company Id
+     * @param string $employeeId       Employee Id
+     * @param array  $headerParameters {
      *
      *     @var string $Authorization Bearer + JWT
      * }
@@ -479,15 +428,13 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
      * @throws \Paylocity\Api\Exception\AddOrUpdateNonPrimaryStateTaxBadRequestException
-     * @throws \Paylocity\Api\Exception\AddOrUpdateNonPrimaryStateTaxUnauthorizedException
-     * @throws \Paylocity\Api\Exception\AddOrUpdateNonPrimaryStateTaxForbiddenException
      * @throws \Paylocity\Api\Exception\AddOrUpdateNonPrimaryStateTaxInternalServerErrorException
      *
      * @return \Psr\Http\Message\ResponseInterface|null
      */
-    public function addOrUpdateNonPrimaryStateTax(string $companyId, string $employeeId, \Paylocity\Api\Model\NonPrimaryStateTax $json, array $headerParameters = [], string $fetch = self::FETCH_OBJECT)
+    public function addOrUpdateNonPrimaryStateTax(string $companyId, string $employeeId, \stdClass $requestBody, array $headerParameters = [], string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Paylocity\Api\Endpoint\AddOrUpdateNonPrimaryStateTax($companyId, $employeeId, $json, $headerParameters), $fetch);
+        return $this->executePsr7Endpoint(new \Paylocity\Api\Endpoint\AddOrUpdateNonPrimaryStateTax($companyId, $employeeId, $requestBody, $headerParameters), $fetch);
     }
 
     /**
@@ -510,8 +457,6 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      *
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @throws \Paylocity\Api\Exception\GetsEmployeePayStatementDetailDataBasedOnTheSpecifiedYearUnauthorizedException
-     * @throws \Paylocity\Api\Exception\GetsEmployeePayStatementDetailDataBasedOnTheSpecifiedYearForbiddenException
      * @throws \Paylocity\Api\Exception\GetsEmployeePayStatementDetailDataBasedOnTheSpecifiedYearNotFoundException
      * @throws \Paylocity\Api\Exception\GetsEmployeePayStatementDetailDataBasedOnTheSpecifiedYearInternalServerErrorException
      *
@@ -543,8 +488,6 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      *
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @throws \Paylocity\Api\Exception\GetsEmployeePayStatementDetailDataBasedOnTheSpecifiedYearAndCheckDateUnauthorizedException
-     * @throws \Paylocity\Api\Exception\GetsEmployeePayStatementDetailDataBasedOnTheSpecifiedYearAndCheckDateForbiddenException
      * @throws \Paylocity\Api\Exception\GetsEmployeePayStatementDetailDataBasedOnTheSpecifiedYearAndCheckDateNotFoundException
      * @throws \Paylocity\Api\Exception\GetsEmployeePayStatementDetailDataBasedOnTheSpecifiedYearAndCheckDateInternalServerErrorException
      *
@@ -575,8 +518,6 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      *
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @throws \Paylocity\Api\Exception\GetsEmployeePayStatementSummaryDataBasedOnTheSpecifiedYearUnauthorizedException
-     * @throws \Paylocity\Api\Exception\GetsEmployeePayStatementSummaryDataBasedOnTheSpecifiedYearForbiddenException
      * @throws \Paylocity\Api\Exception\GetsEmployeePayStatementSummaryDataBasedOnTheSpecifiedYearNotFoundException
      * @throws \Paylocity\Api\Exception\GetsEmployeePayStatementSummaryDataBasedOnTheSpecifiedYearInternalServerErrorException
      *
@@ -608,8 +549,6 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      *
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @throws \Paylocity\Api\Exception\GetsEmployeePayStatementSummaryDataBasedOnTheSpecifiedYearAndCheckDateUnauthorizedException
-     * @throws \Paylocity\Api\Exception\GetsEmployeePayStatementSummaryDataBasedOnTheSpecifiedYearAndCheckDateForbiddenException
      * @throws \Paylocity\Api\Exception\GetsEmployeePayStatementSummaryDataBasedOnTheSpecifiedYearAndCheckDateNotFoundException
      * @throws \Paylocity\Api\Exception\GetsEmployeePayStatementSummaryDataBasedOnTheSpecifiedYearAndCheckDateInternalServerErrorException
      *
@@ -623,10 +562,9 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     /**
      * Sends new or updated employee primary state tax information directly to Web Pay.
      *
-     * @param string                        $companyId        Company Id
-     * @param string                        $employeeId       Employee Id
-     * @param \Paylocity\Api\Model\StateTax $json             Primary State Tax Model
-     * @param array                         $headerParameters {
+     * @param string $companyId        Company Id
+     * @param string $employeeId       Employee Id
+     * @param array  $headerParameters {
      *
      *     @var string $Authorization Bearer + JWT
      * }
@@ -634,15 +572,13 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
      * @throws \Paylocity\Api\Exception\AddOrUpdatePrimaryStateTaxBadRequestException
-     * @throws \Paylocity\Api\Exception\AddOrUpdatePrimaryStateTaxUnauthorizedException
-     * @throws \Paylocity\Api\Exception\AddOrUpdatePrimaryStateTaxForbiddenException
      * @throws \Paylocity\Api\Exception\AddOrUpdatePrimaryStateTaxInternalServerErrorException
      *
      * @return \Psr\Http\Message\ResponseInterface|null
      */
-    public function addOrUpdatePrimaryStateTax(string $companyId, string $employeeId, \Paylocity\Api\Model\StateTax $json, array $headerParameters = [], string $fetch = self::FETCH_OBJECT)
+    public function addOrUpdatePrimaryStateTax(string $companyId, string $employeeId, \stdClass $requestBody, array $headerParameters = [], string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Paylocity\Api\Endpoint\AddOrUpdatePrimaryStateTax($companyId, $employeeId, $json, $headerParameters), $fetch);
+        return $this->executePsr7Endpoint(new \Paylocity\Api\Endpoint\AddOrUpdatePrimaryStateTax($companyId, $employeeId, $requestBody, $headerParameters), $fetch);
     }
 
     /**
@@ -657,7 +593,6 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
      * @throws \Paylocity\Api\Exception\GetCompanySpecificOpenAPIDocumentationBadRequestException
-     * @throws \Paylocity\Api\Exception\GetCompanySpecificOpenAPIDocumentationForbiddenException
      * @throws \Paylocity\Api\Exception\GetCompanySpecificOpenAPIDocumentationInternalServerErrorException
      *
      * @return \Psr\Http\Message\ResponseInterface|null
@@ -670,8 +605,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     /**
      * Obtain new client secret for Paylocity-issued client id. See Setup section for details.
      *
-     * @param \Paylocity\Api\Model\AddClientSecret $json             Add Client Secret Model
-     * @param array                                $headerParameters {
+     * @param array $headerParameters {
      *
      *     @var string $Authorization Bearer + JWT
      * }
@@ -679,23 +613,20 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
      * @throws \Paylocity\Api\Exception\AddClientSecretBadRequestException
-     * @throws \Paylocity\Api\Exception\AddClientSecretUnauthorizedException
-     * @throws \Paylocity\Api\Exception\AddClientSecretForbiddenException
      * @throws \Paylocity\Api\Exception\AddClientSecretInternalServerErrorException
      *
      * @return \Psr\Http\Message\ResponseInterface|null
      */
-    public function addClientSecret(\Paylocity\Api\Model\AddClientSecret $json, array $headerParameters = [], string $fetch = self::FETCH_OBJECT)
+    public function addClientSecret(\Paylocity\Api\Model\AddClientSecret $requestBody, array $headerParameters = [], string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Paylocity\Api\Endpoint\AddClientSecret($json, $headerParameters), $fetch);
+        return $this->executePsr7Endpoint(new \Paylocity\Api\Endpoint\AddClientSecret($requestBody, $headerParameters), $fetch);
     }
 
     /**
      * Add new employee to Web Link will send partially completed or potentially erroneous new hire record to Web Link, where it can be corrected and competed by company administrator or authorized Paylocity Service Bureau employee.
      *
-     * @param string                              $companyId        Company Id
-     * @param \Paylocity\Api\Model\StagedEmployee $json             StagedEmployee Model
-     * @param array                               $headerParameters {
+     * @param string $companyId        Company Id
+     * @param array  $headerParameters {
      *
      *     @var string $Authorization Bearer + JWT
      * }
@@ -703,14 +634,13 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
      * @throws \Paylocity\Api\Exception\AddNewEmployeeToWebLinkBadRequestException
-     * @throws \Paylocity\Api\Exception\AddNewEmployeeToWebLinkForbiddenException
      * @throws \Paylocity\Api\Exception\AddNewEmployeeToWebLinkInternalServerErrorException
      *
      * @return \Paylocity\Api\Model\TrackingNumberResponse[]|\Psr\Http\Message\ResponseInterface|null
      */
-    public function addNewEmployeeToWebLink(string $companyId, \Paylocity\Api\Model\StagedEmployee $json, array $headerParameters = [], string $fetch = self::FETCH_OBJECT)
+    public function addNewEmployeeToWebLink(string $companyId, \Paylocity\Api\Model\StagedEmployee $requestBody, array $headerParameters = [], string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Paylocity\Api\Endpoint\AddNewEmployeeToWebLink($companyId, $json, $headerParameters), $fetch);
+        return $this->executePsr7Endpoint(new \Paylocity\Api\Endpoint\AddNewEmployeeToWebLink($companyId, $requestBody, $headerParameters), $fetch);
     }
 
     public static function create($httpClient = null)

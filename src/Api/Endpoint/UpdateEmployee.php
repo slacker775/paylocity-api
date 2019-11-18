@@ -18,19 +18,18 @@ class UpdateEmployee extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements
     /**
      * Update Employee API will update existing employee data in WebPay.
      *
-     * @param string                        $companyId        Company Id
-     * @param string                        $employeeId       Employee Id
-     * @param \Paylocity\Api\Model\Employee $json             Employee Model
-     * @param array                         $headerParameters {
+     * @param string $companyId        Company Id
+     * @param string $employeeId       Employee Id
+     * @param array  $headerParameters {
      *
      *     @var string $Authorization Bearer + JWT
      * }
      */
-    public function __construct(string $companyId, string $employeeId, \Paylocity\Api\Model\Employee $json, array $headerParameters = [])
+    public function __construct(string $companyId, string $employeeId, \Paylocity\Api\Model\Employee $requestBody, array $headerParameters = [])
     {
         $this->companyId = $companyId;
         $this->employeeId = $employeeId;
-        $this->body = $json;
+        $this->body = $requestBody;
         $this->headerParameters = $headerParameters;
     }
 
@@ -48,7 +47,11 @@ class UpdateEmployee extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements
 
     public function getBody(\Symfony\Component\Serializer\SerializerInterface $serializer, $streamFactory = null): array
     {
-        return $this->getSerializedBody($serializer);
+        if ($this->body instanceof \Paylocity\Api\Model\Employee) {
+            return [['Content-Type' => ['application/json']], $serializer->serialize($this->body, 'json')];
+        }
+
+        return [[], null];
     }
 
     public function getExtraHeaders(): array
@@ -71,27 +74,22 @@ class UpdateEmployee extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements
      * {@inheritdoc}
      *
      * @throws \Paylocity\Api\Exception\UpdateEmployeeBadRequestException
-     * @throws \Paylocity\Api\Exception\UpdateEmployeeUnauthorizedException
-     * @throws \Paylocity\Api\Exception\UpdateEmployeeForbiddenException
      * @throws \Paylocity\Api\Exception\UpdateEmployeeInternalServerErrorException
      *
      * @return null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType)
+    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
         if (200 === $status) {
-            return null;
         }
-        if (400 === $status) {
+        if (400 === $status && mb_strpos($contentType, 'application/json') !== false) {
             throw new \Paylocity\Api\Exception\UpdateEmployeeBadRequestException($serializer->deserialize($body, 'Paylocity\\Api\\Model\\Error[]', 'json'));
         }
         if (401 === $status) {
-            throw new \Paylocity\Api\Exception\UpdateEmployeeUnauthorizedException();
         }
         if (403 === $status) {
-            throw new \Paylocity\Api\Exception\UpdateEmployeeForbiddenException();
         }
-        if (500 === $status) {
+        if (500 === $status && mb_strpos($contentType, 'application/json') !== false) {
             throw new \Paylocity\Api\Exception\UpdateEmployeeInternalServerErrorException($serializer->deserialize($body, 'Paylocity\\Api\\Model\\Error[]', 'json'));
         }
     }

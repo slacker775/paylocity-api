@@ -30,7 +30,7 @@ class PayStatementDetailsNormalizer implements DenormalizerInterface, Normalizer
 
     public function supportsNormalization($data, $format = null)
     {
-        return get_class($data) === 'Paylocity\\Api\\Model\\PayStatementDetails';
+        return is_object($data) && get_class($data) === 'Paylocity\\Api\\Model\\PayStatementDetails';
     }
 
     public function denormalize($data, $class, $format = null, array $context = [])
@@ -39,71 +39,8 @@ class PayStatementDetailsNormalizer implements DenormalizerInterface, Normalizer
             throw new InvalidArgumentException();
         }
         $object = new \Paylocity\Api\Model\PayStatementDetails();
-        if (property_exists($data, 'amount')) {
-            $value = $data->{'amount'};
-            if (is_float($data->{'amount'})) {
-                $value = $data->{'amount'};
-            } elseif (is_null($data->{'amount'})) {
-                $value = $data->{'amount'};
-            }
-            $object->setAmount($value);
-        }
-        if (property_exists($data, 'checkDate')) {
-            $value_1 = $data->{'checkDate'};
-            if (is_string($data->{'checkDate'})) {
-                $value_1 = $data->{'checkDate'};
-            } elseif (is_null($data->{'checkDate'})) {
-                $value_1 = $data->{'checkDate'};
-            }
-            $object->setCheckDate($value_1);
-        }
-        if (property_exists($data, 'det')) {
-            $value_2 = $data->{'det'};
-            if (is_string($data->{'det'})) {
-                $value_2 = $data->{'det'};
-            } elseif (is_null($data->{'det'})) {
-                $value_2 = $data->{'det'};
-            }
-            $object->setDet($value_2);
-        }
-        if (property_exists($data, 'detCode')) {
-            $value_3 = $data->{'detCode'};
-            if (is_string($data->{'detCode'})) {
-                $value_3 = $data->{'detCode'};
-            } elseif (is_null($data->{'detCode'})) {
-                $value_3 = $data->{'detCode'};
-            }
-            $object->setDetCode($value_3);
-        }
-        if (property_exists($data, 'hours')) {
-            $value_4 = $data->{'hours'};
-            if (is_float($data->{'hours'})) {
-                $value_4 = $data->{'hours'};
-            } elseif (is_null($data->{'hours'})) {
-                $value_4 = $data->{'hours'};
-            }
-            $object->setHours($value_4);
-        }
-        if (property_exists($data, 'rate')) {
-            $value_5 = $data->{'rate'};
-            if (is_float($data->{'rate'})) {
-                $value_5 = $data->{'rate'};
-            } elseif (is_null($data->{'rate'})) {
-                $value_5 = $data->{'rate'};
-            }
-            $object->setRate($value_5);
-        }
         if (property_exists($data, 'transactionNumber')) {
             $object->setTransactionNumber($data->{'transactionNumber'});
-        }
-        if (property_exists($data, 'transactionType')) {
-            $value_6 = $data->{'transactionType'};
-            if (is_string($data->{'transactionType'})) {
-                $value_6 = $data->{'transactionType'};
-            } elseif (is_null($data->{'transactionType'})) {
-                $value_6 = $data->{'transactionType'};
-            }
-            $object->setTransactionType($value_6);
         }
         if (property_exists($data, 'year')) {
             $object->setYear($data->{'year'});
@@ -115,61 +52,8 @@ class PayStatementDetailsNormalizer implements DenormalizerInterface, Normalizer
     public function normalize($object, $format = null, array $context = [])
     {
         $data = new \stdClass();
-        $value = $object->getAmount();
-        if (is_float($object->getAmount())) {
-            $value = $object->getAmount();
-        } elseif (is_null($object->getAmount())) {
-            $value = $object->getAmount();
-        }
-        $data->{'amount'} = $value;
-        $value_1 = $object->getCheckDate();
-        if (is_string($object->getCheckDate())) {
-            $value_1 = $object->getCheckDate();
-        } elseif (is_null($object->getCheckDate())) {
-            $value_1 = $object->getCheckDate();
-        }
-        $data->{'checkDate'} = $value_1;
-        $value_2 = $object->getDet();
-        if (is_string($object->getDet())) {
-            $value_2 = $object->getDet();
-        } elseif (is_null($object->getDet())) {
-            $value_2 = $object->getDet();
-        }
-        $data->{'det'} = $value_2;
-        $value_3 = $object->getDetCode();
-        if (is_string($object->getDetCode())) {
-            $value_3 = $object->getDetCode();
-        } elseif (is_null($object->getDetCode())) {
-            $value_3 = $object->getDetCode();
-        }
-        $data->{'detCode'} = $value_3;
-        $value_4 = $object->getHours();
-        if (is_float($object->getHours())) {
-            $value_4 = $object->getHours();
-        } elseif (is_null($object->getHours())) {
-            $value_4 = $object->getHours();
-        }
-        $data->{'hours'} = $value_4;
-        $value_5 = $object->getRate();
-        if (is_float($object->getRate())) {
-            $value_5 = $object->getRate();
-        } elseif (is_null($object->getRate())) {
-            $value_5 = $object->getRate();
-        }
-        $data->{'rate'} = $value_5;
-        if (null !== $object->getTransactionNumber()) {
-            $data->{'transactionNumber'} = $object->getTransactionNumber();
-        }
-        $value_6 = $object->getTransactionType();
-        if (is_string($object->getTransactionType())) {
-            $value_6 = $object->getTransactionType();
-        } elseif (is_null($object->getTransactionType())) {
-            $value_6 = $object->getTransactionType();
-        }
-        $data->{'transactionType'} = $value_6;
-        if (null !== $object->getYear()) {
-            $data->{'year'} = $object->getYear();
-        }
+        $data->{'transactionNumber'} = $object->getTransactionNumber();
+        $data->{'year'} = $object->getYear();
 
         return $data;
     }

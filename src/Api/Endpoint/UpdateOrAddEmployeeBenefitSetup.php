@@ -18,19 +18,18 @@ class UpdateOrAddEmployeeBenefitSetup extends \Jane\OpenApiRuntime\Client\BaseEn
     /**
      * Sends new or updated employee benefit setup information directly to Web Pay.
      *
-     * @param string                            $companyId        Company Id
-     * @param string                            $employeeId       Employee Id
-     * @param \Paylocity\Api\Model\BenefitSetup $json             BenefitSetup Model
-     * @param array                             $headerParameters {
+     * @param string $companyId        Company Id
+     * @param string $employeeId       Employee Id
+     * @param array  $headerParameters {
      *
      *     @var string $Authorization Bearer + JWT
      * }
      */
-    public function __construct(string $companyId, string $employeeId, \Paylocity\Api\Model\BenefitSetup $json, array $headerParameters = [])
+    public function __construct(string $companyId, string $employeeId, \Paylocity\Api\Model\BenefitSetup $requestBody, array $headerParameters = [])
     {
         $this->companyId = $companyId;
         $this->employeeId = $employeeId;
-        $this->body = $json;
+        $this->body = $requestBody;
         $this->headerParameters = $headerParameters;
     }
 
@@ -48,7 +47,11 @@ class UpdateOrAddEmployeeBenefitSetup extends \Jane\OpenApiRuntime\Client\BaseEn
 
     public function getBody(\Symfony\Component\Serializer\SerializerInterface $serializer, $streamFactory = null): array
     {
-        return $this->getSerializedBody($serializer);
+        if ($this->body instanceof \Paylocity\Api\Model\BenefitSetup) {
+            return [['Content-Type' => ['application/json']], $serializer->serialize($this->body, 'json')];
+        }
+
+        return [[], null];
     }
 
     public function getExtraHeaders(): array
@@ -71,27 +74,22 @@ class UpdateOrAddEmployeeBenefitSetup extends \Jane\OpenApiRuntime\Client\BaseEn
      * {@inheritdoc}
      *
      * @throws \Paylocity\Api\Exception\UpdateOrAddEmployeeBenefitSetupBadRequestException
-     * @throws \Paylocity\Api\Exception\UpdateOrAddEmployeeBenefitSetupUnauthorizedException
-     * @throws \Paylocity\Api\Exception\UpdateOrAddEmployeeBenefitSetupForbiddenException
      * @throws \Paylocity\Api\Exception\UpdateOrAddEmployeeBenefitSetupInternalServerErrorException
      *
      * @return null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType)
+    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
         if (200 === $status) {
-            return null;
         }
-        if (400 === $status) {
+        if (400 === $status && mb_strpos($contentType, 'application/json') !== false) {
             throw new \Paylocity\Api\Exception\UpdateOrAddEmployeeBenefitSetupBadRequestException($serializer->deserialize($body, 'Paylocity\\Api\\Model\\Error[]', 'json'));
         }
         if (401 === $status) {
-            throw new \Paylocity\Api\Exception\UpdateOrAddEmployeeBenefitSetupUnauthorizedException();
         }
         if (403 === $status) {
-            throw new \Paylocity\Api\Exception\UpdateOrAddEmployeeBenefitSetupForbiddenException();
         }
-        if (500 === $status) {
+        if (500 === $status && mb_strpos($contentType, 'application/json') !== false) {
             throw new \Paylocity\Api\Exception\UpdateOrAddEmployeeBenefitSetupInternalServerErrorException($serializer->deserialize($body, 'Paylocity\\Api\\Model\\Error[]', 'json'));
         }
     }

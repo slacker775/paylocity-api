@@ -68,28 +68,24 @@ class GetEmployee extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \J
     /**
      * {@inheritdoc}
      *
-     * @throws \Paylocity\Api\Exception\GetEmployeeUnauthorizedException
-     * @throws \Paylocity\Api\Exception\GetEmployeeForbiddenException
      * @throws \Paylocity\Api\Exception\GetEmployeeNotFoundException
      * @throws \Paylocity\Api\Exception\GetEmployeeInternalServerErrorException
      *
      * @return null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType)
+    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
-        if (200 === $status) {
+        if (200 === $status && mb_strpos($contentType, 'application/json') !== false) {
             return json_decode($body);
         }
         if (401 === $status) {
-            throw new \Paylocity\Api\Exception\GetEmployeeUnauthorizedException();
         }
         if (403 === $status) {
-            throw new \Paylocity\Api\Exception\GetEmployeeForbiddenException();
         }
-        if (404 === $status) {
+        if (404 === $status && mb_strpos($contentType, 'application/json') !== false) {
             throw new \Paylocity\Api\Exception\GetEmployeeNotFoundException($serializer->deserialize($body, 'Paylocity\\Api\\Model\\Error[]', 'json'));
         }
-        if (500 === $status) {
+        if (500 === $status && mb_strpos($contentType, 'application/json') !== false) {
             throw new \Paylocity\Api\Exception\GetEmployeeInternalServerErrorException($serializer->deserialize($body, 'Paylocity\\Api\\Model\\Error[]', 'json'));
         }
     }

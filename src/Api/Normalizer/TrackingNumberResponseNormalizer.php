@@ -30,7 +30,7 @@ class TrackingNumberResponseNormalizer implements DenormalizerInterface, Normali
 
     public function supportsNormalization($data, $format = null)
     {
-        return get_class($data) === 'Paylocity\\Api\\Model\\TrackingNumberResponse';
+        return is_object($data) && get_class($data) === 'Paylocity\\Api\\Model\\TrackingNumberResponse';
     }
 
     public function denormalize($data, $class, $format = null, array $context = [])
@@ -49,9 +49,7 @@ class TrackingNumberResponseNormalizer implements DenormalizerInterface, Normali
     public function normalize($object, $format = null, array $context = [])
     {
         $data = new \stdClass();
-        if (null !== $object->getTrackingNumber()) {
-            $data->{'trackingNumber'} = $object->getTrackingNumber();
-        }
+        $data->{'trackingNumber'} = $object->getTrackingNumber();
 
         return $data;
     }

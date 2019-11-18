@@ -17,17 +17,16 @@ class AddEmployee extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \J
     /**
      * New Employee API sends new employee data directly to Web Pay. Companies who use the New Hire Template in Web Pay may require additional fields when hiring employees. New Employee API Requests will honor these required fields.
      *
-     * @param string                        $companyId        Company Id
-     * @param \Paylocity\Api\Model\Employee $json             Employee Model
-     * @param array                         $headerParameters {
+     * @param string $companyId        Company Id
+     * @param array  $headerParameters {
      *
      *     @var string $Authorization Bearer + JWT
      * }
      */
-    public function __construct(string $companyId, \Paylocity\Api\Model\Employee $json, array $headerParameters = [])
+    public function __construct(string $companyId, \Paylocity\Api\Model\Employee $requestBody, array $headerParameters = [])
     {
         $this->companyId = $companyId;
-        $this->body = $json;
+        $this->body = $requestBody;
         $this->headerParameters = $headerParameters;
     }
 
@@ -45,7 +44,11 @@ class AddEmployee extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \J
 
     public function getBody(\Symfony\Component\Serializer\SerializerInterface $serializer, $streamFactory = null): array
     {
-        return $this->getSerializedBody($serializer);
+        if ($this->body instanceof \Paylocity\Api\Model\Employee) {
+            return [['Content-Type' => ['application/json']], $serializer->serialize($this->body, 'json')];
+        }
+
+        return [[], null];
     }
 
     public function getExtraHeaders(): array
@@ -68,27 +71,23 @@ class AddEmployee extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \J
      * {@inheritdoc}
      *
      * @throws \Paylocity\Api\Exception\AddEmployeeBadRequestException
-     * @throws \Paylocity\Api\Exception\AddEmployeeUnauthorizedException
-     * @throws \Paylocity\Api\Exception\AddEmployeeForbiddenException
      * @throws \Paylocity\Api\Exception\AddEmployeeInternalServerErrorException
      *
      * @return \Paylocity\Api\Model\EmployeeIdResponse[]|null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType)
+    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
-        if (201 === $status) {
+        if (201 === $status && mb_strpos($contentType, 'application/json') !== false) {
             return $serializer->deserialize($body, 'Paylocity\\Api\\Model\\EmployeeIdResponse[]', 'json');
         }
-        if (400 === $status) {
+        if (400 === $status && mb_strpos($contentType, 'application/json') !== false) {
             throw new \Paylocity\Api\Exception\AddEmployeeBadRequestException($serializer->deserialize($body, 'Paylocity\\Api\\Model\\Error[]', 'json'));
         }
         if (401 === $status) {
-            throw new \Paylocity\Api\Exception\AddEmployeeUnauthorizedException();
         }
         if (403 === $status) {
-            throw new \Paylocity\Api\Exception\AddEmployeeForbiddenException();
         }
-        if (500 === $status) {
+        if (500 === $status && mb_strpos($contentType, 'application/json') !== false) {
             throw new \Paylocity\Api\Exception\AddEmployeeInternalServerErrorException($serializer->deserialize($body, 'Paylocity\\Api\\Model\\Error[]', 'json'));
         }
     }

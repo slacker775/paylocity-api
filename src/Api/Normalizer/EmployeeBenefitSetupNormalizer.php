@@ -30,7 +30,7 @@ class EmployeeBenefitSetupNormalizer implements DenormalizerInterface, Normalize
 
     public function supportsNormalization($data, $format = null)
     {
-        return get_class($data) === 'Paylocity\\Api\\Model\\EmployeeBenefitSetup';
+        return is_object($data) && get_class($data) === 'Paylocity\\Api\\Model\\EmployeeBenefitSetup';
     }
 
     public function denormalize($data, $class, $format = null, array $context = [])
@@ -39,60 +39,6 @@ class EmployeeBenefitSetupNormalizer implements DenormalizerInterface, Normalize
             throw new InvalidArgumentException();
         }
         $object = new \Paylocity\Api\Model\EmployeeBenefitSetup();
-        if (property_exists($data, 'benefitClass')) {
-            $value = $data->{'benefitClass'};
-            if (is_string($data->{'benefitClass'})) {
-                $value = $data->{'benefitClass'};
-            } elseif (is_null($data->{'benefitClass'})) {
-                $value = $data->{'benefitClass'};
-            }
-            $object->setBenefitClass($value);
-        }
-        if (property_exists($data, 'benefitClassEffectiveDate')) {
-            $value_1 = $data->{'benefitClassEffectiveDate'};
-            if (is_string($data->{'benefitClassEffectiveDate'})) {
-                $value_1 = $data->{'benefitClassEffectiveDate'};
-            } elseif (is_null($data->{'benefitClassEffectiveDate'})) {
-                $value_1 = $data->{'benefitClassEffectiveDate'};
-            }
-            $object->setBenefitClassEffectiveDate($value_1);
-        }
-        if (property_exists($data, 'benefitSalary')) {
-            $value_2 = $data->{'benefitSalary'};
-            if (is_float($data->{'benefitSalary'})) {
-                $value_2 = $data->{'benefitSalary'};
-            } elseif (is_null($data->{'benefitSalary'})) {
-                $value_2 = $data->{'benefitSalary'};
-            }
-            $object->setBenefitSalary($value_2);
-        }
-        if (property_exists($data, 'benefitSalaryEffectiveDate')) {
-            $value_3 = $data->{'benefitSalaryEffectiveDate'};
-            if (is_string($data->{'benefitSalaryEffectiveDate'})) {
-                $value_3 = $data->{'benefitSalaryEffectiveDate'};
-            } elseif (is_null($data->{'benefitSalaryEffectiveDate'})) {
-                $value_3 = $data->{'benefitSalaryEffectiveDate'};
-            }
-            $object->setBenefitSalaryEffectiveDate($value_3);
-        }
-        if (property_exists($data, 'doNotApplyAdministrativePeriod')) {
-            $value_4 = $data->{'doNotApplyAdministrativePeriod'};
-            if (is_bool($data->{'doNotApplyAdministrativePeriod'})) {
-                $value_4 = $data->{'doNotApplyAdministrativePeriod'};
-            } elseif (is_null($data->{'doNotApplyAdministrativePeriod'})) {
-                $value_4 = $data->{'doNotApplyAdministrativePeriod'};
-            }
-            $object->setDoNotApplyAdministrativePeriod($value_4);
-        }
-        if (property_exists($data, 'isMeasureAcaEligibility')) {
-            $value_5 = $data->{'isMeasureAcaEligibility'};
-            if (is_bool($data->{'isMeasureAcaEligibility'})) {
-                $value_5 = $data->{'isMeasureAcaEligibility'};
-            } elseif (is_null($data->{'isMeasureAcaEligibility'})) {
-                $value_5 = $data->{'isMeasureAcaEligibility'};
-            }
-            $object->setIsMeasureAcaEligibility($value_5);
-        }
 
         return $object;
     }
@@ -100,48 +46,6 @@ class EmployeeBenefitSetupNormalizer implements DenormalizerInterface, Normalize
     public function normalize($object, $format = null, array $context = [])
     {
         $data = new \stdClass();
-        $value = $object->getBenefitClass();
-        if (is_string($object->getBenefitClass())) {
-            $value = $object->getBenefitClass();
-        } elseif (is_null($object->getBenefitClass())) {
-            $value = $object->getBenefitClass();
-        }
-        $data->{'benefitClass'} = $value;
-        $value_1 = $object->getBenefitClassEffectiveDate();
-        if (is_string($object->getBenefitClassEffectiveDate())) {
-            $value_1 = $object->getBenefitClassEffectiveDate();
-        } elseif (is_null($object->getBenefitClassEffectiveDate())) {
-            $value_1 = $object->getBenefitClassEffectiveDate();
-        }
-        $data->{'benefitClassEffectiveDate'} = $value_1;
-        $value_2 = $object->getBenefitSalary();
-        if (is_float($object->getBenefitSalary())) {
-            $value_2 = $object->getBenefitSalary();
-        } elseif (is_null($object->getBenefitSalary())) {
-            $value_2 = $object->getBenefitSalary();
-        }
-        $data->{'benefitSalary'} = $value_2;
-        $value_3 = $object->getBenefitSalaryEffectiveDate();
-        if (is_string($object->getBenefitSalaryEffectiveDate())) {
-            $value_3 = $object->getBenefitSalaryEffectiveDate();
-        } elseif (is_null($object->getBenefitSalaryEffectiveDate())) {
-            $value_3 = $object->getBenefitSalaryEffectiveDate();
-        }
-        $data->{'benefitSalaryEffectiveDate'} = $value_3;
-        $value_4 = $object->getDoNotApplyAdministrativePeriod();
-        if (is_bool($object->getDoNotApplyAdministrativePeriod())) {
-            $value_4 = $object->getDoNotApplyAdministrativePeriod();
-        } elseif (is_null($object->getDoNotApplyAdministrativePeriod())) {
-            $value_4 = $object->getDoNotApplyAdministrativePeriod();
-        }
-        $data->{'doNotApplyAdministrativePeriod'} = $value_4;
-        $value_5 = $object->getIsMeasureAcaEligibility();
-        if (is_bool($object->getIsMeasureAcaEligibility())) {
-            $value_5 = $object->getIsMeasureAcaEligibility();
-        } elseif (is_null($object->getIsMeasureAcaEligibility())) {
-            $value_5 = $object->getIsMeasureAcaEligibility();
-        }
-        $data->{'isMeasureAcaEligibility'} = $value_5;
 
         return $data;
     }

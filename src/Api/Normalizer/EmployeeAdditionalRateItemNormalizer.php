@@ -30,7 +30,7 @@ class EmployeeAdditionalRateItemNormalizer implements DenormalizerInterface, Nor
 
     public function supportsNormalization($data, $format = null)
     {
-        return get_class($data) === 'Paylocity\\Api\\Model\\EmployeeAdditionalRateItem';
+        return is_object($data) && get_class($data) === 'Paylocity\\Api\\Model\\EmployeeAdditionalRateItem';
     }
 
     public function denormalize($data, $class, $format = null, array $context = [])
@@ -39,114 +39,6 @@ class EmployeeAdditionalRateItemNormalizer implements DenormalizerInterface, Nor
             throw new InvalidArgumentException();
         }
         $object = new \Paylocity\Api\Model\EmployeeAdditionalRateItem();
-        if (property_exists($data, 'changeReason')) {
-            $value = $data->{'changeReason'};
-            if (is_string($data->{'changeReason'})) {
-                $value = $data->{'changeReason'};
-            } elseif (is_null($data->{'changeReason'})) {
-                $value = $data->{'changeReason'};
-            }
-            $object->setChangeReason($value);
-        }
-        if (property_exists($data, 'costCenter1')) {
-            $value_1 = $data->{'costCenter1'};
-            if (is_string($data->{'costCenter1'})) {
-                $value_1 = $data->{'costCenter1'};
-            } elseif (is_null($data->{'costCenter1'})) {
-                $value_1 = $data->{'costCenter1'};
-            }
-            $object->setCostCenter1($value_1);
-        }
-        if (property_exists($data, 'costCenter2')) {
-            $value_2 = $data->{'costCenter2'};
-            if (is_string($data->{'costCenter2'})) {
-                $value_2 = $data->{'costCenter2'};
-            } elseif (is_null($data->{'costCenter2'})) {
-                $value_2 = $data->{'costCenter2'};
-            }
-            $object->setCostCenter2($value_2);
-        }
-        if (property_exists($data, 'costCenter3')) {
-            $value_3 = $data->{'costCenter3'};
-            if (is_string($data->{'costCenter3'})) {
-                $value_3 = $data->{'costCenter3'};
-            } elseif (is_null($data->{'costCenter3'})) {
-                $value_3 = $data->{'costCenter3'};
-            }
-            $object->setCostCenter3($value_3);
-        }
-        if (property_exists($data, 'effectiveDate')) {
-            $value_4 = $data->{'effectiveDate'};
-            if (is_string($data->{'effectiveDate'})) {
-                $value_4 = $data->{'effectiveDate'};
-            } elseif (is_null($data->{'effectiveDate'})) {
-                $value_4 = $data->{'effectiveDate'};
-            }
-            $object->setEffectiveDate($value_4);
-        }
-        if (property_exists($data, 'endCheckDate')) {
-            $value_5 = $data->{'endCheckDate'};
-            if (is_string($data->{'endCheckDate'})) {
-                $value_5 = $data->{'endCheckDate'};
-            } elseif (is_null($data->{'endCheckDate'})) {
-                $value_5 = $data->{'endCheckDate'};
-            }
-            $object->setEndCheckDate($value_5);
-        }
-        if (property_exists($data, 'job')) {
-            $value_6 = $data->{'job'};
-            if (is_string($data->{'job'})) {
-                $value_6 = $data->{'job'};
-            } elseif (is_null($data->{'job'})) {
-                $value_6 = $data->{'job'};
-            }
-            $object->setJob($value_6);
-        }
-        if (property_exists($data, 'rate')) {
-            $value_7 = $data->{'rate'};
-            if (is_float($data->{'rate'})) {
-                $value_7 = $data->{'rate'};
-            } elseif (is_null($data->{'rate'})) {
-                $value_7 = $data->{'rate'};
-            }
-            $object->setRate($value_7);
-        }
-        if (property_exists($data, 'rateCode')) {
-            $value_8 = $data->{'rateCode'};
-            if (is_string($data->{'rateCode'})) {
-                $value_8 = $data->{'rateCode'};
-            } elseif (is_null($data->{'rateCode'})) {
-                $value_8 = $data->{'rateCode'};
-            }
-            $object->setRateCode($value_8);
-        }
-        if (property_exists($data, 'rateNotes')) {
-            $value_9 = $data->{'rateNotes'};
-            if (is_string($data->{'rateNotes'})) {
-                $value_9 = $data->{'rateNotes'};
-            } elseif (is_null($data->{'rateNotes'})) {
-                $value_9 = $data->{'rateNotes'};
-            }
-            $object->setRateNotes($value_9);
-        }
-        if (property_exists($data, 'ratePer')) {
-            $value_10 = $data->{'ratePer'};
-            if (is_string($data->{'ratePer'})) {
-                $value_10 = $data->{'ratePer'};
-            } elseif (is_null($data->{'ratePer'})) {
-                $value_10 = $data->{'ratePer'};
-            }
-            $object->setRatePer($value_10);
-        }
-        if (property_exists($data, 'shift')) {
-            $value_11 = $data->{'shift'};
-            if (is_string($data->{'shift'})) {
-                $value_11 = $data->{'shift'};
-            } elseif (is_null($data->{'shift'})) {
-                $value_11 = $data->{'shift'};
-            }
-            $object->setShift($value_11);
-        }
 
         return $object;
     }
@@ -154,90 +46,6 @@ class EmployeeAdditionalRateItemNormalizer implements DenormalizerInterface, Nor
     public function normalize($object, $format = null, array $context = [])
     {
         $data = new \stdClass();
-        $value = $object->getChangeReason();
-        if (is_string($object->getChangeReason())) {
-            $value = $object->getChangeReason();
-        } elseif (is_null($object->getChangeReason())) {
-            $value = $object->getChangeReason();
-        }
-        $data->{'changeReason'} = $value;
-        $value_1 = $object->getCostCenter1();
-        if (is_string($object->getCostCenter1())) {
-            $value_1 = $object->getCostCenter1();
-        } elseif (is_null($object->getCostCenter1())) {
-            $value_1 = $object->getCostCenter1();
-        }
-        $data->{'costCenter1'} = $value_1;
-        $value_2 = $object->getCostCenter2();
-        if (is_string($object->getCostCenter2())) {
-            $value_2 = $object->getCostCenter2();
-        } elseif (is_null($object->getCostCenter2())) {
-            $value_2 = $object->getCostCenter2();
-        }
-        $data->{'costCenter2'} = $value_2;
-        $value_3 = $object->getCostCenter3();
-        if (is_string($object->getCostCenter3())) {
-            $value_3 = $object->getCostCenter3();
-        } elseif (is_null($object->getCostCenter3())) {
-            $value_3 = $object->getCostCenter3();
-        }
-        $data->{'costCenter3'} = $value_3;
-        $value_4 = $object->getEffectiveDate();
-        if (is_string($object->getEffectiveDate())) {
-            $value_4 = $object->getEffectiveDate();
-        } elseif (is_null($object->getEffectiveDate())) {
-            $value_4 = $object->getEffectiveDate();
-        }
-        $data->{'effectiveDate'} = $value_4;
-        $value_5 = $object->getEndCheckDate();
-        if (is_string($object->getEndCheckDate())) {
-            $value_5 = $object->getEndCheckDate();
-        } elseif (is_null($object->getEndCheckDate())) {
-            $value_5 = $object->getEndCheckDate();
-        }
-        $data->{'endCheckDate'} = $value_5;
-        $value_6 = $object->getJob();
-        if (is_string($object->getJob())) {
-            $value_6 = $object->getJob();
-        } elseif (is_null($object->getJob())) {
-            $value_6 = $object->getJob();
-        }
-        $data->{'job'} = $value_6;
-        $value_7 = $object->getRate();
-        if (is_float($object->getRate())) {
-            $value_7 = $object->getRate();
-        } elseif (is_null($object->getRate())) {
-            $value_7 = $object->getRate();
-        }
-        $data->{'rate'} = $value_7;
-        $value_8 = $object->getRateCode();
-        if (is_string($object->getRateCode())) {
-            $value_8 = $object->getRateCode();
-        } elseif (is_null($object->getRateCode())) {
-            $value_8 = $object->getRateCode();
-        }
-        $data->{'rateCode'} = $value_8;
-        $value_9 = $object->getRateNotes();
-        if (is_string($object->getRateNotes())) {
-            $value_9 = $object->getRateNotes();
-        } elseif (is_null($object->getRateNotes())) {
-            $value_9 = $object->getRateNotes();
-        }
-        $data->{'rateNotes'} = $value_9;
-        $value_10 = $object->getRatePer();
-        if (is_string($object->getRatePer())) {
-            $value_10 = $object->getRatePer();
-        } elseif (is_null($object->getRatePer())) {
-            $value_10 = $object->getRatePer();
-        }
-        $data->{'ratePer'} = $value_10;
-        $value_11 = $object->getShift();
-        if (is_string($object->getShift())) {
-            $value_11 = $object->getShift();
-        } elseif (is_null($object->getShift())) {
-            $value_11 = $object->getShift();
-        }
-        $data->{'shift'} = $value_11;
 
         return $data;
     }

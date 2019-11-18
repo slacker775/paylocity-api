@@ -30,7 +30,7 @@ class EmployeeWebTimeNormalizer implements DenormalizerInterface, NormalizerInte
 
     public function supportsNormalization($data, $format = null)
     {
-        return get_class($data) === 'Paylocity\\Api\\Model\\EmployeeWebTime';
+        return is_object($data) && get_class($data) === 'Paylocity\\Api\\Model\\EmployeeWebTime';
     }
 
     public function denormalize($data, $class, $format = null, array $context = [])
@@ -39,33 +39,6 @@ class EmployeeWebTimeNormalizer implements DenormalizerInterface, NormalizerInte
             throw new InvalidArgumentException();
         }
         $object = new \Paylocity\Api\Model\EmployeeWebTime();
-        if (property_exists($data, 'badgeNumber')) {
-            $value = $data->{'badgeNumber'};
-            if (is_string($data->{'badgeNumber'})) {
-                $value = $data->{'badgeNumber'};
-            } elseif (is_null($data->{'badgeNumber'})) {
-                $value = $data->{'badgeNumber'};
-            }
-            $object->setBadgeNumber($value);
-        }
-        if (property_exists($data, 'chargeRate')) {
-            $value_1 = $data->{'chargeRate'};
-            if (is_float($data->{'chargeRate'})) {
-                $value_1 = $data->{'chargeRate'};
-            } elseif (is_null($data->{'chargeRate'})) {
-                $value_1 = $data->{'chargeRate'};
-            }
-            $object->setChargeRate($value_1);
-        }
-        if (property_exists($data, 'isTimeLaborEnabled')) {
-            $value_2 = $data->{'isTimeLaborEnabled'};
-            if (is_bool($data->{'isTimeLaborEnabled'})) {
-                $value_2 = $data->{'isTimeLaborEnabled'};
-            } elseif (is_null($data->{'isTimeLaborEnabled'})) {
-                $value_2 = $data->{'isTimeLaborEnabled'};
-            }
-            $object->setIsTimeLaborEnabled($value_2);
-        }
 
         return $object;
     }
@@ -73,27 +46,6 @@ class EmployeeWebTimeNormalizer implements DenormalizerInterface, NormalizerInte
     public function normalize($object, $format = null, array $context = [])
     {
         $data = new \stdClass();
-        $value = $object->getBadgeNumber();
-        if (is_string($object->getBadgeNumber())) {
-            $value = $object->getBadgeNumber();
-        } elseif (is_null($object->getBadgeNumber())) {
-            $value = $object->getBadgeNumber();
-        }
-        $data->{'badgeNumber'} = $value;
-        $value_1 = $object->getChargeRate();
-        if (is_float($object->getChargeRate())) {
-            $value_1 = $object->getChargeRate();
-        } elseif (is_null($object->getChargeRate())) {
-            $value_1 = $object->getChargeRate();
-        }
-        $data->{'chargeRate'} = $value_1;
-        $value_2 = $object->getIsTimeLaborEnabled();
-        if (is_bool($object->getIsTimeLaborEnabled())) {
-            $value_2 = $object->getIsTimeLaborEnabled();
-        } elseif (is_null($object->getIsTimeLaborEnabled())) {
-            $value_2 = $object->getIsTimeLaborEnabled();
-        }
-        $data->{'isTimeLaborEnabled'} = $value_2;
 
         return $data;
     }

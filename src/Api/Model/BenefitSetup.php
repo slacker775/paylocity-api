@@ -15,44 +15,32 @@ class BenefitSetup
     /**
      * Benefit Class code. Values are configured in Web Pay Company > Setup > Benefits > Classes.<br  />Max length: 30.
      *
-     * @var string|null
+     * @var string
      */
     protected $benefitClass;
     /**
      * Date when Benefit Class takes effect. Common formats include *MM-DD-CCYY*, *CCYY-MM-DD*.
      *
-     * @var string|null
+     * @var string
      */
     protected $benefitClassEffectiveDate;
     /**
      * Salary used to configure benefits.<br  />Decimal(12,2).
      *
-     * @var float|null
+     * @var float
      */
     protected $benefitSalary;
     /**
      * Date when Benefit Salary takes effect. Common formats include *MM-DD-CCYY*, *CCYY-MM-DD*.
      *
-     * @var string|null
+     * @var string
      */
     protected $benefitSalaryEffectiveDate;
-    /**
-     * Applicable only for HR Enhanced clients and Benefit Classes with ACA Employment Type of Full Time.
-     *
-     * @var bool|null
-     */
-    protected $doNotApplyAdministrativePeriod;
-    /**
-     * Only valid for HR Enhanced clients and Benefit Classes that are ACA Employment Type of Full Time.
-     *
-     * @var bool|null
-     */
-    protected $isMeasureAcaEligibility;
 
     /**
      * Benefit Class code. Values are configured in Web Pay Company > Setup > Benefits > Classes.<br  />Max length: 30.
      */
-    public function getBenefitClass(): ?string
+    public function getBenefitClass(): string
     {
         return $this->benefitClass;
     }
@@ -60,7 +48,7 @@ class BenefitSetup
     /**
      * Benefit Class code. Values are configured in Web Pay Company > Setup > Benefits > Classes.<br  />Max length: 30.
      */
-    public function setBenefitClass(?string $benefitClass): self
+    public function setBenefitClass(string $benefitClass): self
     {
         $this->benefitClass = $benefitClass;
 
@@ -70,7 +58,7 @@ class BenefitSetup
     /**
      * Date when Benefit Class takes effect. Common formats include *MM-DD-CCYY*, *CCYY-MM-DD*.
      */
-    public function getBenefitClassEffectiveDate(): ?string
+    public function getBenefitClassEffectiveDate(): string
     {
         return $this->benefitClassEffectiveDate;
     }
@@ -78,7 +66,7 @@ class BenefitSetup
     /**
      * Date when Benefit Class takes effect. Common formats include *MM-DD-CCYY*, *CCYY-MM-DD*.
      */
-    public function setBenefitClassEffectiveDate(?string $benefitClassEffectiveDate): self
+    public function setBenefitClassEffectiveDate(string $benefitClassEffectiveDate): self
     {
         $this->benefitClassEffectiveDate = $benefitClassEffectiveDate;
 
@@ -88,7 +76,7 @@ class BenefitSetup
     /**
      * Salary used to configure benefits.<br  />Decimal(12,2).
      */
-    public function getBenefitSalary(): ?float
+    public function getBenefitSalary(): float
     {
         return $this->benefitSalary;
     }
@@ -96,7 +84,7 @@ class BenefitSetup
     /**
      * Salary used to configure benefits.<br  />Decimal(12,2).
      */
-    public function setBenefitSalary(?float $benefitSalary): self
+    public function setBenefitSalary(float $benefitSalary): self
     {
         $this->benefitSalary = $benefitSalary;
 
@@ -106,7 +94,7 @@ class BenefitSetup
     /**
      * Date when Benefit Salary takes effect. Common formats include *MM-DD-CCYY*, *CCYY-MM-DD*.
      */
-    public function getBenefitSalaryEffectiveDate(): ?string
+    public function getBenefitSalaryEffectiveDate(): string
     {
         return $this->benefitSalaryEffectiveDate;
     }
@@ -114,45 +102,9 @@ class BenefitSetup
     /**
      * Date when Benefit Salary takes effect. Common formats include *MM-DD-CCYY*, *CCYY-MM-DD*.
      */
-    public function setBenefitSalaryEffectiveDate(?string $benefitSalaryEffectiveDate): self
+    public function setBenefitSalaryEffectiveDate(string $benefitSalaryEffectiveDate): self
     {
         $this->benefitSalaryEffectiveDate = $benefitSalaryEffectiveDate;
-
-        return $this;
-    }
-
-    /**
-     * Applicable only for HR Enhanced clients and Benefit Classes with ACA Employment Type of Full Time.
-     */
-    public function getDoNotApplyAdministrativePeriod(): ?bool
-    {
-        return $this->doNotApplyAdministrativePeriod;
-    }
-
-    /**
-     * Applicable only for HR Enhanced clients and Benefit Classes with ACA Employment Type of Full Time.
-     */
-    public function setDoNotApplyAdministrativePeriod(?bool $doNotApplyAdministrativePeriod): self
-    {
-        $this->doNotApplyAdministrativePeriod = $doNotApplyAdministrativePeriod;
-
-        return $this;
-    }
-
-    /**
-     * Only valid for HR Enhanced clients and Benefit Classes that are ACA Employment Type of Full Time.
-     */
-    public function getIsMeasureAcaEligibility(): ?bool
-    {
-        return $this->isMeasureAcaEligibility;
-    }
-
-    /**
-     * Only valid for HR Enhanced clients and Benefit Classes that are ACA Employment Type of Full Time.
-     */
-    public function setIsMeasureAcaEligibility(?bool $isMeasureAcaEligibility): self
-    {
-        $this->isMeasureAcaEligibility = $isMeasureAcaEligibility;
 
         return $this;
     }

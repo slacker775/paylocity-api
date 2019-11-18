@@ -15,140 +15,80 @@ class Earning
     /**
      * Third-party agency associated with earning. Must match Company setup.<br  />Max length: 10.
      *
-     * @var string|null
+     * @var string
      */
     protected $agency;
     /**
-     * Value that matches CalculationCode to add to gross wages. For percentage (%), enter whole number (10 = 10%).  <br  />Decimal(12,2).
-     *
-     * @var float|null
-     */
-    protected $amount;
-    /**
-     * Year to Date dollar amount not to be exceeded for an earning in the calendar year. Used only with company driven maximums. <br  />Decimal(12,2).
-     *
-     * @var float|null
-     */
-    protected $annualMaximum;
-    /**
      * Defines how earnings are calculated. Common values are *% (percentage of gross), flat (flat dollar amount)*. Defaulted to the Company setup calcCode for earning. <br  />Max length: 20.
      *
-     * @var string|null
+     * @var string
      */
     protected $calculationCode;
     /**
      * Cost Center associated with earning. Must match Company setup.<br  /> Max length: 10.
      *
-     * @var string|null
+     * @var string
      */
     protected $costCenter1;
     /**
      * Cost Center associated with earning. Must match Company setup.<br  /> Max length: 10.
      *
-     * @var string|null
+     * @var string
      */
     protected $costCenter2;
     /**
      * Cost Center associated with earning. Must match Company setup.<br  /> Max length: 10.
      *
-     * @var string|null
+     * @var string
      */
     protected $costCenter3;
     /**
      * Earning code. Must match Company setup. <br  />Max length: 10.
      *
-     * @var string|null
+     * @var string
      */
     protected $earningCode;
     /**
      * Date earning is active. Defaulted to run date or check date based on Company setup. Common formats are MM-DD-CCYY, CCYY-MM-DD.
      *
-     * @var string|null
+     * @var string
      */
     protected $effectiveDate;
     /**
      * Stop date of an earning. Common formats are MM-DD-CCYY, CCYY-MM-DD.
      *
-     * @var string|null
+     * @var string
      */
     protected $endDate;
     /**
      * Needed if earning is applied differently from the payroll frequency (one time earning for example).<br  /> Max length: 5.
      *
-     * @var string|null
+     * @var string
      */
     protected $frequency;
     /**
-     * Dollar amount. The employee earning will stop when the goal amount is reached.<br  /> Decimal(12,2).
-     *
-     * @var float|null
-     */
-    protected $goal;
-    /**
-     * The value is used in conjunction with the Rate field. When entering Group Term Life Insurance (GTL), it should contain the full amount of the group term life insurance policy. <br  /> Decimal(12,2).
-     *
-     * @var float|null
-     */
-    protected $hoursOrUnits;
-    /**
-     * Used for ACA. If not entered, defaulted to Company earning setup.
-     *
-     * @var bool|null
-     */
-    protected $isSelfInsured;
-    /**
      * Job code associated with earnings. Must match Company setup.<br  /> Max length: 20.
      *
-     * @var string|null
+     * @var string
      */
     protected $jobCode;
     /**
-     * Information to print on the check stub if agency is set up for this earning. <br  />Max length: 50.
-     *
-     * @var string|null
-     */
-    protected $miscellaneousInfo;
-    /**
-     * Amount already paid to employee toward goal. <br  /> Decimal(12,2).
-     *
-     * @var float|null
-     */
-    protected $paidTowardsGoal;
-    /**
-     * Maximum amount of the earning on a single paycheck. <br  /> Decimal(12,2).
-     *
-     * @var float|null
-     */
-    protected $payPeriodMaximum;
-    /**
-     * Minimum amount of the earning on a single paycheck. <br  /> Decimal(12,2).
-     *
-     * @var float|null
-     */
-    protected $payPeriodMinimum;
-    /**
-     * Rate is used in conjunction with the hoursOrUnits field. <br  /> Decimal(12,2).
-     *
-     * @var float|null
-     */
-    protected $rate;
-    /**
      * Rate Code applies to additional pay rates entered for an employee. Must match Company setup. <br  /> Max length: 10.
      *
-     * @var string|null
+     * @var string
      */
     protected $rateCode;
     /**
      * Start date of an earning based on payroll calendar. Common formats are MM-DD-CCYY, CCYY-MM-DD.
      *
-     * @var string|null
+     * @var string
      */
     protected $startDate;
 
     /**
      * Third-party agency associated with earning. Must match Company setup.<br  />Max length: 10.
      */
-    public function getAgency(): ?string
+    public function getAgency(): string
     {
         return $this->agency;
     }
@@ -156,7 +96,7 @@ class Earning
     /**
      * Third-party agency associated with earning. Must match Company setup.<br  />Max length: 10.
      */
-    public function setAgency(?string $agency): self
+    public function setAgency(string $agency): self
     {
         $this->agency = $agency;
 
@@ -164,45 +104,9 @@ class Earning
     }
 
     /**
-     * Value that matches CalculationCode to add to gross wages. For percentage (%), enter whole number (10 = 10%).  <br  />Decimal(12,2).
-     */
-    public function getAmount(): ?float
-    {
-        return $this->amount;
-    }
-
-    /**
-     * Value that matches CalculationCode to add to gross wages. For percentage (%), enter whole number (10 = 10%).  <br  />Decimal(12,2).
-     */
-    public function setAmount(?float $amount): self
-    {
-        $this->amount = $amount;
-
-        return $this;
-    }
-
-    /**
-     * Year to Date dollar amount not to be exceeded for an earning in the calendar year. Used only with company driven maximums. <br  />Decimal(12,2).
-     */
-    public function getAnnualMaximum(): ?float
-    {
-        return $this->annualMaximum;
-    }
-
-    /**
-     * Year to Date dollar amount not to be exceeded for an earning in the calendar year. Used only with company driven maximums. <br  />Decimal(12,2).
-     */
-    public function setAnnualMaximum(?float $annualMaximum): self
-    {
-        $this->annualMaximum = $annualMaximum;
-
-        return $this;
-    }
-
-    /**
      * Defines how earnings are calculated. Common values are *% (percentage of gross), flat (flat dollar amount)*. Defaulted to the Company setup calcCode for earning. <br  />Max length: 20.
      */
-    public function getCalculationCode(): ?string
+    public function getCalculationCode(): string
     {
         return $this->calculationCode;
     }
@@ -210,7 +114,7 @@ class Earning
     /**
      * Defines how earnings are calculated. Common values are *% (percentage of gross), flat (flat dollar amount)*. Defaulted to the Company setup calcCode for earning. <br  />Max length: 20.
      */
-    public function setCalculationCode(?string $calculationCode): self
+    public function setCalculationCode(string $calculationCode): self
     {
         $this->calculationCode = $calculationCode;
 
@@ -220,7 +124,7 @@ class Earning
     /**
      * Cost Center associated with earning. Must match Company setup.<br  /> Max length: 10.
      */
-    public function getCostCenter1(): ?string
+    public function getCostCenter1(): string
     {
         return $this->costCenter1;
     }
@@ -228,7 +132,7 @@ class Earning
     /**
      * Cost Center associated with earning. Must match Company setup.<br  /> Max length: 10.
      */
-    public function setCostCenter1(?string $costCenter1): self
+    public function setCostCenter1(string $costCenter1): self
     {
         $this->costCenter1 = $costCenter1;
 
@@ -238,7 +142,7 @@ class Earning
     /**
      * Cost Center associated with earning. Must match Company setup.<br  /> Max length: 10.
      */
-    public function getCostCenter2(): ?string
+    public function getCostCenter2(): string
     {
         return $this->costCenter2;
     }
@@ -246,7 +150,7 @@ class Earning
     /**
      * Cost Center associated with earning. Must match Company setup.<br  /> Max length: 10.
      */
-    public function setCostCenter2(?string $costCenter2): self
+    public function setCostCenter2(string $costCenter2): self
     {
         $this->costCenter2 = $costCenter2;
 
@@ -256,7 +160,7 @@ class Earning
     /**
      * Cost Center associated with earning. Must match Company setup.<br  /> Max length: 10.
      */
-    public function getCostCenter3(): ?string
+    public function getCostCenter3(): string
     {
         return $this->costCenter3;
     }
@@ -264,7 +168,7 @@ class Earning
     /**
      * Cost Center associated with earning. Must match Company setup.<br  /> Max length: 10.
      */
-    public function setCostCenter3(?string $costCenter3): self
+    public function setCostCenter3(string $costCenter3): self
     {
         $this->costCenter3 = $costCenter3;
 
@@ -274,7 +178,7 @@ class Earning
     /**
      * Earning code. Must match Company setup. <br  />Max length: 10.
      */
-    public function getEarningCode(): ?string
+    public function getEarningCode(): string
     {
         return $this->earningCode;
     }
@@ -282,7 +186,7 @@ class Earning
     /**
      * Earning code. Must match Company setup. <br  />Max length: 10.
      */
-    public function setEarningCode(?string $earningCode): self
+    public function setEarningCode(string $earningCode): self
     {
         $this->earningCode = $earningCode;
 
@@ -292,7 +196,7 @@ class Earning
     /**
      * Date earning is active. Defaulted to run date or check date based on Company setup. Common formats are MM-DD-CCYY, CCYY-MM-DD.
      */
-    public function getEffectiveDate(): ?string
+    public function getEffectiveDate(): string
     {
         return $this->effectiveDate;
     }
@@ -300,7 +204,7 @@ class Earning
     /**
      * Date earning is active. Defaulted to run date or check date based on Company setup. Common formats are MM-DD-CCYY, CCYY-MM-DD.
      */
-    public function setEffectiveDate(?string $effectiveDate): self
+    public function setEffectiveDate(string $effectiveDate): self
     {
         $this->effectiveDate = $effectiveDate;
 
@@ -310,7 +214,7 @@ class Earning
     /**
      * Stop date of an earning. Common formats are MM-DD-CCYY, CCYY-MM-DD.
      */
-    public function getEndDate(): ?string
+    public function getEndDate(): string
     {
         return $this->endDate;
     }
@@ -318,7 +222,7 @@ class Earning
     /**
      * Stop date of an earning. Common formats are MM-DD-CCYY, CCYY-MM-DD.
      */
-    public function setEndDate(?string $endDate): self
+    public function setEndDate(string $endDate): self
     {
         $this->endDate = $endDate;
 
@@ -328,7 +232,7 @@ class Earning
     /**
      * Needed if earning is applied differently from the payroll frequency (one time earning for example).<br  /> Max length: 5.
      */
-    public function getFrequency(): ?string
+    public function getFrequency(): string
     {
         return $this->frequency;
     }
@@ -336,7 +240,7 @@ class Earning
     /**
      * Needed if earning is applied differently from the payroll frequency (one time earning for example).<br  /> Max length: 5.
      */
-    public function setFrequency(?string $frequency): self
+    public function setFrequency(string $frequency): self
     {
         $this->frequency = $frequency;
 
@@ -344,63 +248,9 @@ class Earning
     }
 
     /**
-     * Dollar amount. The employee earning will stop when the goal amount is reached.<br  /> Decimal(12,2).
-     */
-    public function getGoal(): ?float
-    {
-        return $this->goal;
-    }
-
-    /**
-     * Dollar amount. The employee earning will stop when the goal amount is reached.<br  /> Decimal(12,2).
-     */
-    public function setGoal(?float $goal): self
-    {
-        $this->goal = $goal;
-
-        return $this;
-    }
-
-    /**
-     * The value is used in conjunction with the Rate field. When entering Group Term Life Insurance (GTL), it should contain the full amount of the group term life insurance policy. <br  /> Decimal(12,2).
-     */
-    public function getHoursOrUnits(): ?float
-    {
-        return $this->hoursOrUnits;
-    }
-
-    /**
-     * The value is used in conjunction with the Rate field. When entering Group Term Life Insurance (GTL), it should contain the full amount of the group term life insurance policy. <br  /> Decimal(12,2).
-     */
-    public function setHoursOrUnits(?float $hoursOrUnits): self
-    {
-        $this->hoursOrUnits = $hoursOrUnits;
-
-        return $this;
-    }
-
-    /**
-     * Used for ACA. If not entered, defaulted to Company earning setup.
-     */
-    public function getIsSelfInsured(): ?bool
-    {
-        return $this->isSelfInsured;
-    }
-
-    /**
-     * Used for ACA. If not entered, defaulted to Company earning setup.
-     */
-    public function setIsSelfInsured(?bool $isSelfInsured): self
-    {
-        $this->isSelfInsured = $isSelfInsured;
-
-        return $this;
-    }
-
-    /**
      * Job code associated with earnings. Must match Company setup.<br  /> Max length: 20.
      */
-    public function getJobCode(): ?string
+    public function getJobCode(): string
     {
         return $this->jobCode;
     }
@@ -408,7 +258,7 @@ class Earning
     /**
      * Job code associated with earnings. Must match Company setup.<br  /> Max length: 20.
      */
-    public function setJobCode(?string $jobCode): self
+    public function setJobCode(string $jobCode): self
     {
         $this->jobCode = $jobCode;
 
@@ -416,99 +266,9 @@ class Earning
     }
 
     /**
-     * Information to print on the check stub if agency is set up for this earning. <br  />Max length: 50.
-     */
-    public function getMiscellaneousInfo(): ?string
-    {
-        return $this->miscellaneousInfo;
-    }
-
-    /**
-     * Information to print on the check stub if agency is set up for this earning. <br  />Max length: 50.
-     */
-    public function setMiscellaneousInfo(?string $miscellaneousInfo): self
-    {
-        $this->miscellaneousInfo = $miscellaneousInfo;
-
-        return $this;
-    }
-
-    /**
-     * Amount already paid to employee toward goal. <br  /> Decimal(12,2).
-     */
-    public function getPaidTowardsGoal(): ?float
-    {
-        return $this->paidTowardsGoal;
-    }
-
-    /**
-     * Amount already paid to employee toward goal. <br  /> Decimal(12,2).
-     */
-    public function setPaidTowardsGoal(?float $paidTowardsGoal): self
-    {
-        $this->paidTowardsGoal = $paidTowardsGoal;
-
-        return $this;
-    }
-
-    /**
-     * Maximum amount of the earning on a single paycheck. <br  /> Decimal(12,2).
-     */
-    public function getPayPeriodMaximum(): ?float
-    {
-        return $this->payPeriodMaximum;
-    }
-
-    /**
-     * Maximum amount of the earning on a single paycheck. <br  /> Decimal(12,2).
-     */
-    public function setPayPeriodMaximum(?float $payPeriodMaximum): self
-    {
-        $this->payPeriodMaximum = $payPeriodMaximum;
-
-        return $this;
-    }
-
-    /**
-     * Minimum amount of the earning on a single paycheck. <br  /> Decimal(12,2).
-     */
-    public function getPayPeriodMinimum(): ?float
-    {
-        return $this->payPeriodMinimum;
-    }
-
-    /**
-     * Minimum amount of the earning on a single paycheck. <br  /> Decimal(12,2).
-     */
-    public function setPayPeriodMinimum(?float $payPeriodMinimum): self
-    {
-        $this->payPeriodMinimum = $payPeriodMinimum;
-
-        return $this;
-    }
-
-    /**
-     * Rate is used in conjunction with the hoursOrUnits field. <br  /> Decimal(12,2).
-     */
-    public function getRate(): ?float
-    {
-        return $this->rate;
-    }
-
-    /**
-     * Rate is used in conjunction with the hoursOrUnits field. <br  /> Decimal(12,2).
-     */
-    public function setRate(?float $rate): self
-    {
-        $this->rate = $rate;
-
-        return $this;
-    }
-
-    /**
      * Rate Code applies to additional pay rates entered for an employee. Must match Company setup. <br  /> Max length: 10.
      */
-    public function getRateCode(): ?string
+    public function getRateCode(): string
     {
         return $this->rateCode;
     }
@@ -516,7 +276,7 @@ class Earning
     /**
      * Rate Code applies to additional pay rates entered for an employee. Must match Company setup. <br  /> Max length: 10.
      */
-    public function setRateCode(?string $rateCode): self
+    public function setRateCode(string $rateCode): self
     {
         $this->rateCode = $rateCode;
 
@@ -526,7 +286,7 @@ class Earning
     /**
      * Start date of an earning based on payroll calendar. Common formats are MM-DD-CCYY, CCYY-MM-DD.
      */
-    public function getStartDate(): ?string
+    public function getStartDate(): string
     {
         return $this->startDate;
     }
@@ -534,7 +294,7 @@ class Earning
     /**
      * Start date of an earning based on payroll calendar. Common formats are MM-DD-CCYY, CCYY-MM-DD.
      */
-    public function setStartDate(?string $startDate): self
+    public function setStartDate(string $startDate): self
     {
         $this->startDate = $startDate;
 

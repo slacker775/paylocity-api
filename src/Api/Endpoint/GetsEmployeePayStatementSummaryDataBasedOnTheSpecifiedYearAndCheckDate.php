@@ -95,28 +95,24 @@ class GetsEmployeePayStatementSummaryDataBasedOnTheSpecifiedYearAndCheckDate ext
     /**
      * {@inheritdoc}
      *
-     * @throws \Paylocity\Api\Exception\GetsEmployeePayStatementSummaryDataBasedOnTheSpecifiedYearAndCheckDateUnauthorizedException
-     * @throws \Paylocity\Api\Exception\GetsEmployeePayStatementSummaryDataBasedOnTheSpecifiedYearAndCheckDateForbiddenException
      * @throws \Paylocity\Api\Exception\GetsEmployeePayStatementSummaryDataBasedOnTheSpecifiedYearAndCheckDateNotFoundException
      * @throws \Paylocity\Api\Exception\GetsEmployeePayStatementSummaryDataBasedOnTheSpecifiedYearAndCheckDateInternalServerErrorException
      *
      * @return \Paylocity\Api\Model\PayStatementSummary[]|null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType)
+    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
-        if (200 === $status) {
+        if (200 === $status && mb_strpos($contentType, 'application/json') !== false) {
             return $serializer->deserialize($body, 'Paylocity\\Api\\Model\\PayStatementSummary[]', 'json');
         }
         if (401 === $status) {
-            throw new \Paylocity\Api\Exception\GetsEmployeePayStatementSummaryDataBasedOnTheSpecifiedYearAndCheckDateUnauthorizedException();
         }
         if (403 === $status) {
-            throw new \Paylocity\Api\Exception\GetsEmployeePayStatementSummaryDataBasedOnTheSpecifiedYearAndCheckDateForbiddenException();
         }
-        if (404 === $status) {
+        if (404 === $status && mb_strpos($contentType, 'application/json') !== false) {
             throw new \Paylocity\Api\Exception\GetsEmployeePayStatementSummaryDataBasedOnTheSpecifiedYearAndCheckDateNotFoundException($serializer->deserialize($body, 'Paylocity\\Api\\Model\\Error[]', 'json'));
         }
-        if (500 === $status) {
+        if (500 === $status && mb_strpos($contentType, 'application/json') !== false) {
             throw new \Paylocity\Api\Exception\GetsEmployeePayStatementSummaryDataBasedOnTheSpecifiedYearAndCheckDateInternalServerErrorException($serializer->deserialize($body, 'Paylocity\\Api\\Model\\Error[]', 'json'));
         }
     }

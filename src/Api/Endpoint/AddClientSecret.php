@@ -15,15 +15,14 @@ class AddClientSecret extends \Jane\OpenApiRuntime\Client\BaseEndpoint implement
     /**
      * Obtain new client secret for Paylocity-issued client id. See Setup section for details.
      *
-     * @param \Paylocity\Api\Model\AddClientSecret $json             Add Client Secret Model
-     * @param array                                $headerParameters {
+     * @param array $headerParameters {
      *
      *     @var string $Authorization Bearer + JWT
      * }
      */
-    public function __construct(\Paylocity\Api\Model\AddClientSecret $json, array $headerParameters = [])
+    public function __construct(\Paylocity\Api\Model\AddClientSecret $requestBody, array $headerParameters = [])
     {
-        $this->body = $json;
+        $this->body = $requestBody;
         $this->headerParameters = $headerParameters;
     }
 
@@ -41,7 +40,11 @@ class AddClientSecret extends \Jane\OpenApiRuntime\Client\BaseEndpoint implement
 
     public function getBody(\Symfony\Component\Serializer\SerializerInterface $serializer, $streamFactory = null): array
     {
-        return $this->getSerializedBody($serializer);
+        if ($this->body instanceof \Paylocity\Api\Model\AddClientSecret) {
+            return [['Content-Type' => ['application/json']], $serializer->serialize($this->body, 'json')];
+        }
+
+        return [[], null];
     }
 
     public function getExtraHeaders(): array
@@ -64,27 +67,22 @@ class AddClientSecret extends \Jane\OpenApiRuntime\Client\BaseEndpoint implement
      * {@inheritdoc}
      *
      * @throws \Paylocity\Api\Exception\AddClientSecretBadRequestException
-     * @throws \Paylocity\Api\Exception\AddClientSecretUnauthorizedException
-     * @throws \Paylocity\Api\Exception\AddClientSecretForbiddenException
      * @throws \Paylocity\Api\Exception\AddClientSecretInternalServerErrorException
      *
      * @return null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType)
+    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
         if (200 === $status) {
-            return null;
         }
-        if (400 === $status) {
+        if (400 === $status && mb_strpos($contentType, 'application/json') !== false) {
             throw new \Paylocity\Api\Exception\AddClientSecretBadRequestException($serializer->deserialize($body, 'Paylocity\\Api\\Model\\Error[]', 'json'));
         }
         if (401 === $status) {
-            throw new \Paylocity\Api\Exception\AddClientSecretUnauthorizedException();
         }
         if (403 === $status) {
-            throw new \Paylocity\Api\Exception\AddClientSecretForbiddenException();
         }
-        if (500 === $status) {
+        if (500 === $status && mb_strpos($contentType, 'application/json') !== false) {
             throw new \Paylocity\Api\Exception\AddClientSecretInternalServerErrorException($serializer->deserialize($body, 'Paylocity\\Api\\Model\\Error[]', 'json'));
         }
     }

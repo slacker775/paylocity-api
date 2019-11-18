@@ -18,18 +18,6 @@ class EmployeeCustomDropDownFieldsItem
      * @var string
      */
     protected $category;
-    /**
-     * The custom field label whose value is to be added/updated.  Must match to the label defined in Web Pay Custom Fields setup.  Max length: 255.
-     *
-     * @var string|null
-     */
-    protected $label;
-    /**
-     * The custom dropdown field value.  Values are configured in Web Pay Company > Setup > List Values > Lookup Values > Custom Fields: PayrollAndHR.  Max length: 10.
-     *
-     * @var string|null
-     */
-    protected $value;
 
     /**
      * The custom field category.  Acceptable value is 'PayrollAndHR'.
@@ -45,42 +33,6 @@ class EmployeeCustomDropDownFieldsItem
     public function setCategory(string $category): self
     {
         $this->category = $category;
-
-        return $this;
-    }
-
-    /**
-     * The custom field label whose value is to be added/updated.  Must match to the label defined in Web Pay Custom Fields setup.  Max length: 255.
-     */
-    public function getLabel(): ?string
-    {
-        return $this->label;
-    }
-
-    /**
-     * The custom field label whose value is to be added/updated.  Must match to the label defined in Web Pay Custom Fields setup.  Max length: 255.
-     */
-    public function setLabel(?string $label): self
-    {
-        $this->label = $label;
-
-        return $this;
-    }
-
-    /**
-     * The custom dropdown field value.  Values are configured in Web Pay Company > Setup > List Values > Lookup Values > Custom Fields: PayrollAndHR.  Max length: 10.
-     */
-    public function getValue(): ?string
-    {
-        return $this->value;
-    }
-
-    /**
-     * The custom dropdown field value.  Values are configured in Web Pay Company > Setup > List Values > Lookup Values > Custom Fields: PayrollAndHR.  Max length: 10.
-     */
-    public function setValue(?string $value): self
-    {
-        $this->value = $value;
 
         return $this;
     }

@@ -30,7 +30,7 @@ class StagedEmployeeNormalizer implements DenormalizerInterface, NormalizerInter
 
     public function supportsNormalization($data, $format = null)
     {
-        return get_class($data) === 'Paylocity\\Api\\Model\\StagedEmployee';
+        return is_object($data) && get_class($data) === 'Paylocity\\Api\\Model\\StagedEmployee';
     }
 
     public function denormalize($data, $class, $format = null, array $context = [])
@@ -53,352 +53,118 @@ class StagedEmployeeNormalizer implements DenormalizerInterface, NormalizerInter
             }
             $object->setBenefitSetup($values_1);
         }
-        if (property_exists($data, 'birthDate')) {
-            $value_2 = $data->{'birthDate'};
-            if (is_string($data->{'birthDate'})) {
-                $value_2 = $data->{'birthDate'};
-            } elseif (is_null($data->{'birthDate'})) {
-                $value_2 = $data->{'birthDate'};
-            }
-            $object->setBirthDate($value_2);
-        }
         if (property_exists($data, 'customBooleanFields')) {
             $values_2 = [];
-            foreach ($data->{'customBooleanFields'} as $value_3) {
-                $values_2[] = $this->denormalizer->denormalize($value_3, 'Paylocity\\Api\\Model\\StagedEmployeeCustomBooleanFieldsItem', 'json', $context);
+            foreach ($data->{'customBooleanFields'} as $value_2) {
+                $values_2[] = $this->denormalizer->denormalize($value_2, 'Paylocity\\Api\\Model\\StagedEmployeeCustomBooleanFieldsItem', 'json', $context);
             }
             $object->setCustomBooleanFields($values_2);
         }
         if (property_exists($data, 'customDateFields')) {
             $values_3 = [];
-            foreach ($data->{'customDateFields'} as $value_4) {
-                $values_3[] = $this->denormalizer->denormalize($value_4, 'Paylocity\\Api\\Model\\StagedEmployeeCustomDateFieldsItem', 'json', $context);
+            foreach ($data->{'customDateFields'} as $value_3) {
+                $values_3[] = $this->denormalizer->denormalize($value_3, 'Paylocity\\Api\\Model\\StagedEmployeeCustomDateFieldsItem', 'json', $context);
             }
             $object->setCustomDateFields($values_3);
         }
         if (property_exists($data, 'customDropDownFields')) {
             $values_4 = [];
-            foreach ($data->{'customDropDownFields'} as $value_5) {
-                $values_4[] = $this->denormalizer->denormalize($value_5, 'Paylocity\\Api\\Model\\StagedEmployeeCustomDropDownFieldsItem', 'json', $context);
+            foreach ($data->{'customDropDownFields'} as $value_4) {
+                $values_4[] = $this->denormalizer->denormalize($value_4, 'Paylocity\\Api\\Model\\StagedEmployeeCustomDropDownFieldsItem', 'json', $context);
             }
             $object->setCustomDropDownFields($values_4);
         }
         if (property_exists($data, 'customNumberFields')) {
             $values_5 = [];
-            foreach ($data->{'customNumberFields'} as $value_6) {
-                $values_5[] = $this->denormalizer->denormalize($value_6, 'Paylocity\\Api\\Model\\StagedEmployeeCustomNumberFieldsItem', 'json', $context);
+            foreach ($data->{'customNumberFields'} as $value_5) {
+                $values_5[] = $this->denormalizer->denormalize($value_5, 'Paylocity\\Api\\Model\\StagedEmployeeCustomNumberFieldsItem', 'json', $context);
             }
             $object->setCustomNumberFields($values_5);
         }
         if (property_exists($data, 'customTextFields')) {
             $values_6 = [];
-            foreach ($data->{'customTextFields'} as $value_7) {
-                $values_6[] = $this->denormalizer->denormalize($value_7, 'Paylocity\\Api\\Model\\StagedEmployeeCustomTextFieldsItem', 'json', $context);
+            foreach ($data->{'customTextFields'} as $value_6) {
+                $values_6[] = $this->denormalizer->denormalize($value_6, 'Paylocity\\Api\\Model\\StagedEmployeeCustomTextFieldsItem', 'json', $context);
             }
             $object->setCustomTextFields($values_6);
         }
         if (property_exists($data, 'departmentPosition')) {
             $values_7 = [];
-            foreach ($data->{'departmentPosition'} as $value_8) {
-                $values_7[] = $this->denormalizer->denormalize($value_8, 'Paylocity\\Api\\Model\\StagedEmployeeDepartmentPositionItem', 'json', $context);
+            foreach ($data->{'departmentPosition'} as $value_7) {
+                $values_7[] = $this->denormalizer->denormalize($value_7, 'Paylocity\\Api\\Model\\StagedEmployeeDepartmentPositionItem', 'json', $context);
             }
             $object->setDepartmentPosition($values_7);
         }
-        if (property_exists($data, 'disabilityDescription')) {
-            $value_9 = $data->{'disabilityDescription'};
-            if (is_string($data->{'disabilityDescription'})) {
-                $value_9 = $data->{'disabilityDescription'};
-            } elseif (is_null($data->{'disabilityDescription'})) {
-                $value_9 = $data->{'disabilityDescription'};
-            }
-            $object->setDisabilityDescription($value_9);
-        }
-        if (property_exists($data, 'employeeId')) {
-            $value_10 = $data->{'employeeId'};
-            if (is_string($data->{'employeeId'})) {
-                $value_10 = $data->{'employeeId'};
-            } elseif (is_null($data->{'employeeId'})) {
-                $value_10 = $data->{'employeeId'};
-            }
-            $object->setEmployeeId($value_10);
-        }
-        if (property_exists($data, 'ethnicity')) {
-            $value_11 = $data->{'ethnicity'};
-            if (is_string($data->{'ethnicity'})) {
-                $value_11 = $data->{'ethnicity'};
-            } elseif (is_null($data->{'ethnicity'})) {
-                $value_11 = $data->{'ethnicity'};
-            }
-            $object->setEthnicity($value_11);
-        }
         if (property_exists($data, 'federalTax')) {
             $values_8 = [];
-            foreach ($data->{'federalTax'} as $value_12) {
-                $values_8[] = $this->denormalizer->denormalize($value_12, 'Paylocity\\Api\\Model\\StagedEmployeeFederalTaxItem', 'json', $context);
+            foreach ($data->{'federalTax'} as $value_8) {
+                $values_8[] = $this->denormalizer->denormalize($value_8, 'Paylocity\\Api\\Model\\StagedEmployeeFederalTaxItem', 'json', $context);
             }
             $object->setFederalTax($values_8);
         }
-        if (property_exists($data, 'firstName')) {
-            $value_13 = $data->{'firstName'};
-            if (is_string($data->{'firstName'})) {
-                $value_13 = $data->{'firstName'};
-            } elseif (is_null($data->{'firstName'})) {
-                $value_13 = $data->{'firstName'};
-            }
-            $object->setFirstName($value_13);
-        }
-        if (property_exists($data, 'fitwExemptReason')) {
-            $value_14 = $data->{'fitwExemptReason'};
-            if (is_string($data->{'fitwExemptReason'})) {
-                $value_14 = $data->{'fitwExemptReason'};
-            } elseif (is_null($data->{'fitwExemptReason'})) {
-                $value_14 = $data->{'fitwExemptReason'};
-            }
-            $object->setFitwExemptReason($value_14);
-        }
-        if (property_exists($data, 'futaExemptReason')) {
-            $value_15 = $data->{'futaExemptReason'};
-            if (is_string($data->{'futaExemptReason'})) {
-                $value_15 = $data->{'futaExemptReason'};
-            } elseif (is_null($data->{'futaExemptReason'})) {
-                $value_15 = $data->{'futaExemptReason'};
-            }
-            $object->setFutaExemptReason($value_15);
-        }
-        if (property_exists($data, 'gender')) {
-            $value_16 = $data->{'gender'};
-            if (is_string($data->{'gender'})) {
-                $value_16 = $data->{'gender'};
-            } elseif (is_null($data->{'gender'})) {
-                $value_16 = $data->{'gender'};
-            }
-            $object->setGender($value_16);
-        }
         if (property_exists($data, 'homeAddress')) {
             $values_9 = [];
-            foreach ($data->{'homeAddress'} as $value_17) {
-                $values_9[] = $this->denormalizer->denormalize($value_17, 'Paylocity\\Api\\Model\\StagedEmployeeHomeAddressItem', 'json', $context);
+            foreach ($data->{'homeAddress'} as $value_9) {
+                $values_9[] = $this->denormalizer->denormalize($value_9, 'Paylocity\\Api\\Model\\StagedEmployeeHomeAddressItem', 'json', $context);
             }
             $object->setHomeAddress($values_9);
         }
-        if (property_exists($data, 'isEmployee943')) {
-            $value_18 = $data->{'isEmployee943'};
-            if (is_bool($data->{'isEmployee943'})) {
-                $value_18 = $data->{'isEmployee943'};
-            } elseif (is_null($data->{'isEmployee943'})) {
-                $value_18 = $data->{'isEmployee943'};
-            }
-            $object->setIsEmployee943($value_18);
-        }
-        if (property_exists($data, 'isSmoker')) {
-            $value_19 = $data->{'isSmoker'};
-            if (is_bool($data->{'isSmoker'})) {
-                $value_19 = $data->{'isSmoker'};
-            } elseif (is_null($data->{'isSmoker'})) {
-                $value_19 = $data->{'isSmoker'};
-            }
-            $object->setIsSmoker($value_19);
-        }
-        if (property_exists($data, 'lastName')) {
-            $value_20 = $data->{'lastName'};
-            if (is_string($data->{'lastName'})) {
-                $value_20 = $data->{'lastName'};
-            } elseif (is_null($data->{'lastName'})) {
-                $value_20 = $data->{'lastName'};
-            }
-            $object->setLastName($value_20);
-        }
         if (property_exists($data, 'localTax')) {
             $values_10 = [];
-            foreach ($data->{'localTax'} as $value_21) {
-                $values_10[] = $this->denormalizer->denormalize($value_21, 'Paylocity\\Api\\Model\\StagedEmployeeLocalTaxItem', 'json', $context);
+            foreach ($data->{'localTax'} as $value_10) {
+                $values_10[] = $this->denormalizer->denormalize($value_10, 'Paylocity\\Api\\Model\\StagedEmployeeLocalTaxItem', 'json', $context);
             }
             $object->setLocalTax($values_10);
         }
         if (property_exists($data, 'mainDirectDeposit')) {
             $values_11 = [];
-            foreach ($data->{'mainDirectDeposit'} as $value_22) {
-                $values_11[] = $this->denormalizer->denormalize($value_22, 'Paylocity\\Api\\Model\\StagedEmployeeMainDirectDepositItem', 'json', $context);
+            foreach ($data->{'mainDirectDeposit'} as $value_11) {
+                $values_11[] = $this->denormalizer->denormalize($value_11, 'Paylocity\\Api\\Model\\StagedEmployeeMainDirectDepositItem', 'json', $context);
             }
             $object->setMainDirectDeposit($values_11);
         }
-        if (property_exists($data, 'maritalStatus')) {
-            $value_23 = $data->{'maritalStatus'};
-            if (is_string($data->{'maritalStatus'})) {
-                $value_23 = $data->{'maritalStatus'};
-            } elseif (is_null($data->{'maritalStatus'})) {
-                $value_23 = $data->{'maritalStatus'};
-            }
-            $object->setMaritalStatus($value_23);
-        }
-        if (property_exists($data, 'medExemptReason')) {
-            $value_24 = $data->{'medExemptReason'};
-            if (is_string($data->{'medExemptReason'})) {
-                $value_24 = $data->{'medExemptReason'};
-            } elseif (is_null($data->{'medExemptReason'})) {
-                $value_24 = $data->{'medExemptReason'};
-            }
-            $object->setMedExemptReason($value_24);
-        }
-        if (property_exists($data, 'middleName')) {
-            $value_25 = $data->{'middleName'};
-            if (is_string($data->{'middleName'})) {
-                $value_25 = $data->{'middleName'};
-            } elseif (is_null($data->{'middleName'})) {
-                $value_25 = $data->{'middleName'};
-            }
-            $object->setMiddleName($value_25);
-        }
         if (property_exists($data, 'nonPrimaryStateTax')) {
             $values_12 = [];
-            foreach ($data->{'nonPrimaryStateTax'} as $value_26) {
-                $values_12[] = $this->denormalizer->denormalize($value_26, 'Paylocity\\Api\\Model\\StagedEmployeeNonPrimaryStateTaxItem', 'json', $context);
+            foreach ($data->{'nonPrimaryStateTax'} as $value_12) {
+                $values_12[] = $this->denormalizer->denormalize($value_12, 'Paylocity\\Api\\Model\\StagedEmployeeNonPrimaryStateTaxItem', 'json', $context);
             }
             $object->setNonPrimaryStateTax($values_12);
         }
-        if (property_exists($data, 'preferredName')) {
-            $value_27 = $data->{'preferredName'};
-            if (is_string($data->{'preferredName'})) {
-                $value_27 = $data->{'preferredName'};
-            } elseif (is_null($data->{'preferredName'})) {
-                $value_27 = $data->{'preferredName'};
-            }
-            $object->setPreferredName($value_27);
-        }
         if (property_exists($data, 'primaryPayRate')) {
             $values_13 = [];
-            foreach ($data->{'primaryPayRate'} as $value_28) {
-                $values_13[] = $this->denormalizer->denormalize($value_28, 'Paylocity\\Api\\Model\\StagedEmployeePrimaryPayRateItem', 'json', $context);
+            foreach ($data->{'primaryPayRate'} as $value_13) {
+                $values_13[] = $this->denormalizer->denormalize($value_13, 'Paylocity\\Api\\Model\\StagedEmployeePrimaryPayRateItem', 'json', $context);
             }
             $object->setPrimaryPayRate($values_13);
         }
         if (property_exists($data, 'primaryStateTax')) {
             $values_14 = [];
-            foreach ($data->{'primaryStateTax'} as $value_29) {
-                $values_14[] = $this->denormalizer->denormalize($value_29, 'Paylocity\\Api\\Model\\StagedEmployeePrimaryStateTaxItem', 'json', $context);
+            foreach ($data->{'primaryStateTax'} as $value_14) {
+                $values_14[] = $this->denormalizer->denormalize($value_14, 'Paylocity\\Api\\Model\\StagedEmployeePrimaryStateTaxItem', 'json', $context);
             }
             $object->setPrimaryStateTax($values_14);
         }
-        if (property_exists($data, 'priorLastName')) {
-            $value_30 = $data->{'priorLastName'};
-            if (is_string($data->{'priorLastName'})) {
-                $value_30 = $data->{'priorLastName'};
-            } elseif (is_null($data->{'priorLastName'})) {
-                $value_30 = $data->{'priorLastName'};
-            }
-            $object->setPriorLastName($value_30);
-        }
-        if (property_exists($data, 'salutation')) {
-            $value_31 = $data->{'salutation'};
-            if (is_string($data->{'salutation'})) {
-                $value_31 = $data->{'salutation'};
-            } elseif (is_null($data->{'salutation'})) {
-                $value_31 = $data->{'salutation'};
-            }
-            $object->setSalutation($value_31);
-        }
-        if (property_exists($data, 'sitwExemptReason')) {
-            $value_32 = $data->{'sitwExemptReason'};
-            if (is_string($data->{'sitwExemptReason'})) {
-                $value_32 = $data->{'sitwExemptReason'};
-            } elseif (is_null($data->{'sitwExemptReason'})) {
-                $value_32 = $data->{'sitwExemptReason'};
-            }
-            $object->setSitwExemptReason($value_32);
-        }
-        if (property_exists($data, 'ssExemptReason')) {
-            $value_33 = $data->{'ssExemptReason'};
-            if (is_string($data->{'ssExemptReason'})) {
-                $value_33 = $data->{'ssExemptReason'};
-            } elseif (is_null($data->{'ssExemptReason'})) {
-                $value_33 = $data->{'ssExemptReason'};
-            }
-            $object->setSsExemptReason($value_33);
-        }
-        if (property_exists($data, 'ssn')) {
-            $value_34 = $data->{'ssn'};
-            if (is_string($data->{'ssn'})) {
-                $value_34 = $data->{'ssn'};
-            } elseif (is_null($data->{'ssn'})) {
-                $value_34 = $data->{'ssn'};
-            }
-            $object->setSsn($value_34);
-        }
         if (property_exists($data, 'status')) {
             $values_15 = [];
-            foreach ($data->{'status'} as $value_35) {
-                $values_15[] = $this->denormalizer->denormalize($value_35, 'Paylocity\\Api\\Model\\StagedEmployeeStatusItem', 'json', $context);
+            foreach ($data->{'status'} as $value_15) {
+                $values_15[] = $this->denormalizer->denormalize($value_15, 'Paylocity\\Api\\Model\\StagedEmployeeStatusItem', 'json', $context);
             }
             $object->setStatus($values_15);
-        }
-        if (property_exists($data, 'suffix')) {
-            $value_36 = $data->{'suffix'};
-            if (is_string($data->{'suffix'})) {
-                $value_36 = $data->{'suffix'};
-            } elseif (is_null($data->{'suffix'})) {
-                $value_36 = $data->{'suffix'};
-            }
-            $object->setSuffix($value_36);
-        }
-        if (property_exists($data, 'suiExemptReason')) {
-            $value_37 = $data->{'suiExemptReason'};
-            if (is_string($data->{'suiExemptReason'})) {
-                $value_37 = $data->{'suiExemptReason'};
-            } elseif (is_null($data->{'suiExemptReason'})) {
-                $value_37 = $data->{'suiExemptReason'};
-            }
-            $object->setSuiExemptReason($value_37);
-        }
-        if (property_exists($data, 'suiState')) {
-            $value_38 = $data->{'suiState'};
-            if (is_string($data->{'suiState'})) {
-                $value_38 = $data->{'suiState'};
-            } elseif (is_null($data->{'suiState'})) {
-                $value_38 = $data->{'suiState'};
-            }
-            $object->setSuiState($value_38);
-        }
-        if (property_exists($data, 'taxDistributionCode1099R')) {
-            $value_39 = $data->{'taxDistributionCode1099R'};
-            if (is_string($data->{'taxDistributionCode1099R'})) {
-                $value_39 = $data->{'taxDistributionCode1099R'};
-            } elseif (is_null($data->{'taxDistributionCode1099R'})) {
-                $value_39 = $data->{'taxDistributionCode1099R'};
-            }
-            $object->setTaxDistributionCode1099R($value_39);
-        }
-        if (property_exists($data, 'taxForm')) {
-            $value_40 = $data->{'taxForm'};
-            if (is_string($data->{'taxForm'})) {
-                $value_40 = $data->{'taxForm'};
-            } elseif (is_null($data->{'taxForm'})) {
-                $value_40 = $data->{'taxForm'};
-            }
-            $object->setTaxForm($value_40);
-        }
-        if (property_exists($data, 'veteranDescription')) {
-            $value_41 = $data->{'veteranDescription'};
-            if (is_string($data->{'veteranDescription'})) {
-                $value_41 = $data->{'veteranDescription'};
-            } elseif (is_null($data->{'veteranDescription'})) {
-                $value_41 = $data->{'veteranDescription'};
-            }
-            $object->setVeteranDescription($value_41);
         }
         if (property_exists($data, 'webTime')) {
             $object->setWebTime($this->denormalizer->denormalize($data->{'webTime'}, 'Paylocity\\Api\\Model\\StagedEmployeeWebTime', 'json', $context));
         }
         if (property_exists($data, 'workAddress')) {
             $values_16 = [];
-            foreach ($data->{'workAddress'} as $value_42) {
-                $values_16[] = $this->denormalizer->denormalize($value_42, 'Paylocity\\Api\\Model\\StagedEmployeeWorkAddressItem', 'json', $context);
+            foreach ($data->{'workAddress'} as $value_16) {
+                $values_16[] = $this->denormalizer->denormalize($value_16, 'Paylocity\\Api\\Model\\StagedEmployeeWorkAddressItem', 'json', $context);
             }
             $object->setWorkAddress($values_16);
         }
         if (property_exists($data, 'workEligibility')) {
             $values_17 = [];
-            foreach ($data->{'workEligibility'} as $value_43) {
-                $values_17[] = $this->denormalizer->denormalize($value_43, 'Paylocity\\Api\\Model\\StagedEmployeeWorkEligibilityItem', 'json', $context);
+            foreach ($data->{'workEligibility'} as $value_17) {
+                $values_17[] = $this->denormalizer->denormalize($value_17, 'Paylocity\\Api\\Model\\StagedEmployeeWorkEligibilityItem', 'json', $context);
             }
             $object->setWorkEligibility($values_17);
         }
@@ -409,317 +175,97 @@ class StagedEmployeeNormalizer implements DenormalizerInterface, NormalizerInter
     public function normalize($object, $format = null, array $context = [])
     {
         $data = new \stdClass();
-        if (null !== $object->getAdditionalDirectDeposit()) {
-            $values = [];
-            foreach ($object->getAdditionalDirectDeposit() as $value) {
-                $values[] = $this->normalizer->normalize($value, 'json', $context);
-            }
-            $data->{'additionalDirectDeposit'} = $values;
+        $values = [];
+        foreach ($object->getAdditionalDirectDeposit() as $value) {
+            $values[] = $this->normalizer->normalize($value, 'json', $context);
         }
-        if (null !== $object->getBenefitSetup()) {
-            $values_1 = [];
-            foreach ($object->getBenefitSetup() as $value_1) {
-                $values_1[] = $this->normalizer->normalize($value_1, 'json', $context);
-            }
-            $data->{'benefitSetup'} = $values_1;
+        $data->{'additionalDirectDeposit'} = $values;
+        $values_1 = [];
+        foreach ($object->getBenefitSetup() as $value_1) {
+            $values_1[] = $this->normalizer->normalize($value_1, 'json', $context);
         }
-        $value_2 = $object->getBirthDate();
-        if (is_string($object->getBirthDate())) {
-            $value_2 = $object->getBirthDate();
-        } elseif (is_null($object->getBirthDate())) {
-            $value_2 = $object->getBirthDate();
+        $data->{'benefitSetup'} = $values_1;
+        $values_2 = [];
+        foreach ($object->getCustomBooleanFields() as $value_2) {
+            $values_2[] = $this->normalizer->normalize($value_2, 'json', $context);
         }
-        $data->{'birthDate'} = $value_2;
-        if (null !== $object->getCustomBooleanFields()) {
-            $values_2 = [];
-            foreach ($object->getCustomBooleanFields() as $value_3) {
-                $values_2[] = $this->normalizer->normalize($value_3, 'json', $context);
-            }
-            $data->{'customBooleanFields'} = $values_2;
+        $data->{'customBooleanFields'} = $values_2;
+        $values_3 = [];
+        foreach ($object->getCustomDateFields() as $value_3) {
+            $values_3[] = $this->normalizer->normalize($value_3, 'json', $context);
         }
-        if (null !== $object->getCustomDateFields()) {
-            $values_3 = [];
-            foreach ($object->getCustomDateFields() as $value_4) {
-                $values_3[] = $this->normalizer->normalize($value_4, 'json', $context);
-            }
-            $data->{'customDateFields'} = $values_3;
+        $data->{'customDateFields'} = $values_3;
+        $values_4 = [];
+        foreach ($object->getCustomDropDownFields() as $value_4) {
+            $values_4[] = $this->normalizer->normalize($value_4, 'json', $context);
         }
-        if (null !== $object->getCustomDropDownFields()) {
-            $values_4 = [];
-            foreach ($object->getCustomDropDownFields() as $value_5) {
-                $values_4[] = $this->normalizer->normalize($value_5, 'json', $context);
-            }
-            $data->{'customDropDownFields'} = $values_4;
+        $data->{'customDropDownFields'} = $values_4;
+        $values_5 = [];
+        foreach ($object->getCustomNumberFields() as $value_5) {
+            $values_5[] = $this->normalizer->normalize($value_5, 'json', $context);
         }
-        if (null !== $object->getCustomNumberFields()) {
-            $values_5 = [];
-            foreach ($object->getCustomNumberFields() as $value_6) {
-                $values_5[] = $this->normalizer->normalize($value_6, 'json', $context);
-            }
-            $data->{'customNumberFields'} = $values_5;
+        $data->{'customNumberFields'} = $values_5;
+        $values_6 = [];
+        foreach ($object->getCustomTextFields() as $value_6) {
+            $values_6[] = $this->normalizer->normalize($value_6, 'json', $context);
         }
-        if (null !== $object->getCustomTextFields()) {
-            $values_6 = [];
-            foreach ($object->getCustomTextFields() as $value_7) {
-                $values_6[] = $this->normalizer->normalize($value_7, 'json', $context);
-            }
-            $data->{'customTextFields'} = $values_6;
+        $data->{'customTextFields'} = $values_6;
+        $values_7 = [];
+        foreach ($object->getDepartmentPosition() as $value_7) {
+            $values_7[] = $this->normalizer->normalize($value_7, 'json', $context);
         }
-        if (null !== $object->getDepartmentPosition()) {
-            $values_7 = [];
-            foreach ($object->getDepartmentPosition() as $value_8) {
-                $values_7[] = $this->normalizer->normalize($value_8, 'json', $context);
-            }
-            $data->{'departmentPosition'} = $values_7;
+        $data->{'departmentPosition'} = $values_7;
+        $values_8 = [];
+        foreach ($object->getFederalTax() as $value_8) {
+            $values_8[] = $this->normalizer->normalize($value_8, 'json', $context);
         }
-        $value_9 = $object->getDisabilityDescription();
-        if (is_string($object->getDisabilityDescription())) {
-            $value_9 = $object->getDisabilityDescription();
-        } elseif (is_null($object->getDisabilityDescription())) {
-            $value_9 = $object->getDisabilityDescription();
+        $data->{'federalTax'} = $values_8;
+        $values_9 = [];
+        foreach ($object->getHomeAddress() as $value_9) {
+            $values_9[] = $this->normalizer->normalize($value_9, 'json', $context);
         }
-        $data->{'disabilityDescription'} = $value_9;
-        $value_10 = $object->getEmployeeId();
-        if (is_string($object->getEmployeeId())) {
-            $value_10 = $object->getEmployeeId();
-        } elseif (is_null($object->getEmployeeId())) {
-            $value_10 = $object->getEmployeeId();
+        $data->{'homeAddress'} = $values_9;
+        $values_10 = [];
+        foreach ($object->getLocalTax() as $value_10) {
+            $values_10[] = $this->normalizer->normalize($value_10, 'json', $context);
         }
-        $data->{'employeeId'} = $value_10;
-        $value_11 = $object->getEthnicity();
-        if (is_string($object->getEthnicity())) {
-            $value_11 = $object->getEthnicity();
-        } elseif (is_null($object->getEthnicity())) {
-            $value_11 = $object->getEthnicity();
+        $data->{'localTax'} = $values_10;
+        $values_11 = [];
+        foreach ($object->getMainDirectDeposit() as $value_11) {
+            $values_11[] = $this->normalizer->normalize($value_11, 'json', $context);
         }
-        $data->{'ethnicity'} = $value_11;
-        if (null !== $object->getFederalTax()) {
-            $values_8 = [];
-            foreach ($object->getFederalTax() as $value_12) {
-                $values_8[] = $this->normalizer->normalize($value_12, 'json', $context);
-            }
-            $data->{'federalTax'} = $values_8;
+        $data->{'mainDirectDeposit'} = $values_11;
+        $values_12 = [];
+        foreach ($object->getNonPrimaryStateTax() as $value_12) {
+            $values_12[] = $this->normalizer->normalize($value_12, 'json', $context);
         }
-        $value_13 = $object->getFirstName();
-        if (is_string($object->getFirstName())) {
-            $value_13 = $object->getFirstName();
-        } elseif (is_null($object->getFirstName())) {
-            $value_13 = $object->getFirstName();
+        $data->{'nonPrimaryStateTax'} = $values_12;
+        $values_13 = [];
+        foreach ($object->getPrimaryPayRate() as $value_13) {
+            $values_13[] = $this->normalizer->normalize($value_13, 'json', $context);
         }
-        $data->{'firstName'} = $value_13;
-        $value_14 = $object->getFitwExemptReason();
-        if (is_string($object->getFitwExemptReason())) {
-            $value_14 = $object->getFitwExemptReason();
-        } elseif (is_null($object->getFitwExemptReason())) {
-            $value_14 = $object->getFitwExemptReason();
+        $data->{'primaryPayRate'} = $values_13;
+        $values_14 = [];
+        foreach ($object->getPrimaryStateTax() as $value_14) {
+            $values_14[] = $this->normalizer->normalize($value_14, 'json', $context);
         }
-        $data->{'fitwExemptReason'} = $value_14;
-        $value_15 = $object->getFutaExemptReason();
-        if (is_string($object->getFutaExemptReason())) {
-            $value_15 = $object->getFutaExemptReason();
-        } elseif (is_null($object->getFutaExemptReason())) {
-            $value_15 = $object->getFutaExemptReason();
+        $data->{'primaryStateTax'} = $values_14;
+        $values_15 = [];
+        foreach ($object->getStatus() as $value_15) {
+            $values_15[] = $this->normalizer->normalize($value_15, 'json', $context);
         }
-        $data->{'futaExemptReason'} = $value_15;
-        $value_16 = $object->getGender();
-        if (is_string($object->getGender())) {
-            $value_16 = $object->getGender();
-        } elseif (is_null($object->getGender())) {
-            $value_16 = $object->getGender();
+        $data->{'status'} = $values_15;
+        $data->{'webTime'} = $this->normalizer->normalize($object->getWebTime(), 'json', $context);
+        $values_16 = [];
+        foreach ($object->getWorkAddress() as $value_16) {
+            $values_16[] = $this->normalizer->normalize($value_16, 'json', $context);
         }
-        $data->{'gender'} = $value_16;
-        if (null !== $object->getHomeAddress()) {
-            $values_9 = [];
-            foreach ($object->getHomeAddress() as $value_17) {
-                $values_9[] = $this->normalizer->normalize($value_17, 'json', $context);
-            }
-            $data->{'homeAddress'} = $values_9;
+        $data->{'workAddress'} = $values_16;
+        $values_17 = [];
+        foreach ($object->getWorkEligibility() as $value_17) {
+            $values_17[] = $this->normalizer->normalize($value_17, 'json', $context);
         }
-        $value_18 = $object->getIsEmployee943();
-        if (is_bool($object->getIsEmployee943())) {
-            $value_18 = $object->getIsEmployee943();
-        } elseif (is_null($object->getIsEmployee943())) {
-            $value_18 = $object->getIsEmployee943();
-        }
-        $data->{'isEmployee943'} = $value_18;
-        $value_19 = $object->getIsSmoker();
-        if (is_bool($object->getIsSmoker())) {
-            $value_19 = $object->getIsSmoker();
-        } elseif (is_null($object->getIsSmoker())) {
-            $value_19 = $object->getIsSmoker();
-        }
-        $data->{'isSmoker'} = $value_19;
-        $value_20 = $object->getLastName();
-        if (is_string($object->getLastName())) {
-            $value_20 = $object->getLastName();
-        } elseif (is_null($object->getLastName())) {
-            $value_20 = $object->getLastName();
-        }
-        $data->{'lastName'} = $value_20;
-        if (null !== $object->getLocalTax()) {
-            $values_10 = [];
-            foreach ($object->getLocalTax() as $value_21) {
-                $values_10[] = $this->normalizer->normalize($value_21, 'json', $context);
-            }
-            $data->{'localTax'} = $values_10;
-        }
-        if (null !== $object->getMainDirectDeposit()) {
-            $values_11 = [];
-            foreach ($object->getMainDirectDeposit() as $value_22) {
-                $values_11[] = $this->normalizer->normalize($value_22, 'json', $context);
-            }
-            $data->{'mainDirectDeposit'} = $values_11;
-        }
-        $value_23 = $object->getMaritalStatus();
-        if (is_string($object->getMaritalStatus())) {
-            $value_23 = $object->getMaritalStatus();
-        } elseif (is_null($object->getMaritalStatus())) {
-            $value_23 = $object->getMaritalStatus();
-        }
-        $data->{'maritalStatus'} = $value_23;
-        $value_24 = $object->getMedExemptReason();
-        if (is_string($object->getMedExemptReason())) {
-            $value_24 = $object->getMedExemptReason();
-        } elseif (is_null($object->getMedExemptReason())) {
-            $value_24 = $object->getMedExemptReason();
-        }
-        $data->{'medExemptReason'} = $value_24;
-        $value_25 = $object->getMiddleName();
-        if (is_string($object->getMiddleName())) {
-            $value_25 = $object->getMiddleName();
-        } elseif (is_null($object->getMiddleName())) {
-            $value_25 = $object->getMiddleName();
-        }
-        $data->{'middleName'} = $value_25;
-        if (null !== $object->getNonPrimaryStateTax()) {
-            $values_12 = [];
-            foreach ($object->getNonPrimaryStateTax() as $value_26) {
-                $values_12[] = $this->normalizer->normalize($value_26, 'json', $context);
-            }
-            $data->{'nonPrimaryStateTax'} = $values_12;
-        }
-        $value_27 = $object->getPreferredName();
-        if (is_string($object->getPreferredName())) {
-            $value_27 = $object->getPreferredName();
-        } elseif (is_null($object->getPreferredName())) {
-            $value_27 = $object->getPreferredName();
-        }
-        $data->{'preferredName'} = $value_27;
-        if (null !== $object->getPrimaryPayRate()) {
-            $values_13 = [];
-            foreach ($object->getPrimaryPayRate() as $value_28) {
-                $values_13[] = $this->normalizer->normalize($value_28, 'json', $context);
-            }
-            $data->{'primaryPayRate'} = $values_13;
-        }
-        if (null !== $object->getPrimaryStateTax()) {
-            $values_14 = [];
-            foreach ($object->getPrimaryStateTax() as $value_29) {
-                $values_14[] = $this->normalizer->normalize($value_29, 'json', $context);
-            }
-            $data->{'primaryStateTax'} = $values_14;
-        }
-        $value_30 = $object->getPriorLastName();
-        if (is_string($object->getPriorLastName())) {
-            $value_30 = $object->getPriorLastName();
-        } elseif (is_null($object->getPriorLastName())) {
-            $value_30 = $object->getPriorLastName();
-        }
-        $data->{'priorLastName'} = $value_30;
-        $value_31 = $object->getSalutation();
-        if (is_string($object->getSalutation())) {
-            $value_31 = $object->getSalutation();
-        } elseif (is_null($object->getSalutation())) {
-            $value_31 = $object->getSalutation();
-        }
-        $data->{'salutation'} = $value_31;
-        $value_32 = $object->getSitwExemptReason();
-        if (is_string($object->getSitwExemptReason())) {
-            $value_32 = $object->getSitwExemptReason();
-        } elseif (is_null($object->getSitwExemptReason())) {
-            $value_32 = $object->getSitwExemptReason();
-        }
-        $data->{'sitwExemptReason'} = $value_32;
-        $value_33 = $object->getSsExemptReason();
-        if (is_string($object->getSsExemptReason())) {
-            $value_33 = $object->getSsExemptReason();
-        } elseif (is_null($object->getSsExemptReason())) {
-            $value_33 = $object->getSsExemptReason();
-        }
-        $data->{'ssExemptReason'} = $value_33;
-        $value_34 = $object->getSsn();
-        if (is_string($object->getSsn())) {
-            $value_34 = $object->getSsn();
-        } elseif (is_null($object->getSsn())) {
-            $value_34 = $object->getSsn();
-        }
-        $data->{'ssn'} = $value_34;
-        if (null !== $object->getStatus()) {
-            $values_15 = [];
-            foreach ($object->getStatus() as $value_35) {
-                $values_15[] = $this->normalizer->normalize($value_35, 'json', $context);
-            }
-            $data->{'status'} = $values_15;
-        }
-        $value_36 = $object->getSuffix();
-        if (is_string($object->getSuffix())) {
-            $value_36 = $object->getSuffix();
-        } elseif (is_null($object->getSuffix())) {
-            $value_36 = $object->getSuffix();
-        }
-        $data->{'suffix'} = $value_36;
-        $value_37 = $object->getSuiExemptReason();
-        if (is_string($object->getSuiExemptReason())) {
-            $value_37 = $object->getSuiExemptReason();
-        } elseif (is_null($object->getSuiExemptReason())) {
-            $value_37 = $object->getSuiExemptReason();
-        }
-        $data->{'suiExemptReason'} = $value_37;
-        $value_38 = $object->getSuiState();
-        if (is_string($object->getSuiState())) {
-            $value_38 = $object->getSuiState();
-        } elseif (is_null($object->getSuiState())) {
-            $value_38 = $object->getSuiState();
-        }
-        $data->{'suiState'} = $value_38;
-        $value_39 = $object->getTaxDistributionCode1099R();
-        if (is_string($object->getTaxDistributionCode1099R())) {
-            $value_39 = $object->getTaxDistributionCode1099R();
-        } elseif (is_null($object->getTaxDistributionCode1099R())) {
-            $value_39 = $object->getTaxDistributionCode1099R();
-        }
-        $data->{'taxDistributionCode1099R'} = $value_39;
-        $value_40 = $object->getTaxForm();
-        if (is_string($object->getTaxForm())) {
-            $value_40 = $object->getTaxForm();
-        } elseif (is_null($object->getTaxForm())) {
-            $value_40 = $object->getTaxForm();
-        }
-        $data->{'taxForm'} = $value_40;
-        $value_41 = $object->getVeteranDescription();
-        if (is_string($object->getVeteranDescription())) {
-            $value_41 = $object->getVeteranDescription();
-        } elseif (is_null($object->getVeteranDescription())) {
-            $value_41 = $object->getVeteranDescription();
-        }
-        $data->{'veteranDescription'} = $value_41;
-        if (null !== $object->getWebTime()) {
-            $data->{'webTime'} = $this->normalizer->normalize($object->getWebTime(), 'json', $context);
-        }
-        if (null !== $object->getWorkAddress()) {
-            $values_16 = [];
-            foreach ($object->getWorkAddress() as $value_42) {
-                $values_16[] = $this->normalizer->normalize($value_42, 'json', $context);
-            }
-            $data->{'workAddress'} = $values_16;
-        }
-        if (null !== $object->getWorkEligibility()) {
-            $values_17 = [];
-            foreach ($object->getWorkEligibility() as $value_43) {
-                $values_17[] = $this->normalizer->normalize($value_43, 'json', $context);
-            }
-            $data->{'workEligibility'} = $values_17;
-        }
+        $data->{'workEligibility'} = $values_17;
 
         return $data;
     }

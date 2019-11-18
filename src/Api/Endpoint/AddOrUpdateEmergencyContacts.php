@@ -18,19 +18,18 @@ class AddOrUpdateEmergencyContacts extends \Jane\OpenApiRuntime\Client\BaseEndpo
     /**
      * Sends new or updated employee emergency contacts directly to Web Pay.
      *
-     * @param string                                $companyId        Company Id
-     * @param string                                $employeeId       Employee Id
-     * @param \Paylocity\Api\Model\EmergencyContact $json             Emergency Contact Model
-     * @param array                                 $headerParameters {
+     * @param string $companyId        Company Id
+     * @param string $employeeId       Employee Id
+     * @param array  $headerParameters {
      *
      *     @var string $Authorization Bearer + JWT
      * }
      */
-    public function __construct(string $companyId, string $employeeId, \Paylocity\Api\Model\EmergencyContact $json, array $headerParameters = [])
+    public function __construct(string $companyId, string $employeeId, \Paylocity\Api\Model\EmergencyContact $requestBody, array $headerParameters = [])
     {
         $this->companyId = $companyId;
         $this->employeeId = $employeeId;
-        $this->body = $json;
+        $this->body = $requestBody;
         $this->headerParameters = $headerParameters;
     }
 
@@ -48,7 +47,11 @@ class AddOrUpdateEmergencyContacts extends \Jane\OpenApiRuntime\Client\BaseEndpo
 
     public function getBody(\Symfony\Component\Serializer\SerializerInterface $serializer, $streamFactory = null): array
     {
-        return $this->getSerializedBody($serializer);
+        if ($this->body instanceof \Paylocity\Api\Model\EmergencyContact) {
+            return [['Content-Type' => ['application/json']], $serializer->serialize($this->body, 'json')];
+        }
+
+        return [[], null];
     }
 
     public function getExtraHeaders(): array
@@ -71,27 +74,22 @@ class AddOrUpdateEmergencyContacts extends \Jane\OpenApiRuntime\Client\BaseEndpo
      * {@inheritdoc}
      *
      * @throws \Paylocity\Api\Exception\AddOrUpdateEmergencyContactsBadRequestException
-     * @throws \Paylocity\Api\Exception\AddOrUpdateEmergencyContactsUnauthorizedException
-     * @throws \Paylocity\Api\Exception\AddOrUpdateEmergencyContactsForbiddenException
      * @throws \Paylocity\Api\Exception\AddOrUpdateEmergencyContactsInternalServerErrorException
      *
      * @return null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType)
+    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
         if (200 === $status) {
-            return null;
         }
-        if (400 === $status) {
+        if (400 === $status && mb_strpos($contentType, 'application/json') !== false) {
             throw new \Paylocity\Api\Exception\AddOrUpdateEmergencyContactsBadRequestException($serializer->deserialize($body, 'Paylocity\\Api\\Model\\Error[]', 'json'));
         }
         if (401 === $status) {
-            throw new \Paylocity\Api\Exception\AddOrUpdateEmergencyContactsUnauthorizedException();
         }
         if (403 === $status) {
-            throw new \Paylocity\Api\Exception\AddOrUpdateEmergencyContactsForbiddenException();
         }
-        if (500 === $status) {
+        if (500 === $status && mb_strpos($contentType, 'application/json') !== false) {
             throw new \Paylocity\Api\Exception\AddOrUpdateEmergencyContactsInternalServerErrorException($serializer->deserialize($body, 'Paylocity\\Api\\Model\\Error[]', 'json'));
         }
     }

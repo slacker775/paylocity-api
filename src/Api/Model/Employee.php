@@ -31,24 +31,6 @@ class Employee
      */
     protected $benefitSetup;
     /**
-     * Employee birthdate. Common formats include *MM-DD-CCYY*, *CCYY-MM-DD*.
-     *
-     * @var string|null
-     */
-    protected $birthDate;
-    /**
-     * Company name as defined in Web Pay, applicable with GET requests only.<br  /> Max length: 50.
-     *
-     * @var string|null
-     */
-    protected $companyName;
-    /**
-     * Employee is paid in this currency. <br  />Max length: 30.
-     *
-     * @var string|null
-     */
-    protected $currency;
-    /**
      * Up to 8 custom fields of boolean (checkbox) type value.
      *
      * @var EmployeeCustomBooleanFieldsItem[]
@@ -85,47 +67,17 @@ class Employee
      */
     protected $departmentPosition;
     /**
-     * Indicates if employee has disability status.
-     *
-     * @var string|null
-     */
-    protected $disabilityDescription;
-    /**
      * Add or update Emergency Contacts.
      *
      * @var EmployeeEmergencyContactsItem[]
      */
     protected $emergencyContacts;
     /**
-     * Leave blank to have Web Pay automatically assign the next available employee ID.<br  />Max length: 10.
-     *
-     * @var string|null
-     */
-    protected $employeeId;
-    /**
-     * Employee ethnicity.<br  /> Max length: 10.
-     *
-     * @var string|null
-     */
-    protected $ethnicity;
-    /**
      * Add or update federal tax amount type (taxCalculationCode), amount or percentage, filing status, and exemptions.
      *
      * @var EmployeeFederalTax
      */
     protected $federalTax;
-    /**
-     * Employee first name. <br  />Max length: 40.
-     *
-     * @var string|null
-     */
-    protected $firstName;
-    /**
-     * Employee gender. Common values *M* (Male), *F* (Female). <br  />Max length: 1.
-     *
-     * @var string|null
-     */
-    protected $gender;
     /**
      * Add or update employee's home address, personal phone numbers, and personal email.
      *
@@ -145,12 +97,6 @@ class Employee
      */
     protected $isSmoker;
     /**
-     * Employee last name. <br  />Max length: 40.
-     *
-     * @var string|null
-     */
-    protected $lastName;
-    /**
      * Add, update, or delete local tax code, filing status, and exemptions including  PA-PSD taxes.
      *
      * @var EmployeeLocalTaxItem[]
@@ -163,35 +109,11 @@ class Employee
      */
     protected $mainDirectDeposit;
     /**
-     * Employee marital status. Common values *D (Divorced), M (Married), S (Single), W (Widowed)*. <br  />Max length: 10.
-     *
-     * @var string|null
-     */
-    protected $maritalStatus;
-    /**
-     * Employee middle name.<br  /> Max length: 20.
-     *
-     * @var string|null
-     */
-    protected $middleName;
-    /**
      * Add or update non-primary state tax code, amount type (taxCalculationCode), amount or percentage, filing status, exemptions, supplemental check (specialCheckCalc), and reciprocity code information.
      *
      * @var EmployeeNonPrimaryStateTax
      */
     protected $nonPrimaryStateTax;
-    /**
-     * Percentage of employee's ownership in the company, entered as a whole number. <br  /> Decimal (12,2).
-     *
-     * @var float|null
-     */
-    protected $ownerPercent;
-    /**
-     * Employee preferred display name.<br  /> Max length: 20.
-     *
-     * @var string|null
-     */
-    protected $preferredName;
     /**
      * Add or update hourly or salary pay rate, effective date, and pay frequency.
      *
@@ -205,47 +127,17 @@ class Employee
      */
     protected $primaryStateTax;
     /**
-     * Prior last name if applicable.<br  />Max length: 40.
-     *
-     * @var string|null
-     */
-    protected $priorLastName;
-    /**
-     * Employee preferred salutation. <br  />Max length: 10.
-     *
-     * @var string|null
-     */
-    protected $salutation;
-    /**
-     * Employee social security number. Leave it blank if valid social security number not available. <br  />Max length: 11.
-     *
-     * @var string|null
-     */
-    protected $ssn;
-    /**
      * Add or update employee status, change reason, effective date, and adjusted seniority date. Note that companies that are still in Implementation cannot hire future employees.
      *
      * @var EmployeeStatus
      */
     protected $status;
     /**
-     * Employee name suffix. Common values are *Jr, Sr, II*.<br  />Max length: 30.
-     *
-     * @var string|null
-     */
-    protected $suffix;
-    /**
      * Add tax form, 1099 exempt reasons and notes, and 943 agricultural employee information. Once the employee receives wages, this information cannot be updated. Add or update SUI tax state, retirement plan, and statutory information.
      *
      * @var EmployeeTaxSetup
      */
     protected $taxSetup;
-    /**
-     * Indicates if employee is a veteran.
-     *
-     * @var string|null
-     */
-    protected $veteranDescription;
     /**
      * Add or update Web Time badge number and charge rate and synchronize Web Pay and Web Time employee data.
      *
@@ -323,60 +215,6 @@ class Employee
     public function setBenefitSetup(EmployeeBenefitSetup $benefitSetup): self
     {
         $this->benefitSetup = $benefitSetup;
-
-        return $this;
-    }
-
-    /**
-     * Employee birthdate. Common formats include *MM-DD-CCYY*, *CCYY-MM-DD*.
-     */
-    public function getBirthDate(): ?string
-    {
-        return $this->birthDate;
-    }
-
-    /**
-     * Employee birthdate. Common formats include *MM-DD-CCYY*, *CCYY-MM-DD*.
-     */
-    public function setBirthDate(?string $birthDate): self
-    {
-        $this->birthDate = $birthDate;
-
-        return $this;
-    }
-
-    /**
-     * Company name as defined in Web Pay, applicable with GET requests only.<br  /> Max length: 50.
-     */
-    public function getCompanyName(): ?string
-    {
-        return $this->companyName;
-    }
-
-    /**
-     * Company name as defined in Web Pay, applicable with GET requests only.<br  /> Max length: 50.
-     */
-    public function setCompanyName(?string $companyName): self
-    {
-        $this->companyName = $companyName;
-
-        return $this;
-    }
-
-    /**
-     * Employee is paid in this currency. <br  />Max length: 30.
-     */
-    public function getCurrency(): ?string
-    {
-        return $this->currency;
-    }
-
-    /**
-     * Employee is paid in this currency. <br  />Max length: 30.
-     */
-    public function setCurrency(?string $currency): self
-    {
-        $this->currency = $currency;
 
         return $this;
     }
@@ -510,24 +348,6 @@ class Employee
     }
 
     /**
-     * Indicates if employee has disability status.
-     */
-    public function getDisabilityDescription(): ?string
-    {
-        return $this->disabilityDescription;
-    }
-
-    /**
-     * Indicates if employee has disability status.
-     */
-    public function setDisabilityDescription(?string $disabilityDescription): self
-    {
-        $this->disabilityDescription = $disabilityDescription;
-
-        return $this;
-    }
-
-    /**
      * Add or update Emergency Contacts.
      *
      * @return EmployeeEmergencyContactsItem[]
@@ -550,42 +370,6 @@ class Employee
     }
 
     /**
-     * Leave blank to have Web Pay automatically assign the next available employee ID.<br  />Max length: 10.
-     */
-    public function getEmployeeId(): ?string
-    {
-        return $this->employeeId;
-    }
-
-    /**
-     * Leave blank to have Web Pay automatically assign the next available employee ID.<br  />Max length: 10.
-     */
-    public function setEmployeeId(?string $employeeId): self
-    {
-        $this->employeeId = $employeeId;
-
-        return $this;
-    }
-
-    /**
-     * Employee ethnicity.<br  /> Max length: 10.
-     */
-    public function getEthnicity(): ?string
-    {
-        return $this->ethnicity;
-    }
-
-    /**
-     * Employee ethnicity.<br  /> Max length: 10.
-     */
-    public function setEthnicity(?string $ethnicity): self
-    {
-        $this->ethnicity = $ethnicity;
-
-        return $this;
-    }
-
-    /**
      * Add or update federal tax amount type (taxCalculationCode), amount or percentage, filing status, and exemptions.
      */
     public function getFederalTax(): EmployeeFederalTax
@@ -599,42 +383,6 @@ class Employee
     public function setFederalTax(EmployeeFederalTax $federalTax): self
     {
         $this->federalTax = $federalTax;
-
-        return $this;
-    }
-
-    /**
-     * Employee first name. <br  />Max length: 40.
-     */
-    public function getFirstName(): ?string
-    {
-        return $this->firstName;
-    }
-
-    /**
-     * Employee first name. <br  />Max length: 40.
-     */
-    public function setFirstName(?string $firstName): self
-    {
-        $this->firstName = $firstName;
-
-        return $this;
-    }
-
-    /**
-     * Employee gender. Common values *M* (Male), *F* (Female). <br  />Max length: 1.
-     */
-    public function getGender(): ?string
-    {
-        return $this->gender;
-    }
-
-    /**
-     * Employee gender. Common values *M* (Male), *F* (Female). <br  />Max length: 1.
-     */
-    public function setGender(?string $gender): self
-    {
-        $this->gender = $gender;
 
         return $this;
     }
@@ -694,24 +442,6 @@ class Employee
     }
 
     /**
-     * Employee last name. <br  />Max length: 40.
-     */
-    public function getLastName(): ?string
-    {
-        return $this->lastName;
-    }
-
-    /**
-     * Employee last name. <br  />Max length: 40.
-     */
-    public function setLastName(?string $lastName): self
-    {
-        $this->lastName = $lastName;
-
-        return $this;
-    }
-
-    /**
      * Add, update, or delete local tax code, filing status, and exemptions including  PA-PSD taxes.
      *
      * @return EmployeeLocalTaxItem[]
@@ -752,42 +482,6 @@ class Employee
     }
 
     /**
-     * Employee marital status. Common values *D (Divorced), M (Married), S (Single), W (Widowed)*. <br  />Max length: 10.
-     */
-    public function getMaritalStatus(): ?string
-    {
-        return $this->maritalStatus;
-    }
-
-    /**
-     * Employee marital status. Common values *D (Divorced), M (Married), S (Single), W (Widowed)*. <br  />Max length: 10.
-     */
-    public function setMaritalStatus(?string $maritalStatus): self
-    {
-        $this->maritalStatus = $maritalStatus;
-
-        return $this;
-    }
-
-    /**
-     * Employee middle name.<br  /> Max length: 20.
-     */
-    public function getMiddleName(): ?string
-    {
-        return $this->middleName;
-    }
-
-    /**
-     * Employee middle name.<br  /> Max length: 20.
-     */
-    public function setMiddleName(?string $middleName): self
-    {
-        $this->middleName = $middleName;
-
-        return $this;
-    }
-
-    /**
      * Add or update non-primary state tax code, amount type (taxCalculationCode), amount or percentage, filing status, exemptions, supplemental check (specialCheckCalc), and reciprocity code information.
      */
     public function getNonPrimaryStateTax(): EmployeeNonPrimaryStateTax
@@ -801,42 +495,6 @@ class Employee
     public function setNonPrimaryStateTax(EmployeeNonPrimaryStateTax $nonPrimaryStateTax): self
     {
         $this->nonPrimaryStateTax = $nonPrimaryStateTax;
-
-        return $this;
-    }
-
-    /**
-     * Percentage of employee's ownership in the company, entered as a whole number. <br  /> Decimal (12,2).
-     */
-    public function getOwnerPercent(): ?float
-    {
-        return $this->ownerPercent;
-    }
-
-    /**
-     * Percentage of employee's ownership in the company, entered as a whole number. <br  /> Decimal (12,2).
-     */
-    public function setOwnerPercent(?float $ownerPercent): self
-    {
-        $this->ownerPercent = $ownerPercent;
-
-        return $this;
-    }
-
-    /**
-     * Employee preferred display name.<br  /> Max length: 20.
-     */
-    public function getPreferredName(): ?string
-    {
-        return $this->preferredName;
-    }
-
-    /**
-     * Employee preferred display name.<br  /> Max length: 20.
-     */
-    public function setPreferredName(?string $preferredName): self
-    {
-        $this->preferredName = $preferredName;
 
         return $this;
     }
@@ -878,60 +536,6 @@ class Employee
     }
 
     /**
-     * Prior last name if applicable.<br  />Max length: 40.
-     */
-    public function getPriorLastName(): ?string
-    {
-        return $this->priorLastName;
-    }
-
-    /**
-     * Prior last name if applicable.<br  />Max length: 40.
-     */
-    public function setPriorLastName(?string $priorLastName): self
-    {
-        $this->priorLastName = $priorLastName;
-
-        return $this;
-    }
-
-    /**
-     * Employee preferred salutation. <br  />Max length: 10.
-     */
-    public function getSalutation(): ?string
-    {
-        return $this->salutation;
-    }
-
-    /**
-     * Employee preferred salutation. <br  />Max length: 10.
-     */
-    public function setSalutation(?string $salutation): self
-    {
-        $this->salutation = $salutation;
-
-        return $this;
-    }
-
-    /**
-     * Employee social security number. Leave it blank if valid social security number not available. <br  />Max length: 11.
-     */
-    public function getSsn(): ?string
-    {
-        return $this->ssn;
-    }
-
-    /**
-     * Employee social security number. Leave it blank if valid social security number not available. <br  />Max length: 11.
-     */
-    public function setSsn(?string $ssn): self
-    {
-        $this->ssn = $ssn;
-
-        return $this;
-    }
-
-    /**
      * Add or update employee status, change reason, effective date, and adjusted seniority date. Note that companies that are still in Implementation cannot hire future employees.
      */
     public function getStatus(): EmployeeStatus
@@ -950,24 +554,6 @@ class Employee
     }
 
     /**
-     * Employee name suffix. Common values are *Jr, Sr, II*.<br  />Max length: 30.
-     */
-    public function getSuffix(): ?string
-    {
-        return $this->suffix;
-    }
-
-    /**
-     * Employee name suffix. Common values are *Jr, Sr, II*.<br  />Max length: 30.
-     */
-    public function setSuffix(?string $suffix): self
-    {
-        $this->suffix = $suffix;
-
-        return $this;
-    }
-
-    /**
      * Add tax form, 1099 exempt reasons and notes, and 943 agricultural employee information. Once the employee receives wages, this information cannot be updated. Add or update SUI tax state, retirement plan, and statutory information.
      */
     public function getTaxSetup(): EmployeeTaxSetup
@@ -981,24 +567,6 @@ class Employee
     public function setTaxSetup(EmployeeTaxSetup $taxSetup): self
     {
         $this->taxSetup = $taxSetup;
-
-        return $this;
-    }
-
-    /**
-     * Indicates if employee is a veteran.
-     */
-    public function getVeteranDescription(): ?string
-    {
-        return $this->veteranDescription;
-    }
-
-    /**
-     * Indicates if employee is a veteran.
-     */
-    public function setVeteranDescription(?string $veteranDescription): self
-    {
-        $this->veteranDescription = $veteranDescription;
 
         return $this;
     }

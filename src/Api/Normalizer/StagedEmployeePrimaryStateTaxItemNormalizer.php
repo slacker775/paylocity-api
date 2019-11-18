@@ -30,7 +30,7 @@ class StagedEmployeePrimaryStateTaxItemNormalizer implements DenormalizerInterfa
 
     public function supportsNormalization($data, $format = null)
     {
-        return get_class($data) === 'Paylocity\\Api\\Model\\StagedEmployeePrimaryStateTaxItem';
+        return is_object($data) && get_class($data) === 'Paylocity\\Api\\Model\\StagedEmployeePrimaryStateTaxItem';
     }
 
     public function denormalize($data, $class, $format = null, array $context = [])
@@ -39,78 +39,6 @@ class StagedEmployeePrimaryStateTaxItemNormalizer implements DenormalizerInterfa
             throw new InvalidArgumentException();
         }
         $object = new \Paylocity\Api\Model\StagedEmployeePrimaryStateTaxItem();
-        if (property_exists($data, 'amount')) {
-            $value = $data->{'amount'};
-            if (is_float($data->{'amount'})) {
-                $value = $data->{'amount'};
-            } elseif (is_null($data->{'amount'})) {
-                $value = $data->{'amount'};
-            }
-            $object->setAmount($value);
-        }
-        if (property_exists($data, 'exemptions')) {
-            $value_1 = $data->{'exemptions'};
-            if (is_float($data->{'exemptions'})) {
-                $value_1 = $data->{'exemptions'};
-            } elseif (is_null($data->{'exemptions'})) {
-                $value_1 = $data->{'exemptions'};
-            }
-            $object->setExemptions($value_1);
-        }
-        if (property_exists($data, 'exemptions2')) {
-            $value_2 = $data->{'exemptions2'};
-            if (is_float($data->{'exemptions2'})) {
-                $value_2 = $data->{'exemptions2'};
-            } elseif (is_null($data->{'exemptions2'})) {
-                $value_2 = $data->{'exemptions2'};
-            }
-            $object->setExemptions2($value_2);
-        }
-        if (property_exists($data, 'filingStatus')) {
-            $value_3 = $data->{'filingStatus'};
-            if (is_string($data->{'filingStatus'})) {
-                $value_3 = $data->{'filingStatus'};
-            } elseif (is_null($data->{'filingStatus'})) {
-                $value_3 = $data->{'filingStatus'};
-            }
-            $object->setFilingStatus($value_3);
-        }
-        if (property_exists($data, 'percentage')) {
-            $value_4 = $data->{'percentage'};
-            if (is_float($data->{'percentage'})) {
-                $value_4 = $data->{'percentage'};
-            } elseif (is_null($data->{'percentage'})) {
-                $value_4 = $data->{'percentage'};
-            }
-            $object->setPercentage($value_4);
-        }
-        if (property_exists($data, 'specialCheckCalc')) {
-            $value_5 = $data->{'specialCheckCalc'};
-            if (is_string($data->{'specialCheckCalc'})) {
-                $value_5 = $data->{'specialCheckCalc'};
-            } elseif (is_null($data->{'specialCheckCalc'})) {
-                $value_5 = $data->{'specialCheckCalc'};
-            }
-            $object->setSpecialCheckCalc($value_5);
-        }
-        if (property_exists($data, 'taxCalculationCode')) {
-            $value_6 = $data->{'taxCalculationCode'};
-            if (is_string($data->{'taxCalculationCode'})) {
-                $value_6 = $data->{'taxCalculationCode'};
-            } elseif (is_null($data->{'taxCalculationCode'})) {
-                $value_6 = $data->{'taxCalculationCode'};
-            }
-            $object->setTaxCalculationCode($value_6);
-        }
-        if (property_exists($data, 'taxCode')) {
-            $value_7 = $data->{'taxCode'};
-            if (is_string($data->{'taxCode'})) {
-                $value_7 = $data->{'taxCode'};
-            } elseif (is_null($data->{'taxCode'})) {
-                $value_7 = $data->{'taxCode'};
-            }
-            $object->setTaxCode($value_7);
-        }
 
         return $object;
     }
@@ -118,62 +46,6 @@ class StagedEmployeePrimaryStateTaxItemNormalizer implements DenormalizerInterfa
     public function normalize($object, $format = null, array $context = [])
     {
         $data = new \stdClass();
-        $value = $object->getAmount();
-        if (is_float($object->getAmount())) {
-            $value = $object->getAmount();
-        } elseif (is_null($object->getAmount())) {
-            $value = $object->getAmount();
-        }
-        $data->{'amount'} = $value;
-        $value_1 = $object->getExemptions();
-        if (is_float($object->getExemptions())) {
-            $value_1 = $object->getExemptions();
-        } elseif (is_null($object->getExemptions())) {
-            $value_1 = $object->getExemptions();
-        }
-        $data->{'exemptions'} = $value_1;
-        $value_2 = $object->getExemptions2();
-        if (is_float($object->getExemptions2())) {
-            $value_2 = $object->getExemptions2();
-        } elseif (is_null($object->getExemptions2())) {
-            $value_2 = $object->getExemptions2();
-        }
-        $data->{'exemptions2'} = $value_2;
-        $value_3 = $object->getFilingStatus();
-        if (is_string($object->getFilingStatus())) {
-            $value_3 = $object->getFilingStatus();
-        } elseif (is_null($object->getFilingStatus())) {
-            $value_3 = $object->getFilingStatus();
-        }
-        $data->{'filingStatus'} = $value_3;
-        $value_4 = $object->getPercentage();
-        if (is_float($object->getPercentage())) {
-            $value_4 = $object->getPercentage();
-        } elseif (is_null($object->getPercentage())) {
-            $value_4 = $object->getPercentage();
-        }
-        $data->{'percentage'} = $value_4;
-        $value_5 = $object->getSpecialCheckCalc();
-        if (is_string($object->getSpecialCheckCalc())) {
-            $value_5 = $object->getSpecialCheckCalc();
-        } elseif (is_null($object->getSpecialCheckCalc())) {
-            $value_5 = $object->getSpecialCheckCalc();
-        }
-        $data->{'specialCheckCalc'} = $value_5;
-        $value_6 = $object->getTaxCalculationCode();
-        if (is_string($object->getTaxCalculationCode())) {
-            $value_6 = $object->getTaxCalculationCode();
-        } elseif (is_null($object->getTaxCalculationCode())) {
-            $value_6 = $object->getTaxCalculationCode();
-        }
-        $data->{'taxCalculationCode'} = $value_6;
-        $value_7 = $object->getTaxCode();
-        if (is_string($object->getTaxCode())) {
-            $value_7 = $object->getTaxCode();
-        } elseif (is_null($object->getTaxCode())) {
-            $value_7 = $object->getTaxCode();
-        }
-        $data->{'taxCode'} = $value_7;
 
         return $data;
     }

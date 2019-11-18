@@ -75,31 +75,24 @@ class DeleteEarningByEarningCodeAndStartDate extends \Jane\OpenApiRuntime\Client
      * {@inheritdoc}
      *
      * @throws \Paylocity\Api\Exception\DeleteEarningByEarningCodeAndStartDateBadRequestException
-     * @throws \Paylocity\Api\Exception\DeleteEarningByEarningCodeAndStartDateUnauthorizedException
-     * @throws \Paylocity\Api\Exception\DeleteEarningByEarningCodeAndStartDateForbiddenException
-     * @throws \Paylocity\Api\Exception\DeleteEarningByEarningCodeAndStartDateNotFoundException
      * @throws \Paylocity\Api\Exception\DeleteEarningByEarningCodeAndStartDateInternalServerErrorException
      *
      * @return null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType)
+    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
         if (204 === $status) {
-            return null;
         }
-        if (400 === $status) {
+        if (400 === $status && mb_strpos($contentType, 'application/json') !== false) {
             throw new \Paylocity\Api\Exception\DeleteEarningByEarningCodeAndStartDateBadRequestException($serializer->deserialize($body, 'Paylocity\\Api\\Model\\Error[]', 'json'));
         }
         if (401 === $status) {
-            throw new \Paylocity\Api\Exception\DeleteEarningByEarningCodeAndStartDateUnauthorizedException();
         }
         if (403 === $status) {
-            throw new \Paylocity\Api\Exception\DeleteEarningByEarningCodeAndStartDateForbiddenException();
         }
         if (404 === $status) {
-            throw new \Paylocity\Api\Exception\DeleteEarningByEarningCodeAndStartDateNotFoundException();
         }
-        if (500 === $status) {
+        if (500 === $status && mb_strpos($contentType, 'application/json') !== false) {
             throw new \Paylocity\Api\Exception\DeleteEarningByEarningCodeAndStartDateInternalServerErrorException($serializer->deserialize($body, 'Paylocity\\Api\\Model\\Error[]', 'json'));
         }
     }

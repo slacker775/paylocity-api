@@ -18,18 +18,6 @@ class StagedEmployeeCustomNumberFieldsItem
      * @var string
      */
     protected $category;
-    /**
-     * The custom field label whose value is to be added/updated.  Must match to the label defined in Web Pay Custom Fields setup.  Max length: 255.
-     *
-     * @var string|null
-     */
-    protected $label;
-    /**
-     * The custom number field value.  Decimal (18,6).
-     *
-     * @var float|null
-     */
-    protected $value;
 
     /**
      * The custom field category.  Acceptable value is 'PayrollAndHR'.
@@ -45,42 +33,6 @@ class StagedEmployeeCustomNumberFieldsItem
     public function setCategory(string $category): self
     {
         $this->category = $category;
-
-        return $this;
-    }
-
-    /**
-     * The custom field label whose value is to be added/updated.  Must match to the label defined in Web Pay Custom Fields setup.  Max length: 255.
-     */
-    public function getLabel(): ?string
-    {
-        return $this->label;
-    }
-
-    /**
-     * The custom field label whose value is to be added/updated.  Must match to the label defined in Web Pay Custom Fields setup.  Max length: 255.
-     */
-    public function setLabel(?string $label): self
-    {
-        $this->label = $label;
-
-        return $this;
-    }
-
-    /**
-     * The custom number field value.  Decimal (18,6).
-     */
-    public function getValue(): ?float
-    {
-        return $this->value;
-    }
-
-    /**
-     * The custom number field value.  Decimal (18,6).
-     */
-    public function setValue(?float $value): self
-    {
-        $this->value = $value;
 
         return $this;
     }

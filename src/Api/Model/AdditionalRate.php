@@ -15,80 +15,80 @@ class AdditionalRate
     /**
      * Not required. If populated, must match one of the system coded values available in the Additional Rates Change Reason drop down.<br />.
      *
-     * @var string|null
+     * @var string
      */
     protected $changeReason;
     /**
      * Not required. Valid values must match one of the system coded cost centers available in the Additional Rates Cost Center level 1 drop down. This cell must be in a text format.<br />.
      *
-     * @var string|null
+     * @var string
      */
     protected $costCenter1;
     /**
      * Not required. Valid values must match one of the system coded cost centers available in the Additional Rates Cost Center level 2 drop down. This cell must be in a text format.<br />.
      *
-     * @var string|null
+     * @var string
      */
     protected $costCenter2;
     /**
      * Not required. Valid values must match one of the system coded cost centers available in the Additional Rates Cost Center level 3 drop down. This cell must be in a text format.<br />.
      *
-     * @var string|null
+     * @var string
      */
     protected $costCenter3;
     /**
      * Required. Common formats include *MM-DD-CCYY*, *CCYY-MM-DD*.<br />.
      *
-     * @var string|null
+     * @var string
      */
     protected $effectiveDate;
     /**
      * Not required. Must match one of the system coded check dates available in the Additional Rates End Check Date drop down. Common formats include *MM-DD-CCYY*, *CCYY-MM-DD*.<br />.
      *
-     * @var string|null
+     * @var string
      */
     protected $endCheckDate;
     /**
      * Not required. If populated, must match one of the system coded values available in the Additional Rates Job drop down.<br />.
      *
-     * @var string|null
+     * @var string
      */
     protected $job;
     /**
      * Required. Enter dollar amount that corresponds to the Per selection.<br />.
      *
-     * @var float|null
+     * @var float
      */
     protected $rate;
     /**
      * Required. If populated, must match one of the system coded values available in the Additional Rates Rate Code drop down.<br />.
      *
-     * @var string|null
+     * @var string
      */
     protected $rateCode;
     /**
      * Not required.<br  />Max length: 4000<br />.
      *
-     * @var string|null
+     * @var string
      */
     protected $rateNotes;
     /**
      * Required. Valid values are HOUR or WEEK.<br />.
      *
-     * @var string|null
+     * @var string
      */
     protected $ratePer;
     /**
      * Not required. If populated, must match one of the system coded values available in the Additional Rates Shift drop down.<br />.
      *
-     * @var string|null
+     * @var string
      */
     protected $shift;
 
     /**
      * Not required. If populated, must match one of the system coded values available in the Additional Rates Change Reason drop down.<br />.
      */
-    public function getChangeReason(): ?string
+    public function getChangeReason(): string
     {
         return $this->changeReason;
     }
@@ -96,7 +96,7 @@ class AdditionalRate
     /**
      * Not required. If populated, must match one of the system coded values available in the Additional Rates Change Reason drop down.<br />.
      */
-    public function setChangeReason(?string $changeReason): self
+    public function setChangeReason(string $changeReason): self
     {
         $this->changeReason = $changeReason;
 
@@ -106,7 +106,7 @@ class AdditionalRate
     /**
      * Not required. Valid values must match one of the system coded cost centers available in the Additional Rates Cost Center level 1 drop down. This cell must be in a text format.<br />.
      */
-    public function getCostCenter1(): ?string
+    public function getCostCenter1(): string
     {
         return $this->costCenter1;
     }
@@ -114,7 +114,7 @@ class AdditionalRate
     /**
      * Not required. Valid values must match one of the system coded cost centers available in the Additional Rates Cost Center level 1 drop down. This cell must be in a text format.<br />.
      */
-    public function setCostCenter1(?string $costCenter1): self
+    public function setCostCenter1(string $costCenter1): self
     {
         $this->costCenter1 = $costCenter1;
 
@@ -124,7 +124,7 @@ class AdditionalRate
     /**
      * Not required. Valid values must match one of the system coded cost centers available in the Additional Rates Cost Center level 2 drop down. This cell must be in a text format.<br />.
      */
-    public function getCostCenter2(): ?string
+    public function getCostCenter2(): string
     {
         return $this->costCenter2;
     }
@@ -132,7 +132,7 @@ class AdditionalRate
     /**
      * Not required. Valid values must match one of the system coded cost centers available in the Additional Rates Cost Center level 2 drop down. This cell must be in a text format.<br />.
      */
-    public function setCostCenter2(?string $costCenter2): self
+    public function setCostCenter2(string $costCenter2): self
     {
         $this->costCenter2 = $costCenter2;
 
@@ -142,7 +142,7 @@ class AdditionalRate
     /**
      * Not required. Valid values must match one of the system coded cost centers available in the Additional Rates Cost Center level 3 drop down. This cell must be in a text format.<br />.
      */
-    public function getCostCenter3(): ?string
+    public function getCostCenter3(): string
     {
         return $this->costCenter3;
     }
@@ -150,7 +150,7 @@ class AdditionalRate
     /**
      * Not required. Valid values must match one of the system coded cost centers available in the Additional Rates Cost Center level 3 drop down. This cell must be in a text format.<br />.
      */
-    public function setCostCenter3(?string $costCenter3): self
+    public function setCostCenter3(string $costCenter3): self
     {
         $this->costCenter3 = $costCenter3;
 
@@ -160,7 +160,7 @@ class AdditionalRate
     /**
      * Required. Common formats include *MM-DD-CCYY*, *CCYY-MM-DD*.<br />.
      */
-    public function getEffectiveDate(): ?string
+    public function getEffectiveDate(): string
     {
         return $this->effectiveDate;
     }
@@ -168,7 +168,7 @@ class AdditionalRate
     /**
      * Required. Common formats include *MM-DD-CCYY*, *CCYY-MM-DD*.<br />.
      */
-    public function setEffectiveDate(?string $effectiveDate): self
+    public function setEffectiveDate(string $effectiveDate): self
     {
         $this->effectiveDate = $effectiveDate;
 
@@ -178,7 +178,7 @@ class AdditionalRate
     /**
      * Not required. Must match one of the system coded check dates available in the Additional Rates End Check Date drop down. Common formats include *MM-DD-CCYY*, *CCYY-MM-DD*.<br />.
      */
-    public function getEndCheckDate(): ?string
+    public function getEndCheckDate(): string
     {
         return $this->endCheckDate;
     }
@@ -186,7 +186,7 @@ class AdditionalRate
     /**
      * Not required. Must match one of the system coded check dates available in the Additional Rates End Check Date drop down. Common formats include *MM-DD-CCYY*, *CCYY-MM-DD*.<br />.
      */
-    public function setEndCheckDate(?string $endCheckDate): self
+    public function setEndCheckDate(string $endCheckDate): self
     {
         $this->endCheckDate = $endCheckDate;
 
@@ -196,7 +196,7 @@ class AdditionalRate
     /**
      * Not required. If populated, must match one of the system coded values available in the Additional Rates Job drop down.<br />.
      */
-    public function getJob(): ?string
+    public function getJob(): string
     {
         return $this->job;
     }
@@ -204,7 +204,7 @@ class AdditionalRate
     /**
      * Not required. If populated, must match one of the system coded values available in the Additional Rates Job drop down.<br />.
      */
-    public function setJob(?string $job): self
+    public function setJob(string $job): self
     {
         $this->job = $job;
 
@@ -214,7 +214,7 @@ class AdditionalRate
     /**
      * Required. Enter dollar amount that corresponds to the Per selection.<br />.
      */
-    public function getRate(): ?float
+    public function getRate(): float
     {
         return $this->rate;
     }
@@ -222,7 +222,7 @@ class AdditionalRate
     /**
      * Required. Enter dollar amount that corresponds to the Per selection.<br />.
      */
-    public function setRate(?float $rate): self
+    public function setRate(float $rate): self
     {
         $this->rate = $rate;
 
@@ -232,7 +232,7 @@ class AdditionalRate
     /**
      * Required. If populated, must match one of the system coded values available in the Additional Rates Rate Code drop down.<br />.
      */
-    public function getRateCode(): ?string
+    public function getRateCode(): string
     {
         return $this->rateCode;
     }
@@ -240,7 +240,7 @@ class AdditionalRate
     /**
      * Required. If populated, must match one of the system coded values available in the Additional Rates Rate Code drop down.<br />.
      */
-    public function setRateCode(?string $rateCode): self
+    public function setRateCode(string $rateCode): self
     {
         $this->rateCode = $rateCode;
 
@@ -250,7 +250,7 @@ class AdditionalRate
     /**
      * Not required.<br  />Max length: 4000<br />.
      */
-    public function getRateNotes(): ?string
+    public function getRateNotes(): string
     {
         return $this->rateNotes;
     }
@@ -258,7 +258,7 @@ class AdditionalRate
     /**
      * Not required.<br  />Max length: 4000<br />.
      */
-    public function setRateNotes(?string $rateNotes): self
+    public function setRateNotes(string $rateNotes): self
     {
         $this->rateNotes = $rateNotes;
 
@@ -268,7 +268,7 @@ class AdditionalRate
     /**
      * Required. Valid values are HOUR or WEEK.<br />.
      */
-    public function getRatePer(): ?string
+    public function getRatePer(): string
     {
         return $this->ratePer;
     }
@@ -276,7 +276,7 @@ class AdditionalRate
     /**
      * Required. Valid values are HOUR or WEEK.<br />.
      */
-    public function setRatePer(?string $ratePer): self
+    public function setRatePer(string $ratePer): self
     {
         $this->ratePer = $ratePer;
 
@@ -286,7 +286,7 @@ class AdditionalRate
     /**
      * Not required. If populated, must match one of the system coded values available in the Additional Rates Shift drop down.<br />.
      */
-    public function getShift(): ?string
+    public function getShift(): string
     {
         return $this->shift;
     }
@@ -294,7 +294,7 @@ class AdditionalRate
     /**
      * Not required. If populated, must match one of the system coded values available in the Additional Rates Shift drop down.<br />.
      */
-    public function setShift(?string $shift): self
+    public function setShift(string $shift): self
     {
         $this->shift = $shift;
 

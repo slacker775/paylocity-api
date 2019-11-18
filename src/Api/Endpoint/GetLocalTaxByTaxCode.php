@@ -71,28 +71,22 @@ class GetLocalTaxByTaxCode extends \Jane\OpenApiRuntime\Client\BaseEndpoint impl
     /**
      * {@inheritdoc}
      *
-     * @throws \Paylocity\Api\Exception\GetLocalTaxByTaxCodeUnauthorizedException
-     * @throws \Paylocity\Api\Exception\GetLocalTaxByTaxCodeForbiddenException
-     * @throws \Paylocity\Api\Exception\GetLocalTaxByTaxCodeNotFoundException
      * @throws \Paylocity\Api\Exception\GetLocalTaxByTaxCodeInternalServerErrorException
      *
-     * @return \Paylocity\Api\Model\LocalTax[]|null
+     * @return null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType)
+    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
-        if (200 === $status) {
-            return $serializer->deserialize($body, 'Paylocity\\Api\\Model\\LocalTax[]', 'json');
+        if (200 === $status && mb_strpos($contentType, 'application/json') !== false) {
+            return json_decode($body);
         }
         if (401 === $status) {
-            throw new \Paylocity\Api\Exception\GetLocalTaxByTaxCodeUnauthorizedException();
         }
         if (403 === $status) {
-            throw new \Paylocity\Api\Exception\GetLocalTaxByTaxCodeForbiddenException();
         }
         if (404 === $status) {
-            throw new \Paylocity\Api\Exception\GetLocalTaxByTaxCodeNotFoundException();
         }
-        if (500 === $status) {
+        if (500 === $status && mb_strpos($contentType, 'application/json') !== false) {
             throw new \Paylocity\Api\Exception\GetLocalTaxByTaxCodeInternalServerErrorException($serializer->deserialize($body, 'Paylocity\\Api\\Model\\Error[]', 'json'));
         }
     }

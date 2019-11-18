@@ -30,7 +30,7 @@ class StagedEmployeePrimaryPayRateItemNormalizer implements DenormalizerInterfac
 
     public function supportsNormalization($data, $format = null)
     {
-        return get_class($data) === 'Paylocity\\Api\\Model\\StagedEmployeePrimaryPayRateItem';
+        return is_object($data) && get_class($data) === 'Paylocity\\Api\\Model\\StagedEmployeePrimaryPayRateItem';
     }
 
     public function denormalize($data, $class, $format = null, array $context = [])
@@ -39,96 +39,6 @@ class StagedEmployeePrimaryPayRateItemNormalizer implements DenormalizerInterfac
             throw new InvalidArgumentException();
         }
         $object = new \Paylocity\Api\Model\StagedEmployeePrimaryPayRateItem();
-        if (property_exists($data, 'baseRate')) {
-            $value = $data->{'baseRate'};
-            if (is_float($data->{'baseRate'})) {
-                $value = $data->{'baseRate'};
-            } elseif (is_null($data->{'baseRate'})) {
-                $value = $data->{'baseRate'};
-            }
-            $object->setBaseRate($value);
-        }
-        if (property_exists($data, 'changeReason')) {
-            $value_1 = $data->{'changeReason'};
-            if (is_string($data->{'changeReason'})) {
-                $value_1 = $data->{'changeReason'};
-            } elseif (is_null($data->{'changeReason'})) {
-                $value_1 = $data->{'changeReason'};
-            }
-            $object->setChangeReason($value_1);
-        }
-        if (property_exists($data, 'defaultHours')) {
-            $value_2 = $data->{'defaultHours'};
-            if (is_float($data->{'defaultHours'})) {
-                $value_2 = $data->{'defaultHours'};
-            } elseif (is_null($data->{'defaultHours'})) {
-                $value_2 = $data->{'defaultHours'};
-            }
-            $object->setDefaultHours($value_2);
-        }
-        if (property_exists($data, 'effectiveDate')) {
-            $value_3 = $data->{'effectiveDate'};
-            if (is_string($data->{'effectiveDate'})) {
-                $value_3 = $data->{'effectiveDate'};
-            } elseif (is_null($data->{'effectiveDate'})) {
-                $value_3 = $data->{'effectiveDate'};
-            }
-            $object->setEffectiveDate($value_3);
-        }
-        if (property_exists($data, 'isAutoPay')) {
-            $value_4 = $data->{'isAutoPay'};
-            if (is_bool($data->{'isAutoPay'})) {
-                $value_4 = $data->{'isAutoPay'};
-            } elseif (is_null($data->{'isAutoPay'})) {
-                $value_4 = $data->{'isAutoPay'};
-            }
-            $object->setIsAutoPay($value_4);
-        }
-        if (property_exists($data, 'payFrequency')) {
-            $value_5 = $data->{'payFrequency'};
-            if (is_string($data->{'payFrequency'})) {
-                $value_5 = $data->{'payFrequency'};
-            } elseif (is_null($data->{'payFrequency'})) {
-                $value_5 = $data->{'payFrequency'};
-            }
-            $object->setPayFrequency($value_5);
-        }
-        if (property_exists($data, 'payGrade')) {
-            $value_6 = $data->{'payGrade'};
-            if (is_string($data->{'payGrade'})) {
-                $value_6 = $data->{'payGrade'};
-            } elseif (is_null($data->{'payGrade'})) {
-                $value_6 = $data->{'payGrade'};
-            }
-            $object->setPayGrade($value_6);
-        }
-        if (property_exists($data, 'payType')) {
-            $value_7 = $data->{'payType'};
-            if (is_string($data->{'payType'})) {
-                $value_7 = $data->{'payType'};
-            } elseif (is_null($data->{'payType'})) {
-                $value_7 = $data->{'payType'};
-            }
-            $object->setPayType($value_7);
-        }
-        if (property_exists($data, 'ratePer')) {
-            $value_8 = $data->{'ratePer'};
-            if (is_string($data->{'ratePer'})) {
-                $value_8 = $data->{'ratePer'};
-            } elseif (is_null($data->{'ratePer'})) {
-                $value_8 = $data->{'ratePer'};
-            }
-            $object->setRatePer($value_8);
-        }
-        if (property_exists($data, 'salary')) {
-            $value_9 = $data->{'salary'};
-            if (is_float($data->{'salary'})) {
-                $value_9 = $data->{'salary'};
-            } elseif (is_null($data->{'salary'})) {
-                $value_9 = $data->{'salary'};
-            }
-            $object->setSalary($value_9);
-        }
 
         return $object;
     }
@@ -136,76 +46,6 @@ class StagedEmployeePrimaryPayRateItemNormalizer implements DenormalizerInterfac
     public function normalize($object, $format = null, array $context = [])
     {
         $data = new \stdClass();
-        $value = $object->getBaseRate();
-        if (is_float($object->getBaseRate())) {
-            $value = $object->getBaseRate();
-        } elseif (is_null($object->getBaseRate())) {
-            $value = $object->getBaseRate();
-        }
-        $data->{'baseRate'} = $value;
-        $value_1 = $object->getChangeReason();
-        if (is_string($object->getChangeReason())) {
-            $value_1 = $object->getChangeReason();
-        } elseif (is_null($object->getChangeReason())) {
-            $value_1 = $object->getChangeReason();
-        }
-        $data->{'changeReason'} = $value_1;
-        $value_2 = $object->getDefaultHours();
-        if (is_float($object->getDefaultHours())) {
-            $value_2 = $object->getDefaultHours();
-        } elseif (is_null($object->getDefaultHours())) {
-            $value_2 = $object->getDefaultHours();
-        }
-        $data->{'defaultHours'} = $value_2;
-        $value_3 = $object->getEffectiveDate();
-        if (is_string($object->getEffectiveDate())) {
-            $value_3 = $object->getEffectiveDate();
-        } elseif (is_null($object->getEffectiveDate())) {
-            $value_3 = $object->getEffectiveDate();
-        }
-        $data->{'effectiveDate'} = $value_3;
-        $value_4 = $object->getIsAutoPay();
-        if (is_bool($object->getIsAutoPay())) {
-            $value_4 = $object->getIsAutoPay();
-        } elseif (is_null($object->getIsAutoPay())) {
-            $value_4 = $object->getIsAutoPay();
-        }
-        $data->{'isAutoPay'} = $value_4;
-        $value_5 = $object->getPayFrequency();
-        if (is_string($object->getPayFrequency())) {
-            $value_5 = $object->getPayFrequency();
-        } elseif (is_null($object->getPayFrequency())) {
-            $value_5 = $object->getPayFrequency();
-        }
-        $data->{'payFrequency'} = $value_5;
-        $value_6 = $object->getPayGrade();
-        if (is_string($object->getPayGrade())) {
-            $value_6 = $object->getPayGrade();
-        } elseif (is_null($object->getPayGrade())) {
-            $value_6 = $object->getPayGrade();
-        }
-        $data->{'payGrade'} = $value_6;
-        $value_7 = $object->getPayType();
-        if (is_string($object->getPayType())) {
-            $value_7 = $object->getPayType();
-        } elseif (is_null($object->getPayType())) {
-            $value_7 = $object->getPayType();
-        }
-        $data->{'payType'} = $value_7;
-        $value_8 = $object->getRatePer();
-        if (is_string($object->getRatePer())) {
-            $value_8 = $object->getRatePer();
-        } elseif (is_null($object->getRatePer())) {
-            $value_8 = $object->getRatePer();
-        }
-        $data->{'ratePer'} = $value_8;
-        $value_9 = $object->getSalary();
-        if (is_float($object->getSalary())) {
-            $value_9 = $object->getSalary();
-        } elseif (is_null($object->getSalary())) {
-            $value_9 = $object->getSalary();
-        }
-        $data->{'salary'} = $value_9;
 
         return $data;
     }

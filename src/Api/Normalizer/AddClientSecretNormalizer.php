@@ -30,7 +30,7 @@ class AddClientSecretNormalizer implements DenormalizerInterface, NormalizerInte
 
     public function supportsNormalization($data, $format = null)
     {
-        return get_class($data) === 'Paylocity\\Api\\Model\\AddClientSecret';
+        return is_object($data) && get_class($data) === 'Paylocity\\Api\\Model\\AddClientSecret';
     }
 
     public function denormalize($data, $class, $format = null, array $context = [])
@@ -49,9 +49,7 @@ class AddClientSecretNormalizer implements DenormalizerInterface, NormalizerInte
     public function normalize($object, $format = null, array $context = [])
     {
         $data = new \stdClass();
-        if (null !== $object->getCode()) {
-            $data->{'code'} = $object->getCode();
-        }
+        $data->{'code'} = $object->getCode();
 
         return $data;
     }
