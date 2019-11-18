@@ -13,42 +13,6 @@ namespace Paylocity\Api\Model;
 class PayStatementDetails
 {
     /**
-     * .<br />.
-     *
-     * @var float|null
-     */
-    protected $amount;
-    /**
-     * .<br />.
-     *
-     * @var string|null
-     */
-    protected $checkDate;
-    /**
-     * .<br />.
-     *
-     * @var string|null
-     */
-    protected $det;
-    /**
-     * .<br />.
-     *
-     * @var string|null
-     */
-    protected $detCode;
-    /**
-     * .<br />.
-     *
-     * @var float|null
-     */
-    protected $hours;
-    /**
-     * .<br />.
-     *
-     * @var float|null
-     */
-    protected $rate;
-    /**
      * <br />.
      *
      * @var int
@@ -57,123 +21,9 @@ class PayStatementDetails
     /**
      * .<br />.
      *
-     * @var string|null
-     */
-    protected $transactionType;
-    /**
-     * .<br />.
-     *
      * @var int
      */
     protected $year;
-
-    /**
-     * .<br />.
-     */
-    public function getAmount(): ?float
-    {
-        return $this->amount;
-    }
-
-    /**
-     * .<br />.
-     */
-    public function setAmount(?float $amount): self
-    {
-        $this->amount = $amount;
-
-        return $this;
-    }
-
-    /**
-     * .<br />.
-     */
-    public function getCheckDate(): ?string
-    {
-        return $this->checkDate;
-    }
-
-    /**
-     * .<br />.
-     */
-    public function setCheckDate(?string $checkDate): self
-    {
-        $this->checkDate = $checkDate;
-
-        return $this;
-    }
-
-    /**
-     * .<br />.
-     */
-    public function getDet(): ?string
-    {
-        return $this->det;
-    }
-
-    /**
-     * .<br />.
-     */
-    public function setDet(?string $det): self
-    {
-        $this->det = $det;
-
-        return $this;
-    }
-
-    /**
-     * .<br />.
-     */
-    public function getDetCode(): ?string
-    {
-        return $this->detCode;
-    }
-
-    /**
-     * .<br />.
-     */
-    public function setDetCode(?string $detCode): self
-    {
-        $this->detCode = $detCode;
-
-        return $this;
-    }
-
-    /**
-     * .<br />.
-     */
-    public function getHours(): ?float
-    {
-        return $this->hours;
-    }
-
-    /**
-     * .<br />.
-     */
-    public function setHours(?float $hours): self
-    {
-        $this->hours = $hours;
-
-        return $this;
-    }
-
-    /**
-     * .<br />.
-     */
-    public function getRate(): ?float
-    {
-        return $this->rate;
-    }
-
-    /**
-     * .<br />.
-     */
-    public function setRate(?float $rate): self
-    {
-        $this->rate = $rate;
-
-        return $this;
-    }
 
     /**
      * <br />.
@@ -189,24 +39,6 @@ class PayStatementDetails
     public function setTransactionNumber(int $transactionNumber): self
     {
         $this->transactionNumber = $transactionNumber;
-
-        return $this;
-    }
-
-    /**
-     * .<br />.
-     */
-    public function getTransactionType(): ?string
-    {
-        return $this->transactionType;
-    }
-
-    /**
-     * .<br />.
-     */
-    public function setTransactionType(?string $transactionType): self
-    {
-        $this->transactionType = $transactionType;
 
         return $this;
     }

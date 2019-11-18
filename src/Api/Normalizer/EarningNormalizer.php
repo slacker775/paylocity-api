@@ -30,7 +30,7 @@ class EarningNormalizer implements DenormalizerInterface, NormalizerInterface, D
 
     public function supportsNormalization($data, $format = null)
     {
-        return get_class($data) === 'Paylocity\\Api\\Model\\Earning';
+        return is_object($data) && get_class($data) === 'Paylocity\\Api\\Model\\Earning';
     }
 
     public function denormalize($data, $class, $format = null, array $context = [])
@@ -40,202 +40,40 @@ class EarningNormalizer implements DenormalizerInterface, NormalizerInterface, D
         }
         $object = new \Paylocity\Api\Model\Earning();
         if (property_exists($data, 'agency')) {
-            $value = $data->{'agency'};
-            if (is_string($data->{'agency'})) {
-                $value = $data->{'agency'};
-            } elseif (is_null($data->{'agency'})) {
-                $value = $data->{'agency'};
-            }
-            $object->setAgency($value);
-        }
-        if (property_exists($data, 'amount')) {
-            $value_1 = $data->{'amount'};
-            if (is_float($data->{'amount'})) {
-                $value_1 = $data->{'amount'};
-            } elseif (is_null($data->{'amount'})) {
-                $value_1 = $data->{'amount'};
-            }
-            $object->setAmount($value_1);
-        }
-        if (property_exists($data, 'annualMaximum')) {
-            $value_2 = $data->{'annualMaximum'};
-            if (is_float($data->{'annualMaximum'})) {
-                $value_2 = $data->{'annualMaximum'};
-            } elseif (is_null($data->{'annualMaximum'})) {
-                $value_2 = $data->{'annualMaximum'};
-            }
-            $object->setAnnualMaximum($value_2);
+            $object->setAgency($data->{'agency'});
         }
         if (property_exists($data, 'calculationCode')) {
-            $value_3 = $data->{'calculationCode'};
-            if (is_string($data->{'calculationCode'})) {
-                $value_3 = $data->{'calculationCode'};
-            } elseif (is_null($data->{'calculationCode'})) {
-                $value_3 = $data->{'calculationCode'};
-            }
-            $object->setCalculationCode($value_3);
+            $object->setCalculationCode($data->{'calculationCode'});
         }
         if (property_exists($data, 'costCenter1')) {
-            $value_4 = $data->{'costCenter1'};
-            if (is_string($data->{'costCenter1'})) {
-                $value_4 = $data->{'costCenter1'};
-            } elseif (is_null($data->{'costCenter1'})) {
-                $value_4 = $data->{'costCenter1'};
-            }
-            $object->setCostCenter1($value_4);
+            $object->setCostCenter1($data->{'costCenter1'});
         }
         if (property_exists($data, 'costCenter2')) {
-            $value_5 = $data->{'costCenter2'};
-            if (is_string($data->{'costCenter2'})) {
-                $value_5 = $data->{'costCenter2'};
-            } elseif (is_null($data->{'costCenter2'})) {
-                $value_5 = $data->{'costCenter2'};
-            }
-            $object->setCostCenter2($value_5);
+            $object->setCostCenter2($data->{'costCenter2'});
         }
         if (property_exists($data, 'costCenter3')) {
-            $value_6 = $data->{'costCenter3'};
-            if (is_string($data->{'costCenter3'})) {
-                $value_6 = $data->{'costCenter3'};
-            } elseif (is_null($data->{'costCenter3'})) {
-                $value_6 = $data->{'costCenter3'};
-            }
-            $object->setCostCenter3($value_6);
+            $object->setCostCenter3($data->{'costCenter3'});
         }
         if (property_exists($data, 'earningCode')) {
-            $value_7 = $data->{'earningCode'};
-            if (is_string($data->{'earningCode'})) {
-                $value_7 = $data->{'earningCode'};
-            } elseif (is_null($data->{'earningCode'})) {
-                $value_7 = $data->{'earningCode'};
-            }
-            $object->setEarningCode($value_7);
+            $object->setEarningCode($data->{'earningCode'});
         }
         if (property_exists($data, 'effectiveDate')) {
-            $value_8 = $data->{'effectiveDate'};
-            if (is_string($data->{'effectiveDate'})) {
-                $value_8 = $data->{'effectiveDate'};
-            } elseif (is_null($data->{'effectiveDate'})) {
-                $value_8 = $data->{'effectiveDate'};
-            }
-            $object->setEffectiveDate($value_8);
+            $object->setEffectiveDate($data->{'effectiveDate'});
         }
         if (property_exists($data, 'endDate')) {
-            $value_9 = $data->{'endDate'};
-            if (is_string($data->{'endDate'})) {
-                $value_9 = $data->{'endDate'};
-            } elseif (is_null($data->{'endDate'})) {
-                $value_9 = $data->{'endDate'};
-            }
-            $object->setEndDate($value_9);
+            $object->setEndDate($data->{'endDate'});
         }
         if (property_exists($data, 'frequency')) {
-            $value_10 = $data->{'frequency'};
-            if (is_string($data->{'frequency'})) {
-                $value_10 = $data->{'frequency'};
-            } elseif (is_null($data->{'frequency'})) {
-                $value_10 = $data->{'frequency'};
-            }
-            $object->setFrequency($value_10);
-        }
-        if (property_exists($data, 'goal')) {
-            $value_11 = $data->{'goal'};
-            if (is_float($data->{'goal'})) {
-                $value_11 = $data->{'goal'};
-            } elseif (is_null($data->{'goal'})) {
-                $value_11 = $data->{'goal'};
-            }
-            $object->setGoal($value_11);
-        }
-        if (property_exists($data, 'hoursOrUnits')) {
-            $value_12 = $data->{'hoursOrUnits'};
-            if (is_float($data->{'hoursOrUnits'})) {
-                $value_12 = $data->{'hoursOrUnits'};
-            } elseif (is_null($data->{'hoursOrUnits'})) {
-                $value_12 = $data->{'hoursOrUnits'};
-            }
-            $object->setHoursOrUnits($value_12);
-        }
-        if (property_exists($data, 'isSelfInsured')) {
-            $value_13 = $data->{'isSelfInsured'};
-            if (is_bool($data->{'isSelfInsured'})) {
-                $value_13 = $data->{'isSelfInsured'};
-            } elseif (is_null($data->{'isSelfInsured'})) {
-                $value_13 = $data->{'isSelfInsured'};
-            }
-            $object->setIsSelfInsured($value_13);
+            $object->setFrequency($data->{'frequency'});
         }
         if (property_exists($data, 'jobCode')) {
-            $value_14 = $data->{'jobCode'};
-            if (is_string($data->{'jobCode'})) {
-                $value_14 = $data->{'jobCode'};
-            } elseif (is_null($data->{'jobCode'})) {
-                $value_14 = $data->{'jobCode'};
-            }
-            $object->setJobCode($value_14);
-        }
-        if (property_exists($data, 'miscellaneousInfo')) {
-            $value_15 = $data->{'miscellaneousInfo'};
-            if (is_string($data->{'miscellaneousInfo'})) {
-                $value_15 = $data->{'miscellaneousInfo'};
-            } elseif (is_null($data->{'miscellaneousInfo'})) {
-                $value_15 = $data->{'miscellaneousInfo'};
-            }
-            $object->setMiscellaneousInfo($value_15);
-        }
-        if (property_exists($data, 'paidTowardsGoal')) {
-            $value_16 = $data->{'paidTowardsGoal'};
-            if (is_float($data->{'paidTowardsGoal'})) {
-                $value_16 = $data->{'paidTowardsGoal'};
-            } elseif (is_null($data->{'paidTowardsGoal'})) {
-                $value_16 = $data->{'paidTowardsGoal'};
-            }
-            $object->setPaidTowardsGoal($value_16);
-        }
-        if (property_exists($data, 'payPeriodMaximum')) {
-            $value_17 = $data->{'payPeriodMaximum'};
-            if (is_float($data->{'payPeriodMaximum'})) {
-                $value_17 = $data->{'payPeriodMaximum'};
-            } elseif (is_null($data->{'payPeriodMaximum'})) {
-                $value_17 = $data->{'payPeriodMaximum'};
-            }
-            $object->setPayPeriodMaximum($value_17);
-        }
-        if (property_exists($data, 'payPeriodMinimum')) {
-            $value_18 = $data->{'payPeriodMinimum'};
-            if (is_float($data->{'payPeriodMinimum'})) {
-                $value_18 = $data->{'payPeriodMinimum'};
-            } elseif (is_null($data->{'payPeriodMinimum'})) {
-                $value_18 = $data->{'payPeriodMinimum'};
-            }
-            $object->setPayPeriodMinimum($value_18);
-        }
-        if (property_exists($data, 'rate')) {
-            $value_19 = $data->{'rate'};
-            if (is_float($data->{'rate'})) {
-                $value_19 = $data->{'rate'};
-            } elseif (is_null($data->{'rate'})) {
-                $value_19 = $data->{'rate'};
-            }
-            $object->setRate($value_19);
+            $object->setJobCode($data->{'jobCode'});
         }
         if (property_exists($data, 'rateCode')) {
-            $value_20 = $data->{'rateCode'};
-            if (is_string($data->{'rateCode'})) {
-                $value_20 = $data->{'rateCode'};
-            } elseif (is_null($data->{'rateCode'})) {
-                $value_20 = $data->{'rateCode'};
-            }
-            $object->setRateCode($value_20);
+            $object->setRateCode($data->{'rateCode'});
         }
         if (property_exists($data, 'startDate')) {
-            $value_21 = $data->{'startDate'};
-            if (is_string($data->{'startDate'})) {
-                $value_21 = $data->{'startDate'};
-            } elseif (is_null($data->{'startDate'})) {
-                $value_21 = $data->{'startDate'};
-            }
-            $object->setStartDate($value_21);
+            $object->setStartDate($data->{'startDate'});
         }
 
         return $object;
@@ -244,160 +82,18 @@ class EarningNormalizer implements DenormalizerInterface, NormalizerInterface, D
     public function normalize($object, $format = null, array $context = [])
     {
         $data = new \stdClass();
-        $value = $object->getAgency();
-        if (is_string($object->getAgency())) {
-            $value = $object->getAgency();
-        } elseif (is_null($object->getAgency())) {
-            $value = $object->getAgency();
-        }
-        $data->{'agency'} = $value;
-        $value_1 = $object->getAmount();
-        if (is_float($object->getAmount())) {
-            $value_1 = $object->getAmount();
-        } elseif (is_null($object->getAmount())) {
-            $value_1 = $object->getAmount();
-        }
-        $data->{'amount'} = $value_1;
-        $value_2 = $object->getAnnualMaximum();
-        if (is_float($object->getAnnualMaximum())) {
-            $value_2 = $object->getAnnualMaximum();
-        } elseif (is_null($object->getAnnualMaximum())) {
-            $value_2 = $object->getAnnualMaximum();
-        }
-        $data->{'annualMaximum'} = $value_2;
-        $value_3 = $object->getCalculationCode();
-        if (is_string($object->getCalculationCode())) {
-            $value_3 = $object->getCalculationCode();
-        } elseif (is_null($object->getCalculationCode())) {
-            $value_3 = $object->getCalculationCode();
-        }
-        $data->{'calculationCode'} = $value_3;
-        $value_4 = $object->getCostCenter1();
-        if (is_string($object->getCostCenter1())) {
-            $value_4 = $object->getCostCenter1();
-        } elseif (is_null($object->getCostCenter1())) {
-            $value_4 = $object->getCostCenter1();
-        }
-        $data->{'costCenter1'} = $value_4;
-        $value_5 = $object->getCostCenter2();
-        if (is_string($object->getCostCenter2())) {
-            $value_5 = $object->getCostCenter2();
-        } elseif (is_null($object->getCostCenter2())) {
-            $value_5 = $object->getCostCenter2();
-        }
-        $data->{'costCenter2'} = $value_5;
-        $value_6 = $object->getCostCenter3();
-        if (is_string($object->getCostCenter3())) {
-            $value_6 = $object->getCostCenter3();
-        } elseif (is_null($object->getCostCenter3())) {
-            $value_6 = $object->getCostCenter3();
-        }
-        $data->{'costCenter3'} = $value_6;
-        $value_7 = $object->getEarningCode();
-        if (is_string($object->getEarningCode())) {
-            $value_7 = $object->getEarningCode();
-        } elseif (is_null($object->getEarningCode())) {
-            $value_7 = $object->getEarningCode();
-        }
-        $data->{'earningCode'} = $value_7;
-        $value_8 = $object->getEffectiveDate();
-        if (is_string($object->getEffectiveDate())) {
-            $value_8 = $object->getEffectiveDate();
-        } elseif (is_null($object->getEffectiveDate())) {
-            $value_8 = $object->getEffectiveDate();
-        }
-        $data->{'effectiveDate'} = $value_8;
-        $value_9 = $object->getEndDate();
-        if (is_string($object->getEndDate())) {
-            $value_9 = $object->getEndDate();
-        } elseif (is_null($object->getEndDate())) {
-            $value_9 = $object->getEndDate();
-        }
-        $data->{'endDate'} = $value_9;
-        $value_10 = $object->getFrequency();
-        if (is_string($object->getFrequency())) {
-            $value_10 = $object->getFrequency();
-        } elseif (is_null($object->getFrequency())) {
-            $value_10 = $object->getFrequency();
-        }
-        $data->{'frequency'} = $value_10;
-        $value_11 = $object->getGoal();
-        if (is_float($object->getGoal())) {
-            $value_11 = $object->getGoal();
-        } elseif (is_null($object->getGoal())) {
-            $value_11 = $object->getGoal();
-        }
-        $data->{'goal'} = $value_11;
-        $value_12 = $object->getHoursOrUnits();
-        if (is_float($object->getHoursOrUnits())) {
-            $value_12 = $object->getHoursOrUnits();
-        } elseif (is_null($object->getHoursOrUnits())) {
-            $value_12 = $object->getHoursOrUnits();
-        }
-        $data->{'hoursOrUnits'} = $value_12;
-        $value_13 = $object->getIsSelfInsured();
-        if (is_bool($object->getIsSelfInsured())) {
-            $value_13 = $object->getIsSelfInsured();
-        } elseif (is_null($object->getIsSelfInsured())) {
-            $value_13 = $object->getIsSelfInsured();
-        }
-        $data->{'isSelfInsured'} = $value_13;
-        $value_14 = $object->getJobCode();
-        if (is_string($object->getJobCode())) {
-            $value_14 = $object->getJobCode();
-        } elseif (is_null($object->getJobCode())) {
-            $value_14 = $object->getJobCode();
-        }
-        $data->{'jobCode'} = $value_14;
-        $value_15 = $object->getMiscellaneousInfo();
-        if (is_string($object->getMiscellaneousInfo())) {
-            $value_15 = $object->getMiscellaneousInfo();
-        } elseif (is_null($object->getMiscellaneousInfo())) {
-            $value_15 = $object->getMiscellaneousInfo();
-        }
-        $data->{'miscellaneousInfo'} = $value_15;
-        $value_16 = $object->getPaidTowardsGoal();
-        if (is_float($object->getPaidTowardsGoal())) {
-            $value_16 = $object->getPaidTowardsGoal();
-        } elseif (is_null($object->getPaidTowardsGoal())) {
-            $value_16 = $object->getPaidTowardsGoal();
-        }
-        $data->{'paidTowardsGoal'} = $value_16;
-        $value_17 = $object->getPayPeriodMaximum();
-        if (is_float($object->getPayPeriodMaximum())) {
-            $value_17 = $object->getPayPeriodMaximum();
-        } elseif (is_null($object->getPayPeriodMaximum())) {
-            $value_17 = $object->getPayPeriodMaximum();
-        }
-        $data->{'payPeriodMaximum'} = $value_17;
-        $value_18 = $object->getPayPeriodMinimum();
-        if (is_float($object->getPayPeriodMinimum())) {
-            $value_18 = $object->getPayPeriodMinimum();
-        } elseif (is_null($object->getPayPeriodMinimum())) {
-            $value_18 = $object->getPayPeriodMinimum();
-        }
-        $data->{'payPeriodMinimum'} = $value_18;
-        $value_19 = $object->getRate();
-        if (is_float($object->getRate())) {
-            $value_19 = $object->getRate();
-        } elseif (is_null($object->getRate())) {
-            $value_19 = $object->getRate();
-        }
-        $data->{'rate'} = $value_19;
-        $value_20 = $object->getRateCode();
-        if (is_string($object->getRateCode())) {
-            $value_20 = $object->getRateCode();
-        } elseif (is_null($object->getRateCode())) {
-            $value_20 = $object->getRateCode();
-        }
-        $data->{'rateCode'} = $value_20;
-        $value_21 = $object->getStartDate();
-        if (is_string($object->getStartDate())) {
-            $value_21 = $object->getStartDate();
-        } elseif (is_null($object->getStartDate())) {
-            $value_21 = $object->getStartDate();
-        }
-        $data->{'startDate'} = $value_21;
+        $data->{'agency'} = $object->getAgency();
+        $data->{'calculationCode'} = $object->getCalculationCode();
+        $data->{'costCenter1'} = $object->getCostCenter1();
+        $data->{'costCenter2'} = $object->getCostCenter2();
+        $data->{'costCenter3'} = $object->getCostCenter3();
+        $data->{'earningCode'} = $object->getEarningCode();
+        $data->{'effectiveDate'} = $object->getEffectiveDate();
+        $data->{'endDate'} = $object->getEndDate();
+        $data->{'frequency'} = $object->getFrequency();
+        $data->{'jobCode'} = $object->getJobCode();
+        $data->{'rateCode'} = $object->getRateCode();
+        $data->{'startDate'} = $object->getStartDate();
 
         return $data;
     }

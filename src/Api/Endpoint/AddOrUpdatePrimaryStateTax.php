@@ -18,19 +18,18 @@ class AddOrUpdatePrimaryStateTax extends \Jane\OpenApiRuntime\Client\BaseEndpoin
     /**
      * Sends new or updated employee primary state tax information directly to Web Pay.
      *
-     * @param string                        $companyId        Company Id
-     * @param string                        $employeeId       Employee Id
-     * @param \Paylocity\Api\Model\StateTax $json             Primary State Tax Model
-     * @param array                         $headerParameters {
+     * @param string $companyId        Company Id
+     * @param string $employeeId       Employee Id
+     * @param array  $headerParameters {
      *
      *     @var string $Authorization Bearer + JWT
      * }
      */
-    public function __construct(string $companyId, string $employeeId, \Paylocity\Api\Model\StateTax $json, array $headerParameters = [])
+    public function __construct(string $companyId, string $employeeId, \stdClass $requestBody, array $headerParameters = [])
     {
         $this->companyId = $companyId;
         $this->employeeId = $employeeId;
-        $this->body = $json;
+        $this->body = $requestBody;
         $this->headerParameters = $headerParameters;
     }
 
@@ -48,7 +47,11 @@ class AddOrUpdatePrimaryStateTax extends \Jane\OpenApiRuntime\Client\BaseEndpoin
 
     public function getBody(\Symfony\Component\Serializer\SerializerInterface $serializer, $streamFactory = null): array
     {
-        return $this->getSerializedBody($serializer);
+        if ($this->body instanceof \stdClass) {
+            return [['Content-Type' => ['application/json']], json_encode($this->body)];
+        }
+
+        return [[], null];
     }
 
     public function getExtraHeaders(): array
@@ -71,27 +74,22 @@ class AddOrUpdatePrimaryStateTax extends \Jane\OpenApiRuntime\Client\BaseEndpoin
      * {@inheritdoc}
      *
      * @throws \Paylocity\Api\Exception\AddOrUpdatePrimaryStateTaxBadRequestException
-     * @throws \Paylocity\Api\Exception\AddOrUpdatePrimaryStateTaxUnauthorizedException
-     * @throws \Paylocity\Api\Exception\AddOrUpdatePrimaryStateTaxForbiddenException
      * @throws \Paylocity\Api\Exception\AddOrUpdatePrimaryStateTaxInternalServerErrorException
      *
      * @return null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType)
+    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
         if (200 === $status) {
-            return null;
         }
-        if (400 === $status) {
+        if (400 === $status && mb_strpos($contentType, 'application/json') !== false) {
             throw new \Paylocity\Api\Exception\AddOrUpdatePrimaryStateTaxBadRequestException($serializer->deserialize($body, 'Paylocity\\Api\\Model\\Error[]', 'json'));
         }
         if (401 === $status) {
-            throw new \Paylocity\Api\Exception\AddOrUpdatePrimaryStateTaxUnauthorizedException();
         }
         if (403 === $status) {
-            throw new \Paylocity\Api\Exception\AddOrUpdatePrimaryStateTaxForbiddenException();
         }
-        if (500 === $status) {
+        if (500 === $status && mb_strpos($contentType, 'application/json') !== false) {
             throw new \Paylocity\Api\Exception\AddOrUpdatePrimaryStateTaxInternalServerErrorException($serializer->deserialize($body, 'Paylocity\\Api\\Model\\Error[]', 'json'));
         }
     }

@@ -66,23 +66,20 @@ class GetCompanySpecificOpenAPIDocumentation extends \Jane\OpenApiRuntime\Client
      * {@inheritdoc}
      *
      * @throws \Paylocity\Api\Exception\GetCompanySpecificOpenAPIDocumentationBadRequestException
-     * @throws \Paylocity\Api\Exception\GetCompanySpecificOpenAPIDocumentationForbiddenException
      * @throws \Paylocity\Api\Exception\GetCompanySpecificOpenAPIDocumentationInternalServerErrorException
      *
      * @return null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType)
+    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
         if (200 === $status) {
-            return null;
         }
-        if (400 === $status) {
+        if (400 === $status && mb_strpos($contentType, 'application/json') !== false) {
             throw new \Paylocity\Api\Exception\GetCompanySpecificOpenAPIDocumentationBadRequestException($serializer->deserialize($body, 'Paylocity\\Api\\Model\\Error[]', 'json'));
         }
         if (403 === $status) {
-            throw new \Paylocity\Api\Exception\GetCompanySpecificOpenAPIDocumentationForbiddenException();
         }
-        if (500 === $status) {
+        if (500 === $status && mb_strpos($contentType, 'application/json') !== false) {
             throw new \Paylocity\Api\Exception\GetCompanySpecificOpenAPIDocumentationInternalServerErrorException($serializer->deserialize($body, 'Paylocity\\Api\\Model\\Error[]', 'json'));
         }
     }

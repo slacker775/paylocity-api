@@ -30,7 +30,7 @@ class StagedEmployeeMainDirectDepositItemNormalizer implements DenormalizerInter
 
     public function supportsNormalization($data, $format = null)
     {
-        return get_class($data) === 'Paylocity\\Api\\Model\\StagedEmployeeMainDirectDepositItem';
+        return is_object($data) && get_class($data) === 'Paylocity\\Api\\Model\\StagedEmployeeMainDirectDepositItem';
     }
 
     public function denormalize($data, $class, $format = null, array $context = [])
@@ -39,51 +39,6 @@ class StagedEmployeeMainDirectDepositItemNormalizer implements DenormalizerInter
             throw new InvalidArgumentException();
         }
         $object = new \Paylocity\Api\Model\StagedEmployeeMainDirectDepositItem();
-        if (property_exists($data, 'accountNumber')) {
-            $value = $data->{'accountNumber'};
-            if (is_string($data->{'accountNumber'})) {
-                $value = $data->{'accountNumber'};
-            } elseif (is_null($data->{'accountNumber'})) {
-                $value = $data->{'accountNumber'};
-            }
-            $object->setAccountNumber($value);
-        }
-        if (property_exists($data, 'accountType')) {
-            $value_1 = $data->{'accountType'};
-            if (is_string($data->{'accountType'})) {
-                $value_1 = $data->{'accountType'};
-            } elseif (is_null($data->{'accountType'})) {
-                $value_1 = $data->{'accountType'};
-            }
-            $object->setAccountType($value_1);
-        }
-        if (property_exists($data, 'isSkipPreNote')) {
-            $value_2 = $data->{'isSkipPreNote'};
-            if (is_bool($data->{'isSkipPreNote'})) {
-                $value_2 = $data->{'isSkipPreNote'};
-            } elseif (is_null($data->{'isSkipPreNote'})) {
-                $value_2 = $data->{'isSkipPreNote'};
-            }
-            $object->setIsSkipPreNote($value_2);
-        }
-        if (property_exists($data, 'preNoteDate')) {
-            $value_3 = $data->{'preNoteDate'};
-            if (is_string($data->{'preNoteDate'})) {
-                $value_3 = $data->{'preNoteDate'};
-            } elseif (is_null($data->{'preNoteDate'})) {
-                $value_3 = $data->{'preNoteDate'};
-            }
-            $object->setPreNoteDate($value_3);
-        }
-        if (property_exists($data, 'routingNumber')) {
-            $value_4 = $data->{'routingNumber'};
-            if (is_string($data->{'routingNumber'})) {
-                $value_4 = $data->{'routingNumber'};
-            } elseif (is_null($data->{'routingNumber'})) {
-                $value_4 = $data->{'routingNumber'};
-            }
-            $object->setRoutingNumber($value_4);
-        }
 
         return $object;
     }
@@ -91,41 +46,6 @@ class StagedEmployeeMainDirectDepositItemNormalizer implements DenormalizerInter
     public function normalize($object, $format = null, array $context = [])
     {
         $data = new \stdClass();
-        $value = $object->getAccountNumber();
-        if (is_string($object->getAccountNumber())) {
-            $value = $object->getAccountNumber();
-        } elseif (is_null($object->getAccountNumber())) {
-            $value = $object->getAccountNumber();
-        }
-        $data->{'accountNumber'} = $value;
-        $value_1 = $object->getAccountType();
-        if (is_string($object->getAccountType())) {
-            $value_1 = $object->getAccountType();
-        } elseif (is_null($object->getAccountType())) {
-            $value_1 = $object->getAccountType();
-        }
-        $data->{'accountType'} = $value_1;
-        $value_2 = $object->getIsSkipPreNote();
-        if (is_bool($object->getIsSkipPreNote())) {
-            $value_2 = $object->getIsSkipPreNote();
-        } elseif (is_null($object->getIsSkipPreNote())) {
-            $value_2 = $object->getIsSkipPreNote();
-        }
-        $data->{'isSkipPreNote'} = $value_2;
-        $value_3 = $object->getPreNoteDate();
-        if (is_string($object->getPreNoteDate())) {
-            $value_3 = $object->getPreNoteDate();
-        } elseif (is_null($object->getPreNoteDate())) {
-            $value_3 = $object->getPreNoteDate();
-        }
-        $data->{'preNoteDate'} = $value_3;
-        $value_4 = $object->getRoutingNumber();
-        if (is_string($object->getRoutingNumber())) {
-            $value_4 = $object->getRoutingNumber();
-        } elseif (is_null($object->getRoutingNumber())) {
-            $value_4 = $object->getRoutingNumber();
-        }
-        $data->{'routingNumber'} = $value_4;
 
         return $data;
     }

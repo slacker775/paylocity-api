@@ -30,7 +30,7 @@ class ErrorNormalizer implements DenormalizerInterface, NormalizerInterface, Den
 
     public function supportsNormalization($data, $format = null)
     {
-        return get_class($data) === 'Paylocity\\Api\\Model\\Error';
+        return is_object($data) && get_class($data) === 'Paylocity\\Api\\Model\\Error';
     }
 
     public function denormalize($data, $class, $format = null, array $context = [])
@@ -62,22 +62,14 @@ class ErrorNormalizer implements DenormalizerInterface, NormalizerInterface, Den
     public function normalize($object, $format = null, array $context = [])
     {
         $data = new \stdClass();
-        if (null !== $object->getField()) {
-            $data->{'field'} = $object->getField();
+        $data->{'field'} = $object->getField();
+        $data->{'message'} = $object->getMessage();
+        $values = [];
+        foreach ($object->getOptions() as $value) {
+            $values[] = $this->normalizer->normalize($value, 'json', $context);
         }
-        if (null !== $object->getMessage()) {
-            $data->{'message'} = $object->getMessage();
-        }
-        if (null !== $object->getOptions()) {
-            $values = [];
-            foreach ($object->getOptions() as $value) {
-                $values[] = $this->normalizer->normalize($value, 'json', $context);
-            }
-            $data->{'options'} = $values;
-        }
-        if (null !== $object->getPath()) {
-            $data->{'path'} = $object->getPath();
-        }
+        $data->{'options'} = $values;
+        $data->{'path'} = $object->getPath();
 
         return $data;
     }

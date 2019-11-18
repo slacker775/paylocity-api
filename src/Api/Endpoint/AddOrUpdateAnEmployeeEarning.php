@@ -18,19 +18,18 @@ class AddOrUpdateAnEmployeeEarning extends \Jane\OpenApiRuntime\Client\BaseEndpo
     /**
      * Add/Update Earning API sends new or updated employee earnings information directly to Web Pay.
      *
-     * @param string                       $companyId        Company Id
-     * @param string                       $employeeId       Employee Id
-     * @param \Paylocity\Api\Model\Earning $json             Earning Model
-     * @param array                        $headerParameters {
+     * @param string $companyId        Company Id
+     * @param string $employeeId       Employee Id
+     * @param array  $headerParameters {
      *
      *     @var string $Authorization Bearer + JWT
      * }
      */
-    public function __construct(string $companyId, string $employeeId, \Paylocity\Api\Model\Earning $json, array $headerParameters = [])
+    public function __construct(string $companyId, string $employeeId, \Paylocity\Api\Model\Earning $requestBody, array $headerParameters = [])
     {
         $this->companyId = $companyId;
         $this->employeeId = $employeeId;
-        $this->body = $json;
+        $this->body = $requestBody;
         $this->headerParameters = $headerParameters;
     }
 
@@ -48,7 +47,11 @@ class AddOrUpdateAnEmployeeEarning extends \Jane\OpenApiRuntime\Client\BaseEndpo
 
     public function getBody(\Symfony\Component\Serializer\SerializerInterface $serializer, $streamFactory = null): array
     {
-        return $this->getSerializedBody($serializer);
+        if ($this->body instanceof \Paylocity\Api\Model\Earning) {
+            return [['Content-Type' => ['application/json']], $serializer->serialize($this->body, 'json')];
+        }
+
+        return [[], null];
     }
 
     public function getExtraHeaders(): array
@@ -71,27 +74,22 @@ class AddOrUpdateAnEmployeeEarning extends \Jane\OpenApiRuntime\Client\BaseEndpo
      * {@inheritdoc}
      *
      * @throws \Paylocity\Api\Exception\AddOrUpdateAnEmployeeEarningBadRequestException
-     * @throws \Paylocity\Api\Exception\AddOrUpdateAnEmployeeEarningUnauthorizedException
-     * @throws \Paylocity\Api\Exception\AddOrUpdateAnEmployeeEarningForbiddenException
      * @throws \Paylocity\Api\Exception\AddOrUpdateAnEmployeeEarningInternalServerErrorException
      *
      * @return null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType)
+    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
         if (200 === $status) {
-            return null;
         }
-        if (400 === $status) {
+        if (400 === $status && mb_strpos($contentType, 'application/json') !== false) {
             throw new \Paylocity\Api\Exception\AddOrUpdateAnEmployeeEarningBadRequestException($serializer->deserialize($body, 'Paylocity\\Api\\Model\\Error[]', 'json'));
         }
         if (401 === $status) {
-            throw new \Paylocity\Api\Exception\AddOrUpdateAnEmployeeEarningUnauthorizedException();
         }
         if (403 === $status) {
-            throw new \Paylocity\Api\Exception\AddOrUpdateAnEmployeeEarningForbiddenException();
         }
-        if (500 === $status) {
+        if (500 === $status && mb_strpos($contentType, 'application/json') !== false) {
             throw new \Paylocity\Api\Exception\AddOrUpdateAnEmployeeEarningInternalServerErrorException($serializer->deserialize($body, 'Paylocity\\Api\\Model\\Error[]', 'json'));
         }
     }

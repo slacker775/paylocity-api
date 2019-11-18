@@ -30,7 +30,7 @@ class CustomFieldDefinitionValuesItemNormalizer implements DenormalizerInterface
 
     public function supportsNormalization($data, $format = null)
     {
-        return get_class($data) === 'Paylocity\\Api\\Model\\CustomFieldDefinitionValuesItem';
+        return is_object($data) && get_class($data) === 'Paylocity\\Api\\Model\\CustomFieldDefinitionValuesItem';
     }
 
     public function denormalize($data, $class, $format = null, array $context = [])
@@ -52,12 +52,8 @@ class CustomFieldDefinitionValuesItemNormalizer implements DenormalizerInterface
     public function normalize($object, $format = null, array $context = [])
     {
         $data = new \stdClass();
-        if (null !== $object->getCode()) {
-            $data->{'code'} = $object->getCode();
-        }
-        if (null !== $object->getDescription()) {
-            $data->{'description'} = $object->getDescription();
-        }
+        $data->{'code'} = $object->getCode();
+        $data->{'description'} = $object->getDescription();
 
         return $data;
     }

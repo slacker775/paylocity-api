@@ -18,19 +18,18 @@ class AddLocalTax extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \J
     /**
      * Sends new employee local tax information directly to Web Pay.
      *
-     * @param string                        $companyId        Company Id
-     * @param string                        $employeeId       Employee Id
-     * @param \Paylocity\Api\Model\LocalTax $json             LocalTax Model
-     * @param array                         $headerParameters {
+     * @param string $companyId        Company Id
+     * @param string $employeeId       Employee Id
+     * @param array  $headerParameters {
      *
      *     @var string $Authorization Bearer + JWT
      * }
      */
-    public function __construct(string $companyId, string $employeeId, \Paylocity\Api\Model\LocalTax $json, array $headerParameters = [])
+    public function __construct(string $companyId, string $employeeId, \stdClass $requestBody, array $headerParameters = [])
     {
         $this->companyId = $companyId;
         $this->employeeId = $employeeId;
-        $this->body = $json;
+        $this->body = $requestBody;
         $this->headerParameters = $headerParameters;
     }
 
@@ -48,7 +47,11 @@ class AddLocalTax extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \J
 
     public function getBody(\Symfony\Component\Serializer\SerializerInterface $serializer, $streamFactory = null): array
     {
-        return $this->getSerializedBody($serializer);
+        if ($this->body instanceof \stdClass) {
+            return [['Content-Type' => ['application/json']], json_encode($this->body)];
+        }
+
+        return [[], null];
     }
 
     public function getExtraHeaders(): array
@@ -71,27 +74,22 @@ class AddLocalTax extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \J
      * {@inheritdoc}
      *
      * @throws \Paylocity\Api\Exception\AddLocalTaxBadRequestException
-     * @throws \Paylocity\Api\Exception\AddLocalTaxUnauthorizedException
-     * @throws \Paylocity\Api\Exception\AddLocalTaxForbiddenException
      * @throws \Paylocity\Api\Exception\AddLocalTaxInternalServerErrorException
      *
      * @return null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType)
+    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
         if (201 === $status) {
-            return null;
         }
-        if (400 === $status) {
+        if (400 === $status && mb_strpos($contentType, 'application/json') !== false) {
             throw new \Paylocity\Api\Exception\AddLocalTaxBadRequestException($serializer->deserialize($body, 'Paylocity\\Api\\Model\\Error[]', 'json'));
         }
         if (401 === $status) {
-            throw new \Paylocity\Api\Exception\AddLocalTaxUnauthorizedException();
         }
         if (403 === $status) {
-            throw new \Paylocity\Api\Exception\AddLocalTaxForbiddenException();
         }
-        if (500 === $status) {
+        if (500 === $status && mb_strpos($contentType, 'application/json') !== false) {
             throw new \Paylocity\Api\Exception\AddLocalTaxInternalServerErrorException($serializer->deserialize($body, 'Paylocity\\Api\\Model\\Error[]', 'json'));
         }
     }

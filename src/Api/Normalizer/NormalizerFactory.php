@@ -48,11 +48,8 @@ class NormalizerFactory
         $normalizers[] = new EmployeeWorkAddressNormalizer();
         $normalizers[] = new EmployeeWorkEligibilityNormalizer();
         $normalizers[] = new EmployeeIdResponseNormalizer();
-        $normalizers[] = new EmployeeInfoNormalizer();
         $normalizers[] = new ErrorNormalizer();
         $normalizers[] = new ErrorOptionsItemNormalizer();
-        $normalizers[] = new LocalTaxNormalizer();
-        $normalizers[] = new NonPrimaryStateTaxNormalizer();
         $normalizers[] = new PayStatementDetailsNormalizer();
         $normalizers[] = new PayStatementSummaryNormalizer();
         $normalizers[] = new StagedEmployeeNormalizer();
@@ -75,7 +72,6 @@ class NormalizerFactory
         $normalizers[] = new StagedEmployeeWebTimeNormalizer();
         $normalizers[] = new StagedEmployeeWorkAddressItemNormalizer();
         $normalizers[] = new StagedEmployeeWorkEligibilityItemNormalizer();
-        $normalizers[] = new StateTaxNormalizer();
         $normalizers[] = new TrackingNumberResponseNormalizer();
 
         return $normalizers;

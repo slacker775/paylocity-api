@@ -30,7 +30,7 @@ class CustomFieldDefinitionNormalizer implements DenormalizerInterface, Normaliz
 
     public function supportsNormalization($data, $format = null)
     {
-        return get_class($data) === 'Paylocity\\Api\\Model\\CustomFieldDefinition';
+        return is_object($data) && get_class($data) === 'Paylocity\\Api\\Model\\CustomFieldDefinition';
     }
 
     public function denormalize($data, $class, $format = null, array $context = [])
@@ -68,28 +68,16 @@ class CustomFieldDefinitionNormalizer implements DenormalizerInterface, Normaliz
     public function normalize($object, $format = null, array $context = [])
     {
         $data = new \stdClass();
-        if (null !== $object->getCategory()) {
-            $data->{'category'} = $object->getCategory();
+        $data->{'category'} = $object->getCategory();
+        $data->{'defaultValue'} = $object->getDefaultValue();
+        $data->{'isRequired'} = $object->getIsRequired();
+        $data->{'label'} = $object->getLabel();
+        $data->{'type'} = $object->getType();
+        $values = [];
+        foreach ($object->getValues() as $value) {
+            $values[] = $this->normalizer->normalize($value, 'json', $context);
         }
-        if (null !== $object->getDefaultValue()) {
-            $data->{'defaultValue'} = $object->getDefaultValue();
-        }
-        if (null !== $object->getIsRequired()) {
-            $data->{'isRequired'} = $object->getIsRequired();
-        }
-        if (null !== $object->getLabel()) {
-            $data->{'label'} = $object->getLabel();
-        }
-        if (null !== $object->getType()) {
-            $data->{'type'} = $object->getType();
-        }
-        if (null !== $object->getValues()) {
-            $values = [];
-            foreach ($object->getValues() as $value) {
-                $values[] = $this->normalizer->normalize($value, 'json', $context);
-            }
-            $data->{'values'} = $values;
-        }
+        $data->{'values'} = $values;
 
         return $data;
     }

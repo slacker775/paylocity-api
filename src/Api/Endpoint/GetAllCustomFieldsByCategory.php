@@ -68,28 +68,24 @@ class GetAllCustomFieldsByCategory extends \Jane\OpenApiRuntime\Client\BaseEndpo
     /**
      * {@inheritdoc}
      *
-     * @throws \Paylocity\Api\Exception\GetAllCustomFieldsByCategoryUnauthorizedException
-     * @throws \Paylocity\Api\Exception\GetAllCustomFieldsByCategoryForbiddenException
      * @throws \Paylocity\Api\Exception\GetAllCustomFieldsByCategoryNotFoundException
      * @throws \Paylocity\Api\Exception\GetAllCustomFieldsByCategoryInternalServerErrorException
      *
      * @return \Paylocity\Api\Model\CustomFieldDefinition[]|null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType)
+    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
-        if (200 === $status) {
+        if (200 === $status && mb_strpos($contentType, 'application/json') !== false) {
             return $serializer->deserialize($body, 'Paylocity\\Api\\Model\\CustomFieldDefinition[]', 'json');
         }
         if (401 === $status) {
-            throw new \Paylocity\Api\Exception\GetAllCustomFieldsByCategoryUnauthorizedException();
         }
         if (403 === $status) {
-            throw new \Paylocity\Api\Exception\GetAllCustomFieldsByCategoryForbiddenException();
         }
-        if (404 === $status) {
+        if (404 === $status && mb_strpos($contentType, 'application/json') !== false) {
             throw new \Paylocity\Api\Exception\GetAllCustomFieldsByCategoryNotFoundException($serializer->deserialize($body, 'Paylocity\\Api\\Model\\Error[]', 'json'));
         }
-        if (500 === $status) {
+        if (500 === $status && mb_strpos($contentType, 'application/json') !== false) {
             throw new \Paylocity\Api\Exception\GetAllCustomFieldsByCategoryInternalServerErrorException($serializer->deserialize($body, 'Paylocity\\Api\\Model\\Error[]', 'json'));
         }
     }

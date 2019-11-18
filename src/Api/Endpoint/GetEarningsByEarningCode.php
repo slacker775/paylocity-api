@@ -71,28 +71,22 @@ class GetEarningsByEarningCode extends \Jane\OpenApiRuntime\Client\BaseEndpoint 
     /**
      * {@inheritdoc}
      *
-     * @throws \Paylocity\Api\Exception\GetEarningsByEarningCodeUnauthorizedException
-     * @throws \Paylocity\Api\Exception\GetEarningsByEarningCodeForbiddenException
-     * @throws \Paylocity\Api\Exception\GetEarningsByEarningCodeNotFoundException
      * @throws \Paylocity\Api\Exception\GetEarningsByEarningCodeInternalServerErrorException
      *
      * @return \Paylocity\Api\Model\Earning[]|null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType)
+    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
-        if (200 === $status) {
+        if (200 === $status && mb_strpos($contentType, 'application/json') !== false) {
             return $serializer->deserialize($body, 'Paylocity\\Api\\Model\\Earning[]', 'json');
         }
         if (401 === $status) {
-            throw new \Paylocity\Api\Exception\GetEarningsByEarningCodeUnauthorizedException();
         }
         if (403 === $status) {
-            throw new \Paylocity\Api\Exception\GetEarningsByEarningCodeForbiddenException();
         }
         if (404 === $status) {
-            throw new \Paylocity\Api\Exception\GetEarningsByEarningCodeNotFoundException();
         }
-        if (500 === $status) {
+        if (500 === $status && mb_strpos($contentType, 'application/json') !== false) {
             throw new \Paylocity\Api\Exception\GetEarningsByEarningCodeInternalServerErrorException($serializer->deserialize($body, 'Paylocity\\Api\\Model\\Error[]', 'json'));
         }
     }

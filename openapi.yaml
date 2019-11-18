@@ -1,0 +1,2621 @@
+openapi: 3.0.1
+info:
+  title: Paylocity
+  description: "For general questions and support of the API, contact: webservices@paylocity.com\r\
+    \n# Overview\r\n\r\nPaylocity Web Services API is an externally facing RESTful\
+    \ Internet protocol. The Paylocity API uses HTTP verbs and a RESTful endpoint\
+    \ structure. OAuth 2.0 is used as the API Authorization framework. Request and\
+    \ response payloads are formatted as JSON.\r\nPaylocity supports v1 and v2 versions\
+    \ of its API endpoints. v1, while supported, won't be enhanced with additional\
+    \ functionality. For direct link to v1 documentation, please click [here](https://docs.paylocity.com/weblink/guides/Paylocity_Web_Services_API/v1/Paylocity_Web_Services_API.htm).\
+    \ For additional resources regarding v1/v2 differences and conversion path, please\
+    \ contact webservices@paylocity.com.\r\n\r\n##### Setup\r\n\r\nPaylocity will\
+    \ provide the secure client credentials and set up the scope (type of requests\
+    \ and allowed company numbers). You will receive the unique client id, secret,\
+    \ and Paylocity public key for the data encryption. The secret will expire in\
+    \ 365 days. \r\n* Paylocity will send you an e-mail 10 days prior to the expiration\
+    \ date for the current secret. If not renewed, the second e-mail notification\
+    \ will be sent 5 days prior to secret's expiration. Each email will contain the\
+    \ code necessary to renew the client secret. \r\n* You can obtain the new secret\
+    \ by calling API endpoint using your current not yet expired credentials and the\
+    \ code that was sent with the notification email. For details on API endpoint,\
+    \ please see Client Credentials section. \r\n* Both the current secret value and\
+    \ the new secret value will be recognized during the transition period. After\
+    \ the current secret expires, you must use the new secret. \r\n* If you were unable\
+    \ to renew the secret via API endpoint, you can still contact Service and they\
+    \ will email you new secret via secure email.\r\n\r\n\r\nWhen validating the request,\
+    \ Paylocity API will honor the defaults and required fields set up for the company\
+    \ default New Hire Template as defined in Web Pay.\r\n\r\n\r\n# Authorization\r\
+    \n\r\nPaylocity Web Services API uses OAuth2.0 Authentication with JSON Message\
+    \ Format.\r\n\r\n\r\nAll requests of the Paylocity Web Services API require a\
+    \ bearer token which can be obtained by authenticating the client with the Paylocity\
+    \ Web Services API via OAuth 2.0.\r\n\r\n\r\nThe client must request a bearer\
+    \ token from the authorization endpoint:\r\n\r\n\r\nauth-server for production:\
+    \ https://api.paylocity.com/IdentityServer/connect/token\r\n\r\n\r\nauth-server\
+    \ for testing: https://apisandbox.paylocity.com/IdentityServer/connect/token\r\
+    \n\r\n##### Authorization Header\r\n\r\nThe request is expected to be in the form\
+    \ of a basic authentication request, with the \"Authorization\" header containing\
+    \ the client-id and client-secret. This means the standard base-64 encoded user:password,\
+    \ prefixed with \"Basic\" as the value for the Authorization header, where user\
+    \ is the client-id and password is the client-secret.\r\n\r\n##### Content-Type\
+    \ Header\r\n\r\nThe \"Content-Type\" header is required to be \"application/x-www-form-urlencoded\"\
+    .\r\n\r\n##### Additional Values\r\n\r\nThe request must post the following form\
+    \ encoded values within the request body:\r\n\r\n    grant_type = client_credentials\r\
+    \n    scope = WebLinkAPI\r\n\r\n##### Responses\r\n\r\nSuccess will return HTTP\
+    \ 200 OK with JSON content:\r\n\r\n    {\r\n      \"access_token\": \"xxx\",\r\
+    \n      \"expires_in\": 3600,\r\n      \"token_type\": \"Bearer\"\r\n    }\r\n\
+    \r\n# Encryption\r\n\r\nPaylocity uses a combination of RSA and AES cryptography.\
+    \ As part of the setup, each client is issued a public RSA key.\r\n\r\nPaylocity\
+    \ recommends the encryption of the incoming requests as additional protection\
+    \ of the sensitive data. Clients can opt-out of the encryption during the initial\
+    \ setup process. Opt-out will allow Paylocity to process unencrypted requests.\r\
+    \n\r\nThe Paylocity Public Key has the following properties:\r\n\r\n* 2048 bit\
+    \ key size\r\n\r\n* PKCS1 key format\r\n\r\n* PEM encoding\r\n\r\n##### Properties\r\
+    \n\r\n* key (base 64 encoded): The AES symmetric key encrypted with the Paylocity\
+    \ Public Key. It is the key used to encrypt the content. Paylocity will decrypt\
+    \ the AES key using RSA decryption and use it to decrypt the content.\r\n\r\n\
+    * iv (base 64 encoded): The AES IV (Initialization Vector) used when encrypting\
+    \ the content.\r\n\r\n* content (base 64 encoded): The AES encrypted request.\
+    \ The key and iv provided in the secureContent request are used by Paylocity for\
+    \ decryption of the content.\r\n\r\nWe suggest using the following for the AES:\r\
+    \n\r\n* CBC cipher mode\r\n\r\n* PKCS7 padding\r\n\r\n* 128 bit block size\r\n\
+    \r\n* 256 bit key size\r\n\r\n##### Encryption Flow\r\n\r\n* Generate the unencrypted\
+    \ JSON payload to POST/PUT\r\n* Encrypt this JSON payload using your _own key\
+    \ and IV_ (NOT with the Paylocity public key)\r\n* RSA encrypt the _key_ you used\
+    \ in step 2 with the Paylocity Public Key, then, base64 encode the result\r\n\
+    * Base64 encode the IV used to encrypt the JSON payload in step 2\r\n* Put together\
+    \ a \"securecontent\" JSON object:\r\n \r\n{\r\n  'secureContent' : {\r\n    'key'\
+    \ : -- RSA-encrypted & base64 encoded key from step 3,\r\n    'iv' : -- base64\
+    \ encoded iv from step 4\r\n    'content' -- content encrypted with your own key\
+    \ from step 2, base64 encoded\r\n  }\r\n}\r\n\r\n##### Sample Example\r\n\r\n\
+    \    {\r\n      \"secureContent\": {\r\n        \"key\": \"eS3aw6H/qzHMJ00gSi6gQ3xa08DPMazk8BFY96Pd99ODA==\"\
+    ,\r\n        \"iv\": \"NLyXMGq9svw0XO5aI9BzWw==\",\r\n        \"content\": \"\
+    gAEOiQltO1w+LzGUoIK8FiYbU42hug94EasSl7N+Q1w=\"\r\n      }\r\n    }\r\n\r\n#####\
+    \ Sample C# Code\r\n\r\n    using Newtonsoft.Json;\r\n    using System;\r\n  \
+    \  using System.IO;\r\n    using System.Security.Cryptography;\r\n    using System.Text;\r\
+    \n\r\n    public class SecuredContent\r\n    {\r\n      [JsonProperty(\"key\"\
+    )]\r\n      public string Key { get; set; }\r\n\r\n      [JsonProperty(\"iv\"\
+    )]\r\n      public string Iv { get; set; }\r\n\r\n      [JsonProperty(\"content\"\
+    )]\r\n      public string Content { get; set; }\r\n\r\n    }\r\n\r\n    public\
+    \ class EndUserSecureRequestExample\r\n    {\r\n      public string CreateSecuredRequest(FileInfo\
+    \ paylocityPublicKey, string unsecuredJsonRequest)\r\n      {\r\n        string\
+    \ publicKeyXml = File.ReadAllText(paylocityPublicKey.FullName, Encoding.UTF8);\r\
+    \n\r\n        SecuredContent secureContent = this.CreateSecuredContent(publicKeyXml,\
+    \ unsecuredJsonRequest);\r\n\r\n        string secureRequest = JsonConvert.SerializeObject(new\
+    \ { secureContent });\r\n\r\n        return secureRequest;\r\n      }\r\n\r\n\
+    \      private SecuredContent CreateSecuredContent(string publicKeyXml, string\
+    \ request)\r\n      {\r\n        using (AesCryptoServiceProvider aesCsp = new\
+    \ AesCryptoServiceProvider())\r\n        {\r\n          aesCsp.Mode = CipherMode.CBC;\r\
+    \n          aesCsp.Padding = PaddingMode.PKCS7;\r\n          aesCsp.BlockSize\
+    \ = 128;\r\n          aesCsp.KeySize = 256;\r\n\r\n          using (ICryptoTransform\
+    \ crt = aesCsp.CreateEncryptor(aesCsp.Key, aesCsp.IV))\r\n          {\r\n    \
+    \        using (MemoryStream outputStream = new MemoryStream())\r\n          \
+    \  {\r\n              using (CryptoStream encryptStream = new CryptoStream(outputStream,\
+    \ crt, CryptoStreamMode.Write))\r\n              {\r\n                byte[] encodedRequest\
+    \ = Encoding.UTF8.GetBytes(request);\r\n                encryptStream.Write(encodedRequest,\
+    \ 0, encodedRequest.Length);\r\n                encryptStream.FlushFinalBlock();\r\
+    \n                byte[] encryptedRequest = outputStream.ToArray();\r\n\r\n  \
+    \              using (RSACryptoServiceProvider crp = new RSACryptoServiceProvider())\r\
+    \n                {\r\n                  crp.FromXmlstring(publicKeyXml);\r\n\
+    \                  byte[] encryptedKey = crp.Encrypt(aesCsp.Key, false);\r\n\r\
+    \n                  return new SecuredContent()\r\n                  {\r\n   \
+    \                 Key = Convert.ToBase64string(encryptedKey),\r\n            \
+    \        Iv = Convert.ToBase64string(aesCsp.IV),\r\n                    Content\
+    \ = Convert.ToBase64string(encryptedRequest)\r\n                  };\r\n     \
+    \           }\r\n              }\r\n            }\r\n          }\r\n        }\r\
+    \n      }\r\n    }\r\n\r\n## Support\r\n\r\nQuestions about using the Paylocity\
+    \ API? Please contact webservices@paylocity.com.\r\n\r\n# Deductions (v1)\r\n\r\
+    \nDeductions API provides endpoints to retrieve, add, update and delete deductions\
+    \ for a company's employees. For schema details, click <a href=\"https://docs.paylocity.com/weblink/guides/Paylocity_Web_Services_API/v1/Paylocity_Web_Services_API.htm\"\
+    \ target=\"_blank\">here</a>.\r\n\r\n# OnBoarding (v1)\r\n\r\nOnboarding API sends\
+    \ employee data into Paylocity Onboarding to help ensure an easy and accurate\
+    \ hiring process for subsequent completion into Web Pay. For schema details, click\
+    \ <a href=\"https://docs.paylocity.com/weblink/guides/Paylocity_Web_Services_API/v1/Paylocity_Web_Services_API.htm\"\
+    \ target=\"_blank\">here</a>."
+  termsOfService: Paylocity_Automated_Data_Exchange_Request_Form.pdf
+  contact:
+    email: webservices@paylocity.com
+  version: "2"
+  x-apisguru-categories:
+  - financial
+  x-logo:
+    url: https://api.apis.guru/v2/cache/logo/https_twitter.com_paylocity_profile_image.jpeg
+  x-origin:
+  - format: swagger
+    url: https://api.paylocity.com/api/v2/openapi
+    version: "2.0"
+  x-preferred: true
+  x-providerName: paylocity.com
+servers:
+- url: https://api.paylocity.com/api
+paths:
+  /v2/companies/{companyId}/codes/{codeResource}:
+    get:
+      tags:
+      - Company Codes
+      summary: Get All Company Codes
+      description: Get All Company Codes for the selected company and resource
+      operationId: Get All Company Codes and Descriptions by Resource
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer + JWT
+        required: true
+        schema:
+          type: string
+      - name: companyId
+        in: path
+        description: Company Id
+        required: true
+        schema:
+          type: string
+      - name: codeResource
+        in: path
+        description: Type of Company Code. Common values costcenter1, costcenter2,
+          costcenter3, deductions, earnings, taxes, paygrade, positions.
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Successfully retrieved
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/companyCodes'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Invalid Code Resource
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/error'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/error'
+      security:
+      - paylocity_auth:
+        - WebLinkAPI
+  /v2/companies/{companyId}/customfields/{category}:
+    get:
+      tags:
+      - Custom Fields
+      summary: Get All Custom Fields
+      description: Get All Custom Fields for the selected company
+      operationId: Get All Custom Fields by category
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer + JWT
+        required: true
+        schema:
+          type: string
+      - name: companyId
+        in: path
+        description: Company Id
+        required: true
+        schema:
+          type: string
+      - name: category
+        in: path
+        description: Custom Fields Category
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Successfully retrieved
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/customFieldDefinition'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Invalid Category
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/error'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/error'
+      security:
+      - paylocity_auth:
+        - WebLinkAPI
+  /v2/companies/{companyId}/employees:
+    post:
+      tags:
+      - Employee
+      summary: Add new employee
+      description: New Employee API sends new employee data directly to Web Pay. Companies
+        who use the New Hire Template in Web Pay may require additional fields when
+        hiring employees. New Employee API Requests will honor these required fields.
+      operationId: Add employee
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer + JWT
+        required: true
+        schema:
+          type: string
+      - name: companyId
+        in: path
+        description: Company Id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Employee Model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/employee'
+        required: true
+      responses:
+        201:
+          description: Successfully added
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/employeeIdResponse'
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/error'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/error'
+      security:
+      - paylocity_auth:
+        - WebLinkAPI
+      x-codegen-request-body-name: json
+  /v2/companies/{companyId}/employees/:
+    get:
+      tags:
+      - Employee
+      summary: Get all employees
+      description: Get All Employees API will return employee data currently available
+        in Web Pay.
+      operationId: Get all employees
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer + JWT
+        required: true
+        schema:
+          type: string
+      - name: companyId
+        in: path
+        description: Company Id
+        required: true
+        schema:
+          type: string
+      - name: pagesize
+        in: query
+        description: Number of records per page. Default value is 25.
+        schema:
+          type: integer
+      - name: pagenumber
+        in: query
+        description: Page number to retrieve; page numbers are 0-based (so to get
+          the first page of results, pass pagenumber=0). Default value is 0.
+        schema:
+          type: integer
+      - name: includetotalcount
+        in: query
+        description: Whether to include the total record count in the header's X-Pcty-Total-Count
+          property. Default value is true.
+        schema:
+          type: boolean
+      responses:
+        200:
+          description: Successfully Retrieved
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/employeeInfo'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: The company does not exist
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/error'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/error'
+      security:
+      - paylocity_auth:
+        - WebLinkAPI
+  /v2/companies/{companyId}/employees/{employeeId}:
+    get:
+      tags:
+      - Employee
+      summary: Get employee
+      description: Get Employee API will return employee data currently available
+        in Web Pay.
+      operationId: Get employee
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer + JWT
+        required: true
+        schema:
+          type: string
+      - name: companyId
+        in: path
+        description: Company Id
+        required: true
+        schema:
+          type: string
+      - name: employeeId
+        in: path
+        description: Employee Id
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Successfully Retrieved
+          content:
+            application/json:
+              schema:
+                type: object
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: The employee does not exist
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/error'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/error'
+      security:
+      - paylocity_auth:
+        - WebLinkAPI
+    patch:
+      tags:
+      - Employee
+      summary: Update employee
+      description: Update Employee API will update existing employee data in WebPay.
+      operationId: Update employee
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer + JWT
+        required: true
+        schema:
+          type: string
+      - name: companyId
+        in: path
+        description: Company Id
+        required: true
+        schema:
+          type: string
+      - name: employeeId
+        in: path
+        description: Employee Id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Employee Model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/employee'
+        required: true
+      responses:
+        200:
+          description: Successfully Updated
+          content: {}
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/error'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/error'
+      security:
+      - paylocity_auth:
+        - WebLinkAPI
+      x-codegen-request-body-name: json
+  /v2/companies/{companyId}/employees/{employeeId}/additionalRates:
+    put:
+      tags:
+      - Additional Rates
+      summary: Add/update additional rates
+      description: Sends new or updated employee additional rates information directly
+        to Web Pay.
+      operationId: Add or update additional rates
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer + JWT
+        required: true
+        schema:
+          type: string
+      - name: companyId
+        in: path
+        description: Company Id
+        required: true
+        schema:
+          type: string
+      - name: employeeId
+        in: path
+        description: Employee Id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Additional Rate Model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/additionalRate'
+        required: true
+      responses:
+        200:
+          description: Successfully added or updated
+          content: {}
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/error'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/error'
+      security:
+      - paylocity_auth:
+        - WebLinkAPI
+      x-codegen-request-body-name: json
+  /v2/companies/{companyId}/employees/{employeeId}/benefitSetup:
+    put:
+      tags:
+      - Employee Benefit Setup
+      summary: Add/update employee's benefit setup
+      description: Sends new or updated employee benefit setup information directly
+        to Web Pay.
+      operationId: Update or add employee benefit setup
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer + JWT
+        required: true
+        schema:
+          type: string
+      - name: companyId
+        in: path
+        description: Company Id
+        required: true
+        schema:
+          type: string
+      - name: employeeId
+        in: path
+        description: Employee Id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: BenefitSetup Model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/benefitSetup'
+        required: true
+      responses:
+        200:
+          description: Successfully added or updated
+          content: {}
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/error'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/error'
+      security:
+      - paylocity_auth:
+        - WebLinkAPI
+      x-codegen-request-body-name: json
+  /v2/companies/{companyId}/employees/{employeeId}/earnings:
+    get:
+      tags:
+      - Earnings
+      summary: Get All Earnings
+      description: Get All Earnings returns all earnings for the selected employee.
+      operationId: Get All Earnings
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer + JWT
+        required: true
+        schema:
+          type: string
+      - name: companyId
+        in: path
+        description: Company Id
+        required: true
+        schema:
+          type: string
+      - name: employeeId
+        in: path
+        description: Employee Id
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Successfully retrieved
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/earning'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: The employee does not exist
+          content: {}
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/error'
+      security:
+      - paylocity_auth:
+        - WebLinkAPI
+    put:
+      tags:
+      - Earnings
+      summary: Add/Update Earning
+      description: Add/Update Earning API sends new or updated employee earnings information
+        directly to Web Pay.
+      operationId: Add or update an employee earning
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer + JWT
+        required: true
+        schema:
+          type: string
+      - name: companyId
+        in: path
+        description: Company Id
+        required: true
+        schema:
+          type: string
+      - name: employeeId
+        in: path
+        description: Employee Id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Earning Model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/earning'
+        required: true
+      responses:
+        200:
+          description: Successfully added or updated
+          content: {}
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/error'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/error'
+      security:
+      - paylocity_auth:
+        - WebLinkAPI
+      x-codegen-request-body-name: json
+  /v2/companies/{companyId}/employees/{employeeId}/earnings/{earningCode}:
+    get:
+      tags:
+      - Earnings
+      summary: Get Earnings by Earning Code
+      description: Get Earnings returns all earnings with the provided earning code
+        for the selected employee.
+      operationId: Get Earnings by Earning Code
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer + JWT
+        required: true
+        schema:
+          type: string
+      - name: companyId
+        in: path
+        description: Company Id
+        required: true
+        schema:
+          type: string
+      - name: employeeId
+        in: path
+        description: Employee Id
+        required: true
+        schema:
+          type: string
+      - name: earningCode
+        in: path
+        description: Earning Code
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Successfully retrieved
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/earning'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: The employee does not exist
+          content: {}
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/error'
+      security:
+      - paylocity_auth:
+        - WebLinkAPI
+  /v2/companies/{companyId}/employees/{employeeId}/earnings/{earningCode}/{startDate}:
+    get:
+      tags:
+      - Earnings
+      summary: Get Earning by Earning Code and Start Date
+      description: Get Earnings returns the single earning with the provided earning
+        code and start date for the selected employee.
+      operationId: Get Earning by Earning Code and Start Date
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer + JWT
+        required: true
+        schema:
+          type: string
+      - name: companyId
+        in: path
+        description: Company Id
+        required: true
+        schema:
+          type: string
+      - name: employeeId
+        in: path
+        description: Employee Id
+        required: true
+        schema:
+          type: string
+      - name: earningCode
+        in: path
+        description: Earning Code
+        required: true
+        schema:
+          type: string
+      - name: startDate
+        in: path
+        description: Start Date
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Successfully retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/earning'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: The employee does not exist, or the specified earningCode-startDate
+            combination does not exist
+          content: {}
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/error'
+      security:
+      - paylocity_auth:
+        - WebLinkAPI
+    delete:
+      tags:
+      - Earnings
+      summary: Delete Earning by Earning Code and Start Date
+      description: Delete Earning by Earning Code and Start Date
+      operationId: Delete Earning by Earning Code and Start Date
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer + JWT
+        required: true
+        schema:
+          type: string
+      - name: companyId
+        in: path
+        description: Company Id
+        required: true
+        schema:
+          type: string
+      - name: employeeId
+        in: path
+        description: Employee Id
+        required: true
+        schema:
+          type: string
+      - name: earningCode
+        in: path
+        description: Earning Code
+        required: true
+        schema:
+          type: string
+      - name: startDate
+        in: path
+        description: Start Date
+        required: true
+        schema:
+          type: string
+      responses:
+        204:
+          description: Successfully deleted
+          content: {}
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/error'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: The employee does not exist, or the specified earningCode-startDate
+            combination does not exist
+          content: {}
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/error'
+      security:
+      - paylocity_auth:
+        - WebLinkAPI
+  /v2/companies/{companyId}/employees/{employeeId}/emergencyContacts:
+    put:
+      tags:
+      - Emergency Contacts
+      summary: Add/update emergency contacts
+      description: Sends new or updated employee emergency contacts directly to Web
+        Pay.
+      operationId: Add or update emergency contacts
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer + JWT
+        required: true
+        schema:
+          type: string
+      - name: companyId
+        in: path
+        description: Company Id
+        required: true
+        schema:
+          type: string
+      - name: employeeId
+        in: path
+        description: Employee Id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Emergency Contact Model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/emergencyContact'
+        required: true
+      responses:
+        200:
+          description: Successfully added or updated
+          content: {}
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/error'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/error'
+      security:
+      - paylocity_auth:
+        - WebLinkAPI
+      x-codegen-request-body-name: json
+  /v2/companies/{companyId}/employees/{employeeId}/localTaxes:
+    get:
+      tags:
+      - Local Taxes
+      summary: Get all local taxes
+      description: Returns all local taxes for the selected employee.
+      operationId: Get all local taxes
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer + JWT
+        required: true
+        schema:
+          type: string
+      - name: companyId
+        in: path
+        description: Company Id
+        required: true
+        schema:
+          type: string
+      - name: employeeId
+        in: path
+        description: Employee Id
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Successfully retrieved
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/localTax'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: The employee does not exist
+          content: {}
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/error'
+      security:
+      - paylocity_auth:
+        - WebLinkAPI
+    post:
+      tags:
+      - Local Taxes
+      summary: Add new local tax
+      description: Sends new employee local tax information directly to Web Pay.
+      operationId: Add local tax
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer + JWT
+        required: true
+        schema:
+          type: string
+      - name: companyId
+        in: path
+        description: Company Id
+        required: true
+        schema:
+          type: string
+      - name: employeeId
+        in: path
+        description: Employee Id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: LocalTax Model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/localTax'
+        required: true
+      responses:
+        201:
+          description: Successfully added
+          content: {}
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/error'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/error'
+      security:
+      - paylocity_auth:
+        - WebLinkAPI
+      x-codegen-request-body-name: json
+  /v2/companies/{companyId}/employees/{employeeId}/localTaxes/{taxCode}:
+    get:
+      tags:
+      - Local Taxes
+      summary: Get local taxes by tax code
+      description: Returns all local taxes with the provided tax code for the selected
+        employee.
+      operationId: Get local tax by tax code
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer + JWT
+        required: true
+        schema:
+          type: string
+      - name: companyId
+        in: path
+        description: Company Id
+        required: true
+        schema:
+          type: string
+      - name: employeeId
+        in: path
+        description: Employee Id
+        required: true
+        schema:
+          type: string
+      - name: taxCode
+        in: path
+        description: Tax Code
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Successfully retrieved
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/localTax'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: The employee does not exist, or the specified tax code does
+            not exist
+          content: {}
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/error'
+      security:
+      - paylocity_auth:
+        - WebLinkAPI
+    delete:
+      tags:
+      - Local Taxes
+      summary: Delete local tax by tax code
+      description: Delete local tax by tax code
+      operationId: Delete local tax by tax code
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer + JWT
+        required: true
+        schema:
+          type: string
+      - name: companyId
+        in: path
+        description: Company Id
+        required: true
+        schema:
+          type: string
+      - name: employeeId
+        in: path
+        description: Employee Id
+        required: true
+        schema:
+          type: string
+      - name: taxCode
+        in: path
+        description: Tax Code
+        required: true
+        schema:
+          type: string
+      responses:
+        204:
+          description: Successfully deleted
+          content: {}
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/error'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: The employee does not exist, or the specified tax code does
+            not exist
+          content: {}
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/error'
+      security:
+      - paylocity_auth:
+        - WebLinkAPI
+  /v2/companies/{companyId}/employees/{employeeId}/nonprimaryStateTax:
+    put:
+      tags:
+      - Non-Primary State Tax
+      summary: Add/update non-primary state tax
+      description: Sends new or updated employee non-primary state tax information
+        directly to Web Pay.
+      operationId: Add or update non-primary state tax
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer + JWT
+        required: true
+        schema:
+          type: string
+      - name: companyId
+        in: path
+        description: Company Id
+        required: true
+        schema:
+          type: string
+      - name: employeeId
+        in: path
+        description: Employee Id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Non-Primary State Tax Model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/nonPrimaryStateTax'
+        required: true
+      responses:
+        200:
+          description: Successfully added or updated
+          content: {}
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/error'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/error'
+      security:
+      - paylocity_auth:
+        - WebLinkAPI
+      x-codegen-request-body-name: json
+  /v2/companies/{companyId}/employees/{employeeId}/paystatement/details/{year}:
+    get:
+      tags:
+      - PayStatements
+      summary: Get employee pay statement details data for the specified year.
+      description: Get pay statement details API will return employee pay statement
+        details data currently available in Web Pay for the specified year.
+      operationId: Gets employee pay statement detail data based on the specified
+        year
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer + JWT
+        required: true
+        schema:
+          type: string
+      - name: companyId
+        in: path
+        description: Company Id
+        required: true
+        schema:
+          type: string
+      - name: employeeId
+        in: path
+        description: Employee Id
+        required: true
+        schema:
+          type: string
+      - name: year
+        in: path
+        description: The year for which to retrieve pay statement data
+        required: true
+        schema:
+          type: string
+      - name: pagesize
+        in: query
+        description: Number of records per page. Default value is 25.
+        schema:
+          type: integer
+      - name: pagenumber
+        in: query
+        description: Page number to retrieve; page numbers are 0-based (so to get
+          the first page of results, pass pagenumber=0). Default value is 0.
+        schema:
+          type: integer
+      - name: includetotalcount
+        in: query
+        description: Whether to include the total record count in the header's X-Pcty-Total-Count
+          property. Default value is true.
+        schema:
+          type: boolean
+      responses:
+        200:
+          description: Successfully Retrieved
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/payStatementDetails'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: The employee, specified year, or check date does not exist
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/error'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/error'
+      security:
+      - paylocity_auth:
+        - WebLinkAPI
+  /v2/companies/{companyId}/employees/{employeeId}/paystatement/details/{year}/{checkDate}:
+    get:
+      tags:
+      - PayStatements
+      summary: Get employee pay statement details data for the specified year and
+        check date.
+      description: Get pay statement details API will return employee pay statement
+        detail data currently available in Web Pay for the specified year and check
+        date.
+      operationId: Gets employee pay statement detail data based on the specified
+        year and check date
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer + JWT
+        required: true
+        schema:
+          type: string
+      - name: companyId
+        in: path
+        description: Company Id
+        required: true
+        schema:
+          type: string
+      - name: employeeId
+        in: path
+        description: Employee Id
+        required: true
+        schema:
+          type: string
+      - name: year
+        in: path
+        description: The year for which to retrieve pay statement data
+        required: true
+        schema:
+          type: string
+      - name: checkDate
+        in: path
+        description: The check date for which to retrieve pay statement data
+        required: true
+        schema:
+          type: string
+      - name: pagesize
+        in: query
+        description: Number of records per page. Default value is 25.
+        schema:
+          type: integer
+      - name: pagenumber
+        in: query
+        description: Page number to retrieve; page numbers are 0-based (so to get
+          the first page of results, pass pagenumber=0). Default value is 0.
+        schema:
+          type: integer
+      - name: includetotalcount
+        in: query
+        description: Whether to include the total record count in the header's X-Pcty-Total-Count
+          property. Default value is true.
+        schema:
+          type: boolean
+      responses:
+        200:
+          description: Successfully Retrieved
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/payStatementDetails'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: The employee, specified year, or check date does not exist
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/error'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/error'
+      security:
+      - paylocity_auth:
+        - WebLinkAPI
+  /v2/companies/{companyId}/employees/{employeeId}/paystatement/summary/{year}:
+    get:
+      tags:
+      - PayStatements
+      summary: Get employee pay statement summary data for the specified year.
+      description: Get pay statement summary API will return employee pay statement
+        summary data currently available in Web Pay for the specified year.
+      operationId: Gets employee pay statement summary data based on the specified
+        year
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer + JWT
+        required: true
+        schema:
+          type: string
+      - name: companyId
+        in: path
+        description: Company Id
+        required: true
+        schema:
+          type: string
+      - name: employeeId
+        in: path
+        description: Employee Id
+        required: true
+        schema:
+          type: string
+      - name: year
+        in: path
+        description: The year for which to retrieve pay statement data
+        required: true
+        schema:
+          type: string
+      - name: pagesize
+        in: query
+        description: Number of records per page. Default value is 25.
+        schema:
+          type: integer
+      - name: pagenumber
+        in: query
+        description: Page number to retrieve; page numbers are 0-based (so to get
+          the first page of results, pass pagenumber=0). Default value is 0.
+        schema:
+          type: integer
+      - name: includetotalcount
+        in: query
+        description: Whether to include the total record count in the header's X-Pcty-Total-Count
+          property. Default value is true.
+        schema:
+          type: boolean
+      responses:
+        200:
+          description: Successfully Retrieved
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/payStatementSummary'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: The employee, specified year, or check date does not exist
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/error'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/error'
+      security:
+      - paylocity_auth:
+        - WebLinkAPI
+  /v2/companies/{companyId}/employees/{employeeId}/paystatement/summary/{year}/{checkDate}:
+    get:
+      tags:
+      - PayStatements
+      summary: Get employee pay statement summary data for the specified year and
+        check date.
+      description: Get pay statement summary API will return employee pay statement
+        summary data currently available in Web Pay for the specified year and check
+        date.
+      operationId: Gets employee pay statement summary data based on the specified
+        year and check date
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer + JWT
+        required: true
+        schema:
+          type: string
+      - name: companyId
+        in: path
+        description: Company Id
+        required: true
+        schema:
+          type: string
+      - name: employeeId
+        in: path
+        description: Employee Id
+        required: true
+        schema:
+          type: string
+      - name: year
+        in: path
+        description: The year for which to retrieve pay statement data
+        required: true
+        schema:
+          type: string
+      - name: checkDate
+        in: path
+        description: The check date for which to retrieve pay statement data
+        required: true
+        schema:
+          type: string
+      - name: pagesize
+        in: query
+        description: Number of records per page. Default value is 25.
+        schema:
+          type: integer
+      - name: pagenumber
+        in: query
+        description: Page number to retrieve; page numbers are 0-based (so to get
+          the first page of results, pass pagenumber=0). Default value is 0.
+        schema:
+          type: integer
+      - name: includetotalcount
+        in: query
+        description: Whether to include the total record count in the header's X-Pcty-Total-Count
+          property. Default value is true.
+        schema:
+          type: boolean
+      responses:
+        200:
+          description: Successfully Retrieved
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/payStatementSummary'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: The employee, specified year, or check date does not exist
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/error'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/error'
+      security:
+      - paylocity_auth:
+        - WebLinkAPI
+  /v2/companies/{companyId}/employees/{employeeId}/primaryStateTax:
+    put:
+      tags:
+      - Primary State Tax
+      summary: Add/update primary state tax
+      description: Sends new or updated employee primary state tax information directly
+        to Web Pay.
+      operationId: Add or update primary state tax
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer + JWT
+        required: true
+        schema:
+          type: string
+      - name: companyId
+        in: path
+        description: Company Id
+        required: true
+        schema:
+          type: string
+      - name: employeeId
+        in: path
+        description: Employee Id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Primary State Tax Model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/stateTax'
+        required: true
+      responses:
+        200:
+          description: Successfully added or updated
+          content: {}
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/error'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/error'
+      security:
+      - paylocity_auth:
+        - WebLinkAPI
+      x-codegen-request-body-name: json
+  /v2/companies/{companyId}/openapi:
+    get:
+      tags:
+      - Company-Specific Schema
+      summary: Get Company-Specific Open API Documentation
+      description: The company-specific Open API endpoint allows the client to GET
+        an Open API document for the Paylocity API that is customized with company-specific
+        resource schemas. These customized resource schemas define certain properties
+        as enumerations of pre-defined values that correspond to the company's setup
+        with Web Pay. The customized schemas also indicate which properties are required
+        by the company within Web Pay.<br  />To learn more about Open API, click [here](https://www.openapis.org/)
+      operationId: Get company-specific Open API documentation
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer + JWT
+        required: true
+        schema:
+          type: string
+      - name: companyId
+        in: path
+        description: Company Id
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Successfully retrieved
+          content: {}
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/error'
+        403:
+          description: Forbidden
+          content: {}
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/error'
+      security:
+      - paylocity_auth:
+        - WebLinkAPI
+  /v2/credentials/secrets:
+    post:
+      tags:
+      - Client Credentials
+      summary: Obtain new client secret.
+      description: Obtain new client secret for Paylocity-issued client id. See Setup
+        section for details.
+      operationId: Add Client Secret
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer + JWT
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Add Client Secret Model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/addClientSecret'
+        required: true
+      responses:
+        200:
+          description: Successfully added
+          content: {}
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/error'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/error'
+      security:
+      - paylocity_auth:
+        - WebLinkAPI
+      x-codegen-request-body-name: json
+  /v2/weblinkstaging/companies/{companyId}/employees/newemployees:
+    post:
+      tags:
+      - Employee Staging
+      summary: Add new employee to Web Link
+      description: Add new employee to Web Link will send partially completed or potentially
+        erroneous new hire record to Web Link, where it can be corrected and competed
+        by company administrator or authorized Paylocity Service Bureau employee.
+      operationId: Add new employee to Web Link
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer + JWT
+        required: true
+        schema:
+          type: string
+      - name: companyId
+        in: path
+        description: Company Id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: StagedEmployee Model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/stagedEmployee'
+        required: true
+      responses:
+        201:
+          description: Successfully Added
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/trackingNumberResponse'
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/error'
+        403:
+          description: Forbidden
+          content: {}
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/error'
+      security:
+      - paylocity_auth:
+        - WebLinkAPI
+      x-codegen-request-body-name: json
+components:
+  schemas:
+    addClientSecret:
+      required:
+      - code
+      type: object
+      properties:
+        code:
+          type: string
+          description: 'A value sent with the ''ACTION NEEDED: Web Link API Credentials
+            Expiring Soon.'' email notification.'
+      description: The Add Client Secret Request Model
+    additionalRate:
+      type: object
+      properties:
+        changeReason:
+          type: string
+          description: Not required. If populated, must match one of the system coded
+            values available in the Additional Rates Change Reason drop down.<br />
+        costCenter1:
+          type: string
+          description: Not required. Valid values must match one of the system coded
+            cost centers available in the Additional Rates Cost Center level 1 drop
+            down. This cell must be in a text format.<br />
+        costCenter2:
+          type: string
+          description: Not required. Valid values must match one of the system coded
+            cost centers available in the Additional Rates Cost Center level 2 drop
+            down. This cell must be in a text format.<br />
+        costCenter3:
+          type: string
+          description: Not required. Valid values must match one of the system coded
+            cost centers available in the Additional Rates Cost Center level 3 drop
+            down. This cell must be in a text format.<br />
+        effectiveDate:
+          type: string
+          description: Required. Common formats include *MM-DD-CCYY*, *CCYY-MM-DD*.<br
+            />
+          format: paylocity-date
+        endCheckDate:
+          type: string
+          description: Not required. Must match one of the system coded check dates
+            available in the Additional Rates End Check Date drop down. Common formats
+            include *MM-DD-CCYY*, *CCYY-MM-DD*.<br />
+          format: paylocity-date
+        job:
+          type: string
+          description: Not required. If populated, must match one of the system coded
+            values available in the Additional Rates Job drop down.<br />
+        rate:
+          type: number
+          description: Required. Enter dollar amount that corresponds to the Per selection.<br
+            />
+        rateCode:
+          type: string
+          description: Required. If populated, must match one of the system coded
+            values available in the Additional Rates Rate Code drop down.<br />
+        rateNotes:
+          type: string
+          description: 'Not required.<br  />Max length: 4000<br />'
+        ratePer:
+          type: string
+          description: Required. Valid values are HOUR or WEEK.<br />
+        shift:
+          type: string
+          description: Not required. If populated, must match one of the system coded
+            values available in the Additional Rates Shift drop down.<br />
+      description: The additional pay rate model
+    benefitSetup:
+      type: object
+      properties:
+        benefitClass:
+          type: string
+          description: 'Benefit Class code. Values are configured in Web Pay Company
+            > Setup > Benefits > Classes.<br  />Max length: 30'
+        benefitClassEffectiveDate:
+          type: string
+          description: Date when Benefit Class takes effect. Common formats include
+            *MM-DD-CCYY*, *CCYY-MM-DD*.
+          format: paylocity-date
+        benefitSalary:
+          type: number
+          description: Salary used to configure benefits.<br  />Decimal(12,2)
+        benefitSalaryEffectiveDate:
+          type: string
+          description: Date when Benefit Salary takes effect. Common formats include
+            *MM-DD-CCYY*, *CCYY-MM-DD*.
+          format: paylocity-date
+      description: The benefit setup model
+    companyCodes:
+      type: object
+      properties:
+        code:
+          type: string
+          description: 'Code.<br  /> Max length: 40'
+        description:
+          type: string
+          description: 'Description. <br  /> Max length: 150'
+      description: The Company Codes model
+    customFieldDefinition:
+      type: object
+      properties:
+        category:
+          type: string
+          description: The custom field category.
+        defaultValue:
+          type: string
+          description: Specifies the default value of the custom field.
+        isRequired:
+          type: boolean
+          description: Indicates whether the custom field is required.
+        label:
+          type: string
+          description: The custom field label.
+        type:
+          type: string
+          description: The custom field type.
+        values:
+          type: array
+          description: A set of values that are applicable to the custom field.
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: The custom field code.
+              description:
+                type: string
+                description: The custom field description.
+            description: ""
+      description: ""
+    earning:
+      required:
+      - earningCode
+      - startDate
+      type: object
+      properties:
+        agency:
+          type: string
+          description: 'Third-party agency associated with earning. Must match Company
+            setup.<br  />Max length: 10'
+        calculationCode:
+          type: string
+          description: 'Defines how earnings are calculated. Common values are *%
+            (percentage of gross), flat (flat dollar amount)*. Defaulted to the Company
+            setup calcCode for earning. <br  />Max length: 20'
+        costCenter1:
+          type: string
+          description: 'Cost Center associated with earning. Must match Company setup.<br  />
+            Max length: 10'
+        costCenter2:
+          type: string
+          description: 'Cost Center associated with earning. Must match Company setup.<br  />
+            Max length: 10'
+        costCenter3:
+          type: string
+          description: 'Cost Center associated with earning. Must match Company setup.<br  />
+            Max length: 10'
+        earningCode:
+          type: string
+          description: 'Earning code. Must match Company setup. <br  />Max length:
+            10'
+        effectiveDate:
+          type: string
+          description: Date earning is active. Defaulted to run date or check date
+            based on Company setup. Common formats are MM-DD-CCYY, CCYY-MM-DD.
+          format: paylocity-date
+        endDate:
+          type: string
+          description: Stop date of an earning. Common formats are MM-DD-CCYY, CCYY-MM-DD.
+          format: paylocity-date
+        frequency:
+          type: string
+          description: 'Needed if earning is applied differently from the payroll
+            frequency (one time earning for example).<br  /> Max length: 5'
+        jobCode:
+          type: string
+          description: 'Job code associated with earnings. Must match Company setup.<br  />
+            Max length: 20'
+        rateCode:
+          type: string
+          description: 'Rate Code applies to additional pay rates entered for an employee.
+            Must match Company setup. <br  /> Max length: 10'
+        startDate:
+          type: string
+          description: Start date of an earning based on payroll calendar. Common
+            formats are MM-DD-CCYY, CCYY-MM-DD.
+          format: paylocity-date
+      description: The employee earning model
+    emergencyContact:
+      type: object
+      properties:
+        address1:
+          type: string
+          description: 1st address line.
+        syncEmployeeInfo:
+          type: boolean
+          description: Valid values are *true* or *false*.
+      description: The emergency contact model
+    employee:
+      type: object
+      properties:
+        additionalDirectDeposit:
+          maxItems: 19
+          type: array
+          description: 'Add up to 19 direct deposit accounts in addition to the main
+            direct deposit account. IMPORTANT: A direct deposit update will remove
+            ALL existing main and additional direct deposit information in WebPay
+            and replace with information provided on the request. GET API will not
+            return direct deposit data.'
+          items:
+            type: object
+            properties: {}
+            description: The additional direct deposit model
+        additionalRate:
+          type: array
+          description: Add Additional Rates.
+          items:
+            type: object
+            properties: {}
+            description: The additional pay rate model
+        benefitSetup:
+          type: object
+          properties: {}
+          description: ' Add or update setup values used for employee benefits integration,
+            insurance plan settings, and ACA reporting.'
+        customBooleanFields:
+          maxItems: 8
+          type: array
+          description: Up to 8 custom fields of boolean (checkbox) type value.
+          items:
+            required:
+            - category
+            type: object
+            properties:
+              category:
+                type: string
+                description: The custom field category.  Acceptable value is 'PayrollAndHR'.
+                enum:
+                - PayrollAndHR
+            description: ""
+        customDateFields:
+          maxItems: 8
+          type: array
+          description: Up to 8 custom fields of the date type value.
+          items:
+            required:
+            - category
+            type: object
+            properties:
+              category:
+                type: string
+                description: The custom field category.  Acceptable value is 'PayrollAndHR'.
+                enum:
+                - PayrollAndHR
+            description: ""
+        customDropDownFields:
+          maxItems: 8
+          type: array
+          description: Up to 8 custom fields of the dropdown type value.
+          items:
+            required:
+            - category
+            type: object
+            properties:
+              category:
+                type: string
+                description: The custom field category.  Acceptable value is 'PayrollAndHR'.
+                enum:
+                - PayrollAndHR
+            description: ""
+        customNumberFields:
+          maxItems: 8
+          type: array
+          description: Up to 8 custom fields of numeric type value.
+          items:
+            required:
+            - category
+            type: object
+            properties:
+              category:
+                type: string
+                description: The custom field category.  Acceptable value is 'PayrollAndHR'.
+                enum:
+                - PayrollAndHR
+            description: ""
+        customTextFields:
+          maxItems: 8
+          type: array
+          description: Up to 8 custom fields of text type value.
+          items:
+            required:
+            - category
+            type: object
+            properties:
+              category:
+                type: string
+                description: The custom field category.  Acceptable value is 'PayrollAndHR'.
+                enum:
+                - PayrollAndHR
+            description: ""
+        departmentPosition:
+          type: object
+          properties: {}
+          description: Add or update home department cost center, position, supervisor,
+            reviewer, employment type, EEO class, pay settings, and union information.
+        emergencyContacts:
+          type: array
+          description: Add or update Emergency Contacts.
+          items:
+            type: object
+            properties:
+              syncEmployeeInfo:
+                type: boolean
+                description: Valid values are *true* or *false*.
+            description: The emergency contact model
+        federalTax:
+          type: object
+          properties: {}
+          description: Add or update federal tax amount type (taxCalculationCode),
+            amount or percentage, filing status, and exemptions.
+        homeAddress:
+          type: object
+          properties: {}
+          description: Add or update employee's home address, personal phone numbers,
+            and personal email.
+        isHighlyCompensated:
+          type: boolean
+          description: Indicates if employee meets the highly compensated employee
+            criteria.
+        isSmoker:
+          type: boolean
+          description: Indicates if employee is a smoker.
+        localTax:
+          maxItems: 5
+          type: array
+          description: Add, update, or delete local tax code, filing status, and exemptions
+            including  PA-PSD taxes.
+          items:
+            type: object
+            properties: {}
+            description: The Local Tax model
+        mainDirectDeposit:
+          type: object
+          properties: {}
+          description: 'Add the main direct deposit account. After deposits are made
+            to any additional direct deposit accounts, the remaining net check is
+            deposited in the main direct deposit account. IMPORTANT: A direct deposit
+            update will remove ALL existing main and additional direct deposit information
+            in WebPay and replace with what is provided on the request. GET API will
+            not return direct deposit data.'
+        nonPrimaryStateTax:
+          type: object
+          properties: {}
+          description: Add or update non-primary state tax code, amount type (taxCalculationCode),
+            amount or percentage, filing status, exemptions, supplemental check (specialCheckCalc),
+            and reciprocity code information.
+        primaryPayRate:
+          type: object
+          properties: {}
+          description: Add or update hourly or salary pay rate, effective date, and
+            pay frequency.
+        primaryStateTax:
+          type: object
+          properties: {}
+          description: Add or update primary state tax code, amount type (taxCalculationCode),
+            amount or percentage, filing status, exemptions, and supplemental check
+            (specialCheckCalc) information. Only one primary state is allowed. Sending
+            an updated primary state will replace the current primary state.
+        status:
+          type: object
+          properties: {}
+          description: Add or update employee status, change reason, effective date,
+            and adjusted seniority date. Note that companies that are still in Implementation
+            cannot hire future employees.
+        taxSetup:
+          type: object
+          properties:
+            isEmployee943:
+              type: boolean
+              description: Indicates if employee in agriculture or farming.
+            isPension:
+              type: boolean
+              description: Indicates if employee is eligible for pension.
+            isStatutory:
+              type: boolean
+              description: Indicates if employee is statutory.
+          description: Add tax form, 1099 exempt reasons and notes, and 943 agricultural
+            employee information. Once the employee receives wages, this information
+            cannot be updated. Add or update SUI tax state, retirement plan, and statutory
+            information.
+        webTime:
+          type: object
+          properties: {}
+          description: Add or update Web Time badge number and charge rate and synchronize
+            Web Pay and Web Time employee data.
+        workAddress:
+          type: object
+          properties: {}
+          description: Add or update employee's work address, phone numbers, and email.
+            Work Location drop down field is not included.
+        workEligibility:
+          type: object
+          properties: {}
+          description: Add or update I-9 work authorization information.
+      description: The employee model
+    employeeIdResponse:
+      type: object
+      properties:
+        employeeId:
+          type: string
+          description: The EmployeeId
+      description: The EmployeeId Response Model
+    employeeInfo:
+      type: object
+      description: The employee info model
+    error:
+      type: object
+      properties:
+        field:
+          type: string
+          description: The name of the field, or property in the request message that
+            contains an error.
+        message:
+          type: string
+          description: The error message.
+        options:
+          type: array
+          description: A list of options associated with this error. These options
+            may indicate valid values for the field, or property that contains an
+            error.
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: The code associated with this option.
+              description:
+                type: string
+                description: The description of the option.
+            description: The error option model
+        path:
+          type: string
+          description: The JSON path of the field, or property, that contains an error
+            in the request message.
+      description: The error model
+    localTax:
+      type: object
+      description: The Local Tax model
+    nonPrimaryStateTax:
+      type: object
+      description: The Non-Primary State Tax model
+    payStatementDetails:
+      type: object
+      properties:
+        transactionNumber:
+          type: integer
+          description: <br />
+        year:
+          type: integer
+          description: .<br />
+      description: The pay statement details model
+    payStatementSummary:
+      type: object
+      properties:
+        autoPay:
+          type: boolean
+          description: .<br />
+        checkNumber:
+          type: integer
+          description: .<br />
+        process:
+          type: integer
+          description: .<br />
+        transactionNumber:
+          type: integer
+          description: <br />
+        voucherNumber:
+          type: integer
+          description: .<br />
+        year:
+          type: integer
+          description: .<br />
+      description: The pay statement summary model
+    stagedEmployee:
+      type: object
+      properties:
+        additionalDirectDeposit:
+          maxItems: 4
+          type: array
+          description: 'Add up to 19 direct deposit accounts in addition to the main
+            direct deposit account. IMPORTANT: A direct deposit update will remove
+            ALL existing main and additional direct deposit information in WebPay
+            and replace with information provided on the request. GET API will not
+            return direct deposit data.'
+          items:
+            type: object
+            properties: {}
+            description: The additional direct deposit model
+        benefitSetup:
+          maxItems: 1
+          type: array
+          description: Add setup values used for employee benefits integration, insurance
+            plan settings, and ACA reporting.
+          items:
+            type: object
+            properties: {}
+            description: The benefit setup model
+        customBooleanFields:
+          maxItems: 8
+          type: array
+          description: Up to 8 custom fields of boolean (checkbox) type value.
+          items:
+            required:
+            - category
+            type: object
+            properties:
+              category:
+                type: string
+                description: The custom field category.  Acceptable value is 'PayrollAndHR'.
+                enum:
+                - PayrollAndHR
+            description: ""
+        customDateFields:
+          maxItems: 8
+          type: array
+          description: Up to 8 custom fields of the date type value.
+          items:
+            required:
+            - category
+            type: object
+            properties:
+              category:
+                type: string
+                description: The custom field category.  Acceptable value is 'PayrollAndHR'.
+                enum:
+                - PayrollAndHR
+            description: ""
+        customDropDownFields:
+          maxItems: 8
+          type: array
+          description: Up to 8 custom fields of the dropdown type value.
+          items:
+            required:
+            - category
+            type: object
+            properties:
+              category:
+                type: string
+                description: The custom field category.  Acceptable value is 'PayrollAndHR'.
+                enum:
+                - PayrollAndHR
+            description: ""
+        customNumberFields:
+          maxItems: 8
+          type: array
+          description: Up to 8 custom fields of numeric type value.
+          items:
+            required:
+            - category
+            type: object
+            properties:
+              category:
+                type: string
+                description: The custom field category.  Acceptable value is 'PayrollAndHR'.
+                enum:
+                - PayrollAndHR
+            description: ""
+        customTextFields:
+          maxItems: 8
+          type: array
+          description: Up to 8 custom fields of text type value.
+          items:
+            required:
+            - category
+            type: object
+            properties:
+              category:
+                type: string
+                description: The custom field category.  Acceptable value is 'PayrollAndHR'.
+                enum:
+                - PayrollAndHR
+            description: ""
+        departmentPosition:
+          maxItems: 1
+          type: array
+          description: Add home department cost center, position, supervisor, reviewer,
+            employment type, EEO class, pay settings, and union information.
+          items:
+            type: object
+            properties: {}
+            description: The Department Position model
+        federalTax:
+          maxItems: 1
+          type: array
+          description: Add federal tax amount type (taxCalculationCode), amount or
+            percentage, filing status, and exemptions.
+          items:
+            type: object
+            properties: {}
+            description: The Federal Tax model
+        homeAddress:
+          maxItems: 1
+          type: array
+          description: Add employee's home address, personal phone numbers, and personal
+            email.
+          items:
+            type: object
+            properties: {}
+            description: The address model
+        localTax:
+          maxItems: 5
+          type: array
+          description: Add local tax code, filing status, and exemptions including
+            PA-PSD taxes.
+          items:
+            type: object
+            properties: {}
+            description: The Local Tax model
+        mainDirectDeposit:
+          maxItems: 1
+          type: array
+          description: 'Add the main direct deposit account. After deposits are made
+            to any additional direct deposit accounts, the remaining net check is
+            deposited in the main direct deposit account. IMPORTANT: A direct deposit
+            update will remove ALL existing main and additional direct deposit information
+            in WebPay and replace with what is provided on the request. GET API will
+            not return direct deposit data.'
+          items:
+            type: object
+            properties: {}
+            description: The Main Direct Deposit model
+        nonPrimaryStateTax:
+          maxItems: 1
+          type: array
+          description: Add non-primary state tax code, amount type (taxCalculationCode),
+            amount or percentage, filing status, exemptions, supplemental check (specialCheckCalc),
+            and reciprocity code information.
+          items:
+            type: object
+            properties: {}
+            description: The Non-Primary State Tax model
+        primaryPayRate:
+          maxItems: 1
+          type: array
+          description: Add hourly or salary pay rate, effective date, and pay frequency.
+          items:
+            type: object
+            properties: {}
+            description: The Primary Pay Rate model
+        primaryStateTax:
+          maxItems: 1
+          type: array
+          description: Add primary state tax code, amount type (taxCalculationCode),
+            amount or percentage, filing status, exemptions, and supplemental check
+            (specialCheckCalc) information. Only one primary state is allowed.
+          items:
+            type: object
+            properties: {}
+            description: The State Tax model
+        status:
+          maxItems: 1
+          type: array
+          description: Add employee status, change reason, effective date, and adjusted
+            seniority date. Note that companies that are still in Implementation cannot
+            hire future employees.
+          items:
+            type: object
+            properties: {}
+            description: The employee status model
+        webTime:
+          type: object
+          properties: {}
+          description: Add Web Time badge number and charge rate and synchronize Web
+            Pay and Web Time employee data.
+        workAddress:
+          maxItems: 1
+          type: array
+          description: Add employee's work address, phone numbers, and email. Work
+            Location drop down field is not included.
+          items:
+            type: object
+            properties: {}
+            description: The address model
+        workEligibility:
+          maxItems: 1
+          type: array
+          description: Add I-9 work authorization information.
+          items:
+            type: object
+            properties: {}
+            description: The Work Eligibility model
+      description: The staged employee model
+    stateTax:
+      type: object
+      description: The State Tax model
+    trackingNumberResponse:
+      type: object
+      properties:
+        trackingNumber:
+          type: string
+          description: The unique tracking number
+      description: The Tracking Number Response model
+  securitySchemes:
+    paylocity_auth:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.paylocity.com/IdentityServer/connect/token
+          scopes:
+            WebLinkAPI: Web Link Api

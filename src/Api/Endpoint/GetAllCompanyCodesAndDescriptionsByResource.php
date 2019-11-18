@@ -68,28 +68,24 @@ class GetAllCompanyCodesAndDescriptionsByResource extends \Jane\OpenApiRuntime\C
     /**
      * {@inheritdoc}
      *
-     * @throws \Paylocity\Api\Exception\GetAllCompanyCodesAndDescriptionsByResourceUnauthorizedException
-     * @throws \Paylocity\Api\Exception\GetAllCompanyCodesAndDescriptionsByResourceForbiddenException
      * @throws \Paylocity\Api\Exception\GetAllCompanyCodesAndDescriptionsByResourceNotFoundException
      * @throws \Paylocity\Api\Exception\GetAllCompanyCodesAndDescriptionsByResourceInternalServerErrorException
      *
      * @return \Paylocity\Api\Model\CompanyCodes[]|null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType)
+    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
-        if (200 === $status) {
+        if (200 === $status && mb_strpos($contentType, 'application/json') !== false) {
             return $serializer->deserialize($body, 'Paylocity\\Api\\Model\\CompanyCodes[]', 'json');
         }
         if (401 === $status) {
-            throw new \Paylocity\Api\Exception\GetAllCompanyCodesAndDescriptionsByResourceUnauthorizedException();
         }
         if (403 === $status) {
-            throw new \Paylocity\Api\Exception\GetAllCompanyCodesAndDescriptionsByResourceForbiddenException();
         }
-        if (404 === $status) {
+        if (404 === $status && mb_strpos($contentType, 'application/json') !== false) {
             throw new \Paylocity\Api\Exception\GetAllCompanyCodesAndDescriptionsByResourceNotFoundException($serializer->deserialize($body, 'Paylocity\\Api\\Model\\Error[]', 'json'));
         }
-        if (500 === $status) {
+        if (500 === $status && mb_strpos($contentType, 'application/json') !== false) {
             throw new \Paylocity\Api\Exception\GetAllCompanyCodesAndDescriptionsByResourceInternalServerErrorException($serializer->deserialize($body, 'Paylocity\\Api\\Model\\Error[]', 'json'));
         }
     }

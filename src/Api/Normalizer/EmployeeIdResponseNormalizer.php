@@ -30,7 +30,7 @@ class EmployeeIdResponseNormalizer implements DenormalizerInterface, NormalizerI
 
     public function supportsNormalization($data, $format = null)
     {
-        return get_class($data) === 'Paylocity\\Api\\Model\\EmployeeIdResponse';
+        return is_object($data) && get_class($data) === 'Paylocity\\Api\\Model\\EmployeeIdResponse';
     }
 
     public function denormalize($data, $class, $format = null, array $context = [])
@@ -49,9 +49,7 @@ class EmployeeIdResponseNormalizer implements DenormalizerInterface, NormalizerI
     public function normalize($object, $format = null, array $context = [])
     {
         $data = new \stdClass();
-        if (null !== $object->getEmployeeId()) {
-            $data->{'employeeId'} = $object->getEmployeeId();
-        }
+        $data->{'employeeId'} = $object->getEmployeeId();
 
         return $data;
     }

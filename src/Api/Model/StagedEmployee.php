@@ -25,12 +25,6 @@ class StagedEmployee
      */
     protected $benefitSetup;
     /**
-     * Employee birthdate. Common formats include *MM-DD-CCYY*, *CCYY-MM-DD*.
-     *
-     * @var string|null
-     */
-    protected $birthDate;
-    /**
      * Up to 8 custom fields of boolean (checkbox) type value.
      *
      * @var StagedEmployeeCustomBooleanFieldsItem[]
@@ -67,77 +61,17 @@ class StagedEmployee
      */
     protected $departmentPosition;
     /**
-     * Indicates if employee has disability status.
-     *
-     * @var string|null
-     */
-    protected $disabilityDescription;
-    /**
-     * Leave blank to have Web Pay automatically assign the next available employee ID.<br  /> Max length: 10.
-     *
-     * @var string|null
-     */
-    protected $employeeId;
-    /**
-     * Employee ethnicity.<br  /> Max length: 10.
-     *
-     * @var string|null
-     */
-    protected $ethnicity;
-    /**
      * Add federal tax amount type (taxCalculationCode), amount or percentage, filing status, and exemptions.
      *
      * @var StagedEmployeeFederalTaxItem[]
      */
     protected $federalTax;
     /**
-     * Employee first name. <br  />Max length: 40.
-     *
-     * @var string|null
-     */
-    protected $firstName;
-    /**
-     * Reason code for FITW exemption. Common values are *SE* (Statutory employee), *CR* (clergy/Religious). <br  /> Max length: 30.
-     *
-     * @var string|null
-     */
-    protected $fitwExemptReason;
-    /**
-     * Reason code for FUTA exemption. Common values are *501* (5019c)(3) Organization), *IC* (Independent Contractor).<br  /> Max length: 30.
-     *
-     * @var string|null
-     */
-    protected $futaExemptReason;
-    /**
-     * Employee gender. Common values *M* (Male), *F* (Female). <br  />Max length: 1.
-     *
-     * @var string|null
-     */
-    protected $gender;
-    /**
      * Add employee's home address, personal phone numbers, and personal email.
      *
      * @var StagedEmployeeHomeAddressItem[]
      */
     protected $homeAddress;
-    /**
-     * Indicates if employee in agriculture or farming.
-     *
-     * @var bool|null
-     */
-    protected $isEmployee943;
-    /**
-     * Indicates if employee is a smoker.
-     *
-     * @var bool|null
-     */
-    protected $isSmoker;
-    /**
-     * Employee last name. <br  />Max length: 40.
-     *
-     * @var string|null
-     */
-    protected $lastName;
     /**
      * Add local tax code, filing status, and exemptions including PA-PSD taxes.
      *
@@ -151,35 +85,11 @@ class StagedEmployee
      */
     protected $mainDirectDeposit;
     /**
-     * Employee marital status. Common values *D (Divorced), M (Married), S (Single), W (Widowed)*. <br  />Max length: 10.
-     *
-     * @var string|null
-     */
-    protected $maritalStatus;
-    /**
-     * Reason code for Medicare exemption. Common values are *501* (5019c)(3) Organization), *IC* (Independent Contractor).<br  /> Max length: 30.
-     *
-     * @var string|null
-     */
-    protected $medExemptReason;
-    /**
-     * Employee middle name.<br  /> Max length: 20.
-     *
-     * @var string|null
-     */
-    protected $middleName;
-    /**
      * Add non-primary state tax code, amount type (taxCalculationCode), amount or percentage, filing status, exemptions, supplemental check (specialCheckCalc), and reciprocity code information.
      *
      * @var StagedEmployeeNonPrimaryStateTaxItem[]
      */
     protected $nonPrimaryStateTax;
-    /**
-     * Employee preferred display name.<br  /> Max length: 20.
-     *
-     * @var string|null
-     */
-    protected $preferredName;
     /**
      * Add hourly or salary pay rate, effective date, and pay frequency.
      *
@@ -193,77 +103,11 @@ class StagedEmployee
      */
     protected $primaryStateTax;
     /**
-     * Prior last name if applicable.<br  />Max length: 40.
-     *
-     * @var string|null
-     */
-    protected $priorLastName;
-    /**
-     * Employee preferred salutation. <br  />Max length: 10.
-     *
-     * @var string|null
-     */
-    protected $salutation;
-    /**
-     * Reason code for SITW exemption. Common values are *SE* (Statutory employee), *CR* (clergy/Religious). <br  /> Max length: 30.
-     *
-     * @var string|null
-     */
-    protected $sitwExemptReason;
-    /**
-     * Reason code for Social Security exemption. Common values are *SE* (Statutory employee), *CR* (clergy/Religious). <br  /> Max length: 30.
-     *
-     * @var string|null
-     */
-    protected $ssExemptReason;
-    /**
-     * Employee social security number. Leave it blank if valid social security number not available. <br  />Max length: 11.
-     *
-     * @var string|null
-     */
-    protected $ssn;
-    /**
      * Add employee status, change reason, effective date, and adjusted seniority date. Note that companies that are still in Implementation cannot hire future employees.
      *
      * @var StagedEmployeeStatusItem[]
      */
     protected $status;
-    /**
-     * Employee name suffix. Common values are *Jr, Sr, II*.<br  />Max length: 30.
-     *
-     * @var string|null
-     */
-    protected $suffix;
-    /**
-     * Reason code for SUI exemption. Common values are *SE* (Statutory employee), *CR* (clergy/Religious). <br  /> Max length: 30.
-     *
-     * @var string|null
-     */
-    protected $suiExemptReason;
-    /**
-     * Employee SUI (State Unemployment Insurance) state. <br  />Max length: 2.
-     *
-     * @var string|null
-     */
-    protected $suiState;
-    /**
-     * Employee 1099R distribution code. Common values are *7* (Normal Distribution), *F* (Charitable Gift Annuity). <br  />Max length: 1.
-     *
-     * @var string|null
-     */
-    protected $taxDistributionCode1099R;
-    /**
-     * Employee tax form for reporting income. Valid values are *W2, 1099M, 1099R*. Default is W2. <br  />Max length: 15.
-     *
-     * @var string|null
-     */
-    protected $taxForm;
-    /**
-     * Indicates if employee is a veteran.
-     *
-     * @var string|null
-     */
-    protected $veteranDescription;
     /**
      * Add Web Time badge number and charge rate and synchronize Web Pay and Web Time employee data.
      *
@@ -323,24 +167,6 @@ class StagedEmployee
     public function setBenefitSetup(array $benefitSetup): self
     {
         $this->benefitSetup = $benefitSetup;
-
-        return $this;
-    }
-
-    /**
-     * Employee birthdate. Common formats include *MM-DD-CCYY*, *CCYY-MM-DD*.
-     */
-    public function getBirthDate(): ?string
-    {
-        return $this->birthDate;
-    }
-
-    /**
-     * Employee birthdate. Common formats include *MM-DD-CCYY*, *CCYY-MM-DD*.
-     */
-    public function setBirthDate(?string $birthDate): self
-    {
-        $this->birthDate = $birthDate;
 
         return $this;
     }
@@ -478,60 +304,6 @@ class StagedEmployee
     }
 
     /**
-     * Indicates if employee has disability status.
-     */
-    public function getDisabilityDescription(): ?string
-    {
-        return $this->disabilityDescription;
-    }
-
-    /**
-     * Indicates if employee has disability status.
-     */
-    public function setDisabilityDescription(?string $disabilityDescription): self
-    {
-        $this->disabilityDescription = $disabilityDescription;
-
-        return $this;
-    }
-
-    /**
-     * Leave blank to have Web Pay automatically assign the next available employee ID.<br  /> Max length: 10.
-     */
-    public function getEmployeeId(): ?string
-    {
-        return $this->employeeId;
-    }
-
-    /**
-     * Leave blank to have Web Pay automatically assign the next available employee ID.<br  /> Max length: 10.
-     */
-    public function setEmployeeId(?string $employeeId): self
-    {
-        $this->employeeId = $employeeId;
-
-        return $this;
-    }
-
-    /**
-     * Employee ethnicity.<br  /> Max length: 10.
-     */
-    public function getEthnicity(): ?string
-    {
-        return $this->ethnicity;
-    }
-
-    /**
-     * Employee ethnicity.<br  /> Max length: 10.
-     */
-    public function setEthnicity(?string $ethnicity): self
-    {
-        $this->ethnicity = $ethnicity;
-
-        return $this;
-    }
-
-    /**
      * Add federal tax amount type (taxCalculationCode), amount or percentage, filing status, and exemptions.
      *
      * @return StagedEmployeeFederalTaxItem[]
@@ -554,78 +326,6 @@ class StagedEmployee
     }
 
     /**
-     * Employee first name. <br  />Max length: 40.
-     */
-    public function getFirstName(): ?string
-    {
-        return $this->firstName;
-    }
-
-    /**
-     * Employee first name. <br  />Max length: 40.
-     */
-    public function setFirstName(?string $firstName): self
-    {
-        $this->firstName = $firstName;
-
-        return $this;
-    }
-
-    /**
-     * Reason code for FITW exemption. Common values are *SE* (Statutory employee), *CR* (clergy/Religious). <br  /> Max length: 30.
-     */
-    public function getFitwExemptReason(): ?string
-    {
-        return $this->fitwExemptReason;
-    }
-
-    /**
-     * Reason code for FITW exemption. Common values are *SE* (Statutory employee), *CR* (clergy/Religious). <br  /> Max length: 30.
-     */
-    public function setFitwExemptReason(?string $fitwExemptReason): self
-    {
-        $this->fitwExemptReason = $fitwExemptReason;
-
-        return $this;
-    }
-
-    /**
-     * Reason code for FUTA exemption. Common values are *501* (5019c)(3) Organization), *IC* (Independent Contractor).<br  /> Max length: 30.
-     */
-    public function getFutaExemptReason(): ?string
-    {
-        return $this->futaExemptReason;
-    }
-
-    /**
-     * Reason code for FUTA exemption. Common values are *501* (5019c)(3) Organization), *IC* (Independent Contractor).<br  /> Max length: 30.
-     */
-    public function setFutaExemptReason(?string $futaExemptReason): self
-    {
-        $this->futaExemptReason = $futaExemptReason;
-
-        return $this;
-    }
-
-    /**
-     * Employee gender. Common values *M* (Male), *F* (Female). <br  />Max length: 1.
-     */
-    public function getGender(): ?string
-    {
-        return $this->gender;
-    }
-
-    /**
-     * Employee gender. Common values *M* (Male), *F* (Female). <br  />Max length: 1.
-     */
-    public function setGender(?string $gender): self
-    {
-        $this->gender = $gender;
-
-        return $this;
-    }
-
-    /**
      * Add employee's home address, personal phone numbers, and personal email.
      *
      * @return StagedEmployeeHomeAddressItem[]
@@ -643,60 +343,6 @@ class StagedEmployee
     public function setHomeAddress(array $homeAddress): self
     {
         $this->homeAddress = $homeAddress;
-
-        return $this;
-    }
-
-    /**
-     * Indicates if employee in agriculture or farming.
-     */
-    public function getIsEmployee943(): ?bool
-    {
-        return $this->isEmployee943;
-    }
-
-    /**
-     * Indicates if employee in agriculture or farming.
-     */
-    public function setIsEmployee943(?bool $isEmployee943): self
-    {
-        $this->isEmployee943 = $isEmployee943;
-
-        return $this;
-    }
-
-    /**
-     * Indicates if employee is a smoker.
-     */
-    public function getIsSmoker(): ?bool
-    {
-        return $this->isSmoker;
-    }
-
-    /**
-     * Indicates if employee is a smoker.
-     */
-    public function setIsSmoker(?bool $isSmoker): self
-    {
-        $this->isSmoker = $isSmoker;
-
-        return $this;
-    }
-
-    /**
-     * Employee last name. <br  />Max length: 40.
-     */
-    public function getLastName(): ?string
-    {
-        return $this->lastName;
-    }
-
-    /**
-     * Employee last name. <br  />Max length: 40.
-     */
-    public function setLastName(?string $lastName): self
-    {
-        $this->lastName = $lastName;
 
         return $this;
     }
@@ -746,60 +392,6 @@ class StagedEmployee
     }
 
     /**
-     * Employee marital status. Common values *D (Divorced), M (Married), S (Single), W (Widowed)*. <br  />Max length: 10.
-     */
-    public function getMaritalStatus(): ?string
-    {
-        return $this->maritalStatus;
-    }
-
-    /**
-     * Employee marital status. Common values *D (Divorced), M (Married), S (Single), W (Widowed)*. <br  />Max length: 10.
-     */
-    public function setMaritalStatus(?string $maritalStatus): self
-    {
-        $this->maritalStatus = $maritalStatus;
-
-        return $this;
-    }
-
-    /**
-     * Reason code for Medicare exemption. Common values are *501* (5019c)(3) Organization), *IC* (Independent Contractor).<br  /> Max length: 30.
-     */
-    public function getMedExemptReason(): ?string
-    {
-        return $this->medExemptReason;
-    }
-
-    /**
-     * Reason code for Medicare exemption. Common values are *501* (5019c)(3) Organization), *IC* (Independent Contractor).<br  /> Max length: 30.
-     */
-    public function setMedExemptReason(?string $medExemptReason): self
-    {
-        $this->medExemptReason = $medExemptReason;
-
-        return $this;
-    }
-
-    /**
-     * Employee middle name.<br  /> Max length: 20.
-     */
-    public function getMiddleName(): ?string
-    {
-        return $this->middleName;
-    }
-
-    /**
-     * Employee middle name.<br  /> Max length: 20.
-     */
-    public function setMiddleName(?string $middleName): self
-    {
-        $this->middleName = $middleName;
-
-        return $this;
-    }
-
-    /**
      * Add non-primary state tax code, amount type (taxCalculationCode), amount or percentage, filing status, exemptions, supplemental check (specialCheckCalc), and reciprocity code information.
      *
      * @return StagedEmployeeNonPrimaryStateTaxItem[]
@@ -817,24 +409,6 @@ class StagedEmployee
     public function setNonPrimaryStateTax(array $nonPrimaryStateTax): self
     {
         $this->nonPrimaryStateTax = $nonPrimaryStateTax;
-
-        return $this;
-    }
-
-    /**
-     * Employee preferred display name.<br  /> Max length: 20.
-     */
-    public function getPreferredName(): ?string
-    {
-        return $this->preferredName;
-    }
-
-    /**
-     * Employee preferred display name.<br  /> Max length: 20.
-     */
-    public function setPreferredName(?string $preferredName): self
-    {
-        $this->preferredName = $preferredName;
 
         return $this;
     }
@@ -884,96 +458,6 @@ class StagedEmployee
     }
 
     /**
-     * Prior last name if applicable.<br  />Max length: 40.
-     */
-    public function getPriorLastName(): ?string
-    {
-        return $this->priorLastName;
-    }
-
-    /**
-     * Prior last name if applicable.<br  />Max length: 40.
-     */
-    public function setPriorLastName(?string $priorLastName): self
-    {
-        $this->priorLastName = $priorLastName;
-
-        return $this;
-    }
-
-    /**
-     * Employee preferred salutation. <br  />Max length: 10.
-     */
-    public function getSalutation(): ?string
-    {
-        return $this->salutation;
-    }
-
-    /**
-     * Employee preferred salutation. <br  />Max length: 10.
-     */
-    public function setSalutation(?string $salutation): self
-    {
-        $this->salutation = $salutation;
-
-        return $this;
-    }
-
-    /**
-     * Reason code for SITW exemption. Common values are *SE* (Statutory employee), *CR* (clergy/Religious). <br  /> Max length: 30.
-     */
-    public function getSitwExemptReason(): ?string
-    {
-        return $this->sitwExemptReason;
-    }
-
-    /**
-     * Reason code for SITW exemption. Common values are *SE* (Statutory employee), *CR* (clergy/Religious). <br  /> Max length: 30.
-     */
-    public function setSitwExemptReason(?string $sitwExemptReason): self
-    {
-        $this->sitwExemptReason = $sitwExemptReason;
-
-        return $this;
-    }
-
-    /**
-     * Reason code for Social Security exemption. Common values are *SE* (Statutory employee), *CR* (clergy/Religious). <br  /> Max length: 30.
-     */
-    public function getSsExemptReason(): ?string
-    {
-        return $this->ssExemptReason;
-    }
-
-    /**
-     * Reason code for Social Security exemption. Common values are *SE* (Statutory employee), *CR* (clergy/Religious). <br  /> Max length: 30.
-     */
-    public function setSsExemptReason(?string $ssExemptReason): self
-    {
-        $this->ssExemptReason = $ssExemptReason;
-
-        return $this;
-    }
-
-    /**
-     * Employee social security number. Leave it blank if valid social security number not available. <br  />Max length: 11.
-     */
-    public function getSsn(): ?string
-    {
-        return $this->ssn;
-    }
-
-    /**
-     * Employee social security number. Leave it blank if valid social security number not available. <br  />Max length: 11.
-     */
-    public function setSsn(?string $ssn): self
-    {
-        $this->ssn = $ssn;
-
-        return $this;
-    }
-
-    /**
      * Add employee status, change reason, effective date, and adjusted seniority date. Note that companies that are still in Implementation cannot hire future employees.
      *
      * @return StagedEmployeeStatusItem[]
@@ -991,114 +475,6 @@ class StagedEmployee
     public function setStatus(array $status): self
     {
         $this->status = $status;
-
-        return $this;
-    }
-
-    /**
-     * Employee name suffix. Common values are *Jr, Sr, II*.<br  />Max length: 30.
-     */
-    public function getSuffix(): ?string
-    {
-        return $this->suffix;
-    }
-
-    /**
-     * Employee name suffix. Common values are *Jr, Sr, II*.<br  />Max length: 30.
-     */
-    public function setSuffix(?string $suffix): self
-    {
-        $this->suffix = $suffix;
-
-        return $this;
-    }
-
-    /**
-     * Reason code for SUI exemption. Common values are *SE* (Statutory employee), *CR* (clergy/Religious). <br  /> Max length: 30.
-     */
-    public function getSuiExemptReason(): ?string
-    {
-        return $this->suiExemptReason;
-    }
-
-    /**
-     * Reason code for SUI exemption. Common values are *SE* (Statutory employee), *CR* (clergy/Religious). <br  /> Max length: 30.
-     */
-    public function setSuiExemptReason(?string $suiExemptReason): self
-    {
-        $this->suiExemptReason = $suiExemptReason;
-
-        return $this;
-    }
-
-    /**
-     * Employee SUI (State Unemployment Insurance) state. <br  />Max length: 2.
-     */
-    public function getSuiState(): ?string
-    {
-        return $this->suiState;
-    }
-
-    /**
-     * Employee SUI (State Unemployment Insurance) state. <br  />Max length: 2.
-     */
-    public function setSuiState(?string $suiState): self
-    {
-        $this->suiState = $suiState;
-
-        return $this;
-    }
-
-    /**
-     * Employee 1099R distribution code. Common values are *7* (Normal Distribution), *F* (Charitable Gift Annuity). <br  />Max length: 1.
-     */
-    public function getTaxDistributionCode1099R(): ?string
-    {
-        return $this->taxDistributionCode1099R;
-    }
-
-    /**
-     * Employee 1099R distribution code. Common values are *7* (Normal Distribution), *F* (Charitable Gift Annuity). <br  />Max length: 1.
-     */
-    public function setTaxDistributionCode1099R(?string $taxDistributionCode1099R): self
-    {
-        $this->taxDistributionCode1099R = $taxDistributionCode1099R;
-
-        return $this;
-    }
-
-    /**
-     * Employee tax form for reporting income. Valid values are *W2, 1099M, 1099R*. Default is W2. <br  />Max length: 15.
-     */
-    public function getTaxForm(): ?string
-    {
-        return $this->taxForm;
-    }
-
-    /**
-     * Employee tax form for reporting income. Valid values are *W2, 1099M, 1099R*. Default is W2. <br  />Max length: 15.
-     */
-    public function setTaxForm(?string $taxForm): self
-    {
-        $this->taxForm = $taxForm;
-
-        return $this;
-    }
-
-    /**
-     * Indicates if employee is a veteran.
-     */
-    public function getVeteranDescription(): ?string
-    {
-        return $this->veteranDescription;
-    }
-
-    /**
-     * Indicates if employee is a veteran.
-     */
-    public function setVeteranDescription(?string $veteranDescription): self
-    {
-        $this->veteranDescription = $veteranDescription;
 
         return $this;
     }

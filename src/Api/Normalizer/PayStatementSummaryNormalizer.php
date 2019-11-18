@@ -30,7 +30,7 @@ class PayStatementSummaryNormalizer implements DenormalizerInterface, Normalizer
 
     public function supportsNormalization($data, $format = null)
     {
-        return get_class($data) === 'Paylocity\\Api\\Model\\PayStatementSummary';
+        return is_object($data) && get_class($data) === 'Paylocity\\Api\\Model\\PayStatementSummary';
     }
 
     public function denormalize($data, $class, $format = null, array $context = [])
@@ -42,134 +42,17 @@ class PayStatementSummaryNormalizer implements DenormalizerInterface, Normalizer
         if (property_exists($data, 'autoPay')) {
             $object->setAutoPay($data->{'autoPay'});
         }
-        if (property_exists($data, 'beginDate')) {
-            $value = $data->{'beginDate'};
-            if (is_string($data->{'beginDate'})) {
-                $value = $data->{'beginDate'};
-            } elseif (is_null($data->{'beginDate'})) {
-                $value = $data->{'beginDate'};
-            }
-            $object->setBeginDate($value);
-        }
-        if (property_exists($data, 'checkDate')) {
-            $value_1 = $data->{'checkDate'};
-            if (is_string($data->{'checkDate'})) {
-                $value_1 = $data->{'checkDate'};
-            } elseif (is_null($data->{'checkDate'})) {
-                $value_1 = $data->{'checkDate'};
-            }
-            $object->setCheckDate($value_1);
-        }
         if (property_exists($data, 'checkNumber')) {
             $object->setCheckNumber($data->{'checkNumber'});
         }
-        if (property_exists($data, 'directDepositAmount')) {
-            $value_2 = $data->{'directDepositAmount'};
-            if (is_float($data->{'directDepositAmount'})) {
-                $value_2 = $data->{'directDepositAmount'};
-            } elseif (is_null($data->{'directDepositAmount'})) {
-                $value_2 = $data->{'directDepositAmount'};
-            }
-            $object->setDirectDepositAmount($value_2);
-        }
-        if (property_exists($data, 'endDate')) {
-            $value_3 = $data->{'endDate'};
-            if (is_string($data->{'endDate'})) {
-                $value_3 = $data->{'endDate'};
-            } elseif (is_null($data->{'endDate'})) {
-                $value_3 = $data->{'endDate'};
-            }
-            $object->setEndDate($value_3);
-        }
-        if (property_exists($data, 'grossPay')) {
-            $value_4 = $data->{'grossPay'};
-            if (is_float($data->{'grossPay'})) {
-                $value_4 = $data->{'grossPay'};
-            } elseif (is_null($data->{'grossPay'})) {
-                $value_4 = $data->{'grossPay'};
-            }
-            $object->setGrossPay($value_4);
-        }
-        if (property_exists($data, 'hours')) {
-            $value_5 = $data->{'hours'};
-            if (is_float($data->{'hours'})) {
-                $value_5 = $data->{'hours'};
-            } elseif (is_null($data->{'hours'})) {
-                $value_5 = $data->{'hours'};
-            }
-            $object->setHours($value_5);
-        }
-        if (property_exists($data, 'netCheck')) {
-            $value_6 = $data->{'netCheck'};
-            if (is_float($data->{'netCheck'})) {
-                $value_6 = $data->{'netCheck'};
-            } elseif (is_null($data->{'netCheck'})) {
-                $value_6 = $data->{'netCheck'};
-            }
-            $object->setNetCheck($value_6);
-        }
-        if (property_exists($data, 'netPay')) {
-            $value_7 = $data->{'netPay'};
-            if (is_float($data->{'netPay'})) {
-                $value_7 = $data->{'netPay'};
-            } elseif (is_null($data->{'netPay'})) {
-                $value_7 = $data->{'netPay'};
-            }
-            $object->setNetPay($value_7);
-        }
-        if (property_exists($data, 'overtimeDollars')) {
-            $value_8 = $data->{'overtimeDollars'};
-            if (is_float($data->{'overtimeDollars'})) {
-                $value_8 = $data->{'overtimeDollars'};
-            } elseif (is_null($data->{'overtimeDollars'})) {
-                $value_8 = $data->{'overtimeDollars'};
-            }
-            $object->setOvertimeDollars($value_8);
-        }
-        if (property_exists($data, 'overtimeHours')) {
-            $value_9 = $data->{'overtimeHours'};
-            if (is_float($data->{'overtimeHours'})) {
-                $value_9 = $data->{'overtimeHours'};
-            } elseif (is_null($data->{'overtimeHours'})) {
-                $value_9 = $data->{'overtimeHours'};
-            }
-            $object->setOvertimeHours($value_9);
-        }
         if (property_exists($data, 'process')) {
             $object->setProcess($data->{'process'});
-        }
-        if (property_exists($data, 'regularDollars')) {
-            $value_10 = $data->{'regularDollars'};
-            if (is_float($data->{'regularDollars'})) {
-                $value_10 = $data->{'regularDollars'};
-            } elseif (is_null($data->{'regularDollars'})) {
-                $value_10 = $data->{'regularDollars'};
-            }
-            $object->setRegularDollars($value_10);
-        }
-        if (property_exists($data, 'regularHours')) {
-            $value_11 = $data->{'regularHours'};
-            if (is_float($data->{'regularHours'})) {
-                $value_11 = $data->{'regularHours'};
-            } elseif (is_null($data->{'regularHours'})) {
-                $value_11 = $data->{'regularHours'};
-            }
-            $object->setRegularHours($value_11);
         }
         if (property_exists($data, 'transactionNumber')) {
             $object->setTransactionNumber($data->{'transactionNumber'});
         }
         if (property_exists($data, 'voucherNumber')) {
             $object->setVoucherNumber($data->{'voucherNumber'});
-        }
-        if (property_exists($data, 'workersCompCode')) {
-            $value_12 = $data->{'workersCompCode'};
-            if (is_string($data->{'workersCompCode'})) {
-                $value_12 = $data->{'workersCompCode'};
-            } elseif (is_null($data->{'workersCompCode'})) {
-                $value_12 = $data->{'workersCompCode'};
-            }
-            $object->setWorkersCompCode($value_12);
         }
         if (property_exists($data, 'year')) {
             $object->setYear($data->{'year'});
@@ -181,115 +64,12 @@ class PayStatementSummaryNormalizer implements DenormalizerInterface, Normalizer
     public function normalize($object, $format = null, array $context = [])
     {
         $data = new \stdClass();
-        if (null !== $object->getAutoPay()) {
-            $data->{'autoPay'} = $object->getAutoPay();
-        }
-        $value = $object->getBeginDate();
-        if (is_string($object->getBeginDate())) {
-            $value = $object->getBeginDate();
-        } elseif (is_null($object->getBeginDate())) {
-            $value = $object->getBeginDate();
-        }
-        $data->{'beginDate'} = $value;
-        $value_1 = $object->getCheckDate();
-        if (is_string($object->getCheckDate())) {
-            $value_1 = $object->getCheckDate();
-        } elseif (is_null($object->getCheckDate())) {
-            $value_1 = $object->getCheckDate();
-        }
-        $data->{'checkDate'} = $value_1;
-        if (null !== $object->getCheckNumber()) {
-            $data->{'checkNumber'} = $object->getCheckNumber();
-        }
-        $value_2 = $object->getDirectDepositAmount();
-        if (is_float($object->getDirectDepositAmount())) {
-            $value_2 = $object->getDirectDepositAmount();
-        } elseif (is_null($object->getDirectDepositAmount())) {
-            $value_2 = $object->getDirectDepositAmount();
-        }
-        $data->{'directDepositAmount'} = $value_2;
-        $value_3 = $object->getEndDate();
-        if (is_string($object->getEndDate())) {
-            $value_3 = $object->getEndDate();
-        } elseif (is_null($object->getEndDate())) {
-            $value_3 = $object->getEndDate();
-        }
-        $data->{'endDate'} = $value_3;
-        $value_4 = $object->getGrossPay();
-        if (is_float($object->getGrossPay())) {
-            $value_4 = $object->getGrossPay();
-        } elseif (is_null($object->getGrossPay())) {
-            $value_4 = $object->getGrossPay();
-        }
-        $data->{'grossPay'} = $value_4;
-        $value_5 = $object->getHours();
-        if (is_float($object->getHours())) {
-            $value_5 = $object->getHours();
-        } elseif (is_null($object->getHours())) {
-            $value_5 = $object->getHours();
-        }
-        $data->{'hours'} = $value_5;
-        $value_6 = $object->getNetCheck();
-        if (is_float($object->getNetCheck())) {
-            $value_6 = $object->getNetCheck();
-        } elseif (is_null($object->getNetCheck())) {
-            $value_6 = $object->getNetCheck();
-        }
-        $data->{'netCheck'} = $value_6;
-        $value_7 = $object->getNetPay();
-        if (is_float($object->getNetPay())) {
-            $value_7 = $object->getNetPay();
-        } elseif (is_null($object->getNetPay())) {
-            $value_7 = $object->getNetPay();
-        }
-        $data->{'netPay'} = $value_7;
-        $value_8 = $object->getOvertimeDollars();
-        if (is_float($object->getOvertimeDollars())) {
-            $value_8 = $object->getOvertimeDollars();
-        } elseif (is_null($object->getOvertimeDollars())) {
-            $value_8 = $object->getOvertimeDollars();
-        }
-        $data->{'overtimeDollars'} = $value_8;
-        $value_9 = $object->getOvertimeHours();
-        if (is_float($object->getOvertimeHours())) {
-            $value_9 = $object->getOvertimeHours();
-        } elseif (is_null($object->getOvertimeHours())) {
-            $value_9 = $object->getOvertimeHours();
-        }
-        $data->{'overtimeHours'} = $value_9;
-        if (null !== $object->getProcess()) {
-            $data->{'process'} = $object->getProcess();
-        }
-        $value_10 = $object->getRegularDollars();
-        if (is_float($object->getRegularDollars())) {
-            $value_10 = $object->getRegularDollars();
-        } elseif (is_null($object->getRegularDollars())) {
-            $value_10 = $object->getRegularDollars();
-        }
-        $data->{'regularDollars'} = $value_10;
-        $value_11 = $object->getRegularHours();
-        if (is_float($object->getRegularHours())) {
-            $value_11 = $object->getRegularHours();
-        } elseif (is_null($object->getRegularHours())) {
-            $value_11 = $object->getRegularHours();
-        }
-        $data->{'regularHours'} = $value_11;
-        if (null !== $object->getTransactionNumber()) {
-            $data->{'transactionNumber'} = $object->getTransactionNumber();
-        }
-        if (null !== $object->getVoucherNumber()) {
-            $data->{'voucherNumber'} = $object->getVoucherNumber();
-        }
-        $value_12 = $object->getWorkersCompCode();
-        if (is_string($object->getWorkersCompCode())) {
-            $value_12 = $object->getWorkersCompCode();
-        } elseif (is_null($object->getWorkersCompCode())) {
-            $value_12 = $object->getWorkersCompCode();
-        }
-        $data->{'workersCompCode'} = $value_12;
-        if (null !== $object->getYear()) {
-            $data->{'year'} = $object->getYear();
-        }
+        $data->{'autoPay'} = $object->getAutoPay();
+        $data->{'checkNumber'} = $object->getCheckNumber();
+        $data->{'process'} = $object->getProcess();
+        $data->{'transactionNumber'} = $object->getTransactionNumber();
+        $data->{'voucherNumber'} = $object->getVoucherNumber();
+        $data->{'year'} = $object->getYear();
 
         return $data;
     }

@@ -74,28 +74,22 @@ class GetEarningByEarningCodeAndStartDate extends \Jane\OpenApiRuntime\Client\Ba
     /**
      * {@inheritdoc}
      *
-     * @throws \Paylocity\Api\Exception\GetEarningByEarningCodeAndStartDateUnauthorizedException
-     * @throws \Paylocity\Api\Exception\GetEarningByEarningCodeAndStartDateForbiddenException
-     * @throws \Paylocity\Api\Exception\GetEarningByEarningCodeAndStartDateNotFoundException
      * @throws \Paylocity\Api\Exception\GetEarningByEarningCodeAndStartDateInternalServerErrorException
      *
      * @return \Paylocity\Api\Model\Earning|null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType)
+    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
-        if (200 === $status) {
+        if (200 === $status && mb_strpos($contentType, 'application/json') !== false) {
             return $serializer->deserialize($body, 'Paylocity\\Api\\Model\\Earning', 'json');
         }
         if (401 === $status) {
-            throw new \Paylocity\Api\Exception\GetEarningByEarningCodeAndStartDateUnauthorizedException();
         }
         if (403 === $status) {
-            throw new \Paylocity\Api\Exception\GetEarningByEarningCodeAndStartDateForbiddenException();
         }
         if (404 === $status) {
-            throw new \Paylocity\Api\Exception\GetEarningByEarningCodeAndStartDateNotFoundException();
         }
-        if (500 === $status) {
+        if (500 === $status && mb_strpos($contentType, 'application/json') !== false) {
             throw new \Paylocity\Api\Exception\GetEarningByEarningCodeAndStartDateInternalServerErrorException($serializer->deserialize($body, 'Paylocity\\Api\\Model\\Error[]', 'json'));
         }
     }

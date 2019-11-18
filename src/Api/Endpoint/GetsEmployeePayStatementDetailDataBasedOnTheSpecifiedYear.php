@@ -92,28 +92,24 @@ class GetsEmployeePayStatementDetailDataBasedOnTheSpecifiedYear extends \Jane\Op
     /**
      * {@inheritdoc}
      *
-     * @throws \Paylocity\Api\Exception\GetsEmployeePayStatementDetailDataBasedOnTheSpecifiedYearUnauthorizedException
-     * @throws \Paylocity\Api\Exception\GetsEmployeePayStatementDetailDataBasedOnTheSpecifiedYearForbiddenException
      * @throws \Paylocity\Api\Exception\GetsEmployeePayStatementDetailDataBasedOnTheSpecifiedYearNotFoundException
      * @throws \Paylocity\Api\Exception\GetsEmployeePayStatementDetailDataBasedOnTheSpecifiedYearInternalServerErrorException
      *
      * @return \Paylocity\Api\Model\PayStatementDetails[]|null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType)
+    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
-        if (200 === $status) {
+        if (200 === $status && mb_strpos($contentType, 'application/json') !== false) {
             return $serializer->deserialize($body, 'Paylocity\\Api\\Model\\PayStatementDetails[]', 'json');
         }
         if (401 === $status) {
-            throw new \Paylocity\Api\Exception\GetsEmployeePayStatementDetailDataBasedOnTheSpecifiedYearUnauthorizedException();
         }
         if (403 === $status) {
-            throw new \Paylocity\Api\Exception\GetsEmployeePayStatementDetailDataBasedOnTheSpecifiedYearForbiddenException();
         }
-        if (404 === $status) {
+        if (404 === $status && mb_strpos($contentType, 'application/json') !== false) {
             throw new \Paylocity\Api\Exception\GetsEmployeePayStatementDetailDataBasedOnTheSpecifiedYearNotFoundException($serializer->deserialize($body, 'Paylocity\\Api\\Model\\Error[]', 'json'));
         }
-        if (500 === $status) {
+        if (500 === $status && mb_strpos($contentType, 'application/json') !== false) {
             throw new \Paylocity\Api\Exception\GetsEmployeePayStatementDetailDataBasedOnTheSpecifiedYearInternalServerErrorException($serializer->deserialize($body, 'Paylocity\\Api\\Model\\Error[]', 'json'));
         }
     }

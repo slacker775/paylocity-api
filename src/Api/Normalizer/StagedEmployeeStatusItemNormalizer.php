@@ -30,7 +30,7 @@ class StagedEmployeeStatusItemNormalizer implements DenormalizerInterface, Norma
 
     public function supportsNormalization($data, $format = null)
     {
-        return get_class($data) === 'Paylocity\\Api\\Model\\StagedEmployeeStatusItem';
+        return is_object($data) && get_class($data) === 'Paylocity\\Api\\Model\\StagedEmployeeStatusItem';
     }
 
     public function denormalize($data, $class, $format = null, array $context = [])
@@ -39,60 +39,6 @@ class StagedEmployeeStatusItemNormalizer implements DenormalizerInterface, Norma
             throw new InvalidArgumentException();
         }
         $object = new \Paylocity\Api\Model\StagedEmployeeStatusItem();
-        if (property_exists($data, 'adjustedSeniorityDate')) {
-            $value = $data->{'adjustedSeniorityDate'};
-            if (is_string($data->{'adjustedSeniorityDate'})) {
-                $value = $data->{'adjustedSeniorityDate'};
-            } elseif (is_null($data->{'adjustedSeniorityDate'})) {
-                $value = $data->{'adjustedSeniorityDate'};
-            }
-            $object->setAdjustedSeniorityDate($value);
-        }
-        if (property_exists($data, 'changeReason')) {
-            $value_1 = $data->{'changeReason'};
-            if (is_string($data->{'changeReason'})) {
-                $value_1 = $data->{'changeReason'};
-            } elseif (is_null($data->{'changeReason'})) {
-                $value_1 = $data->{'changeReason'};
-            }
-            $object->setChangeReason($value_1);
-        }
-        if (property_exists($data, 'effectiveDate')) {
-            $value_2 = $data->{'effectiveDate'};
-            if (is_string($data->{'effectiveDate'})) {
-                $value_2 = $data->{'effectiveDate'};
-            } elseif (is_null($data->{'effectiveDate'})) {
-                $value_2 = $data->{'effectiveDate'};
-            }
-            $object->setEffectiveDate($value_2);
-        }
-        if (property_exists($data, 'employeeStatus')) {
-            $value_3 = $data->{'employeeStatus'};
-            if (is_string($data->{'employeeStatus'})) {
-                $value_3 = $data->{'employeeStatus'};
-            } elseif (is_null($data->{'employeeStatus'})) {
-                $value_3 = $data->{'employeeStatus'};
-            }
-            $object->setEmployeeStatus($value_3);
-        }
-        if (property_exists($data, 'hireDate')) {
-            $value_4 = $data->{'hireDate'};
-            if (is_string($data->{'hireDate'})) {
-                $value_4 = $data->{'hireDate'};
-            } elseif (is_null($data->{'hireDate'})) {
-                $value_4 = $data->{'hireDate'};
-            }
-            $object->setHireDate($value_4);
-        }
-        if (property_exists($data, 'isEligibleForRehire')) {
-            $value_5 = $data->{'isEligibleForRehire'};
-            if (is_bool($data->{'isEligibleForRehire'})) {
-                $value_5 = $data->{'isEligibleForRehire'};
-            } elseif (is_null($data->{'isEligibleForRehire'})) {
-                $value_5 = $data->{'isEligibleForRehire'};
-            }
-            $object->setIsEligibleForRehire($value_5);
-        }
 
         return $object;
     }
@@ -100,48 +46,6 @@ class StagedEmployeeStatusItemNormalizer implements DenormalizerInterface, Norma
     public function normalize($object, $format = null, array $context = [])
     {
         $data = new \stdClass();
-        $value = $object->getAdjustedSeniorityDate();
-        if (is_string($object->getAdjustedSeniorityDate())) {
-            $value = $object->getAdjustedSeniorityDate();
-        } elseif (is_null($object->getAdjustedSeniorityDate())) {
-            $value = $object->getAdjustedSeniorityDate();
-        }
-        $data->{'adjustedSeniorityDate'} = $value;
-        $value_1 = $object->getChangeReason();
-        if (is_string($object->getChangeReason())) {
-            $value_1 = $object->getChangeReason();
-        } elseif (is_null($object->getChangeReason())) {
-            $value_1 = $object->getChangeReason();
-        }
-        $data->{'changeReason'} = $value_1;
-        $value_2 = $object->getEffectiveDate();
-        if (is_string($object->getEffectiveDate())) {
-            $value_2 = $object->getEffectiveDate();
-        } elseif (is_null($object->getEffectiveDate())) {
-            $value_2 = $object->getEffectiveDate();
-        }
-        $data->{'effectiveDate'} = $value_2;
-        $value_3 = $object->getEmployeeStatus();
-        if (is_string($object->getEmployeeStatus())) {
-            $value_3 = $object->getEmployeeStatus();
-        } elseif (is_null($object->getEmployeeStatus())) {
-            $value_3 = $object->getEmployeeStatus();
-        }
-        $data->{'employeeStatus'} = $value_3;
-        $value_4 = $object->getHireDate();
-        if (is_string($object->getHireDate())) {
-            $value_4 = $object->getHireDate();
-        } elseif (is_null($object->getHireDate())) {
-            $value_4 = $object->getHireDate();
-        }
-        $data->{'hireDate'} = $value_4;
-        $value_5 = $object->getIsEligibleForRehire();
-        if (is_bool($object->getIsEligibleForRehire())) {
-            $value_5 = $object->getIsEligibleForRehire();
-        } elseif (is_null($object->getIsEligibleForRehire())) {
-            $value_5 = $object->getIsEligibleForRehire();
-        }
-        $data->{'isEligibleForRehire'} = $value_5;
 
         return $data;
     }

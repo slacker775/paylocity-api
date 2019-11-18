@@ -15,20 +15,20 @@ class CompanyCodes
     /**
      * Code.<br  /> Max length: 40.
      *
-     * @var string|null
+     * @var string
      */
     protected $code;
     /**
      * Description. <br  /> Max length: 150.
      *
-     * @var string|null
+     * @var string
      */
     protected $description;
 
     /**
      * Code.<br  /> Max length: 40.
      */
-    public function getCode(): ?string
+    public function getCode(): string
     {
         return $this->code;
     }
@@ -36,7 +36,7 @@ class CompanyCodes
     /**
      * Code.<br  /> Max length: 40.
      */
-    public function setCode(?string $code): self
+    public function setCode(string $code): self
     {
         $this->code = $code;
 
@@ -46,7 +46,7 @@ class CompanyCodes
     /**
      * Description. <br  /> Max length: 150.
      */
-    public function getDescription(): ?string
+    public function getDescription(): string
     {
         return $this->description;
     }
@@ -54,7 +54,7 @@ class CompanyCodes
     /**
      * Description. <br  /> Max length: 150.
      */
-    public function setDescription(?string $description): self
+    public function setDescription(string $description): self
     {
         $this->description = $description;
 

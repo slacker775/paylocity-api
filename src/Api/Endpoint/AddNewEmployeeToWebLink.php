@@ -17,17 +17,16 @@ class AddNewEmployeeToWebLink extends \Jane\OpenApiRuntime\Client\BaseEndpoint i
     /**
      * Add new employee to Web Link will send partially completed or potentially erroneous new hire record to Web Link, where it can be corrected and competed by company administrator or authorized Paylocity Service Bureau employee.
      *
-     * @param string                              $companyId        Company Id
-     * @param \Paylocity\Api\Model\StagedEmployee $json             StagedEmployee Model
-     * @param array                               $headerParameters {
+     * @param string $companyId        Company Id
+     * @param array  $headerParameters {
      *
      *     @var string $Authorization Bearer + JWT
      * }
      */
-    public function __construct(string $companyId, \Paylocity\Api\Model\StagedEmployee $json, array $headerParameters = [])
+    public function __construct(string $companyId, \Paylocity\Api\Model\StagedEmployee $requestBody, array $headerParameters = [])
     {
         $this->companyId = $companyId;
-        $this->body = $json;
+        $this->body = $requestBody;
         $this->headerParameters = $headerParameters;
     }
 
@@ -45,7 +44,11 @@ class AddNewEmployeeToWebLink extends \Jane\OpenApiRuntime\Client\BaseEndpoint i
 
     public function getBody(\Symfony\Component\Serializer\SerializerInterface $serializer, $streamFactory = null): array
     {
-        return $this->getSerializedBody($serializer);
+        if ($this->body instanceof \Paylocity\Api\Model\StagedEmployee) {
+            return [['Content-Type' => ['application/json']], $serializer->serialize($this->body, 'json')];
+        }
+
+        return [[], null];
     }
 
     public function getExtraHeaders(): array
@@ -68,23 +71,21 @@ class AddNewEmployeeToWebLink extends \Jane\OpenApiRuntime\Client\BaseEndpoint i
      * {@inheritdoc}
      *
      * @throws \Paylocity\Api\Exception\AddNewEmployeeToWebLinkBadRequestException
-     * @throws \Paylocity\Api\Exception\AddNewEmployeeToWebLinkForbiddenException
      * @throws \Paylocity\Api\Exception\AddNewEmployeeToWebLinkInternalServerErrorException
      *
      * @return \Paylocity\Api\Model\TrackingNumberResponse[]|null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType)
+    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
-        if (201 === $status) {
+        if (201 === $status && mb_strpos($contentType, 'application/json') !== false) {
             return $serializer->deserialize($body, 'Paylocity\\Api\\Model\\TrackingNumberResponse[]', 'json');
         }
-        if (400 === $status) {
+        if (400 === $status && mb_strpos($contentType, 'application/json') !== false) {
             throw new \Paylocity\Api\Exception\AddNewEmployeeToWebLinkBadRequestException($serializer->deserialize($body, 'Paylocity\\Api\\Model\\Error[]', 'json'));
         }
         if (403 === $status) {
-            throw new \Paylocity\Api\Exception\AddNewEmployeeToWebLinkForbiddenException();
         }
-        if (500 === $status) {
+        if (500 === $status && mb_strpos($contentType, 'application/json') !== false) {
             throw new \Paylocity\Api\Exception\AddNewEmployeeToWebLinkInternalServerErrorException($serializer->deserialize($body, 'Paylocity\\Api\\Model\\Error[]', 'json'));
         }
     }
